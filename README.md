@@ -1,31 +1,31 @@
-#ZXKLine  
+# ZXKLine  
 
-![image](/Users/zhengxu/Desktop/准备重构/README/Animation.gif)
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/Animation.gif)
 
 
 
-##1.简介篇   
+## 1.简介篇   
 * 蜡烛图和山形图绘制切换  
 * 5种指标绘制切换
 * 长按蜡烛和指标线详情展示  
 * 触底加载更多   
 * 实时蜡烛绘制实现 
 * 二级横屏和蜡烛三级横屏 
-![image](/Users/zhengxu/Desktop/准备重构/README/fullScreen1.png)
-![image](/Users/zhengxu/Desktop/准备重构/README/fullScreen2.png)
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/fullScreen1.png)
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/fullScreen2.png)
 * 适配两种布局
-![image](/Users/zhengxu/Desktop/发布/准备重构/README/UI1.png)
-![image](/Users/zhengxu/Desktop/发布/准备重构/README/UI2.png)
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/UI1.png)
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/UI2.png)
 
 
-##2.原理篇 
-##2.1 tableView作为画布依耐   
-###为什么选择了tableView
+## 2.原理篇 
+## 2.1 tableView作为画布依耐   
+### 为什么选择了tableView
 * 尝试是否能对绘制有candle的Cell进行复用；   
 * 换个思维造轮子;    
 
-###需要解决的问题：变纵向滚动为纵向滚动  
-![image](/Users/zhengxu/Desktop/准备重构/README/旋转.png)
+### 需要解决的问题：变纵向滚动为纵向滚动  
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/%E6%97%8B%E8%BD%AC.png)
 
 * 如图所示：在旋转时，是绕tableView中心进行旋转的，为了使旋转后的tableView的frame能够和superView的大小一致，那么就要使旋转前的tableView偏移一定距离；  
 
@@ -49,8 +49,8 @@
 * 优缺点:虽然进行到后面，蜡烛全是用CAShapeLayer+UIBeizerPath绘制的，cell的复用并没有起到多大的作用，并且旋转之后涉及到了tableView的x，y坐标在使用中的转换(这点大家注意下),但是能感到庆幸的是：使用了cell之后，在计算蜡烛横坐标的时候就是cell.indexPath.row*rowHeight;再者就是在缩放的时候，可以直接修改cell的高度就可以达到缩放的目的；
 
 
-##2.2 缩放   
-###缩放有度  
+## 2.2 缩放   
+### 缩放有度  
 
 	- (void)pinchAction:(UIPinchGestureRecognizer *)sender
 	{ 
@@ -80,7 +80,7 @@
 2）控制每次缩放的比率；  
 3）控制缩放的总体范围；
 
-###定点缩放  
+### 定点缩放  
 
 	//这句话达到让tableview在缩放的时候能够保持缩放中心点不变；
     //实现原理：在放大缩小的时候，计算出变化后和变化前中心点的距离，然后为了保持中心点的偏移值始终保持不变，就直接在原来的偏移上加减变换的距离
@@ -100,8 +100,8 @@
     
     
 ##2.3 实现原理   
-###宏观布局  
-####两个关键参数:  
+### 宏观布局  
+#### 两个关键参数:  
   
   * 屏幕中显示的第一个蜡烛图的X坐标:  
 
@@ -127,9 +127,9 @@
       
 * 开收高低值从价格转换成像素值  
 
-###蜡烛绘制     
+### 蜡烛绘制     
 CAShapeLayer+UIBeizerPath     
-##2.4 Socket数据结算  
+## 2.4 Socket数据结算  
 `详见ZXSocketDataReformer`   
 针对服务器返回的数据格式：@"时间戳,实时价格";我们需要利用这一个个的数据自己构建蜡烛模型;     
 
@@ -146,9 +146,9 @@ CAShapeLayer+UIBeizerPath
 	
 
 
-##2.5 实时绘制  
+## 2.5 实时绘制  
 考虑如下情况：    
-![image](/Users/zhengxu/Desktop/准备重构/README/实时绘制.png)  
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/%E5%AE%9E%E6%97%B6%E7%BB%98%E5%88%B6.png)  
 
 
 代码大概是这样的 : 
@@ -238,14 +238,14 @@ CAShapeLayer+UIBeizerPath
 
 
 
-##3.使用篇
-##3.1 基本使用 
+## 3.使用篇
+## 3.1 基本使用 
 * 基本的k线图的接入可以在demo中`SecondStepViewController`中看到,运行需在appDelegate中切换rootViewController;  
 * `JoinUpSocketViewController`是接入socket实时绘制的demo,为了脱敏，控制器中的socket数据是随机产生的;  
 * 具体的接入代码或者接口都可以在demo中看到,这里不做过多描述;  
    
-##3.2 使用注意  
-###3.2.1 历史数据转模型   
+## 3.2 使用注意  
+### 3.2.1 历史数据转模型   
 (详见`Reformer`---`ZXCandleDataReformer`)
 本地历史数据格式为:  
 
@@ -290,7 +290,7 @@ CAShapeLayer+UIBeizerPath
 	}
   
 `历史数据模型转换需要使用者根据请求历史数据的实际格式进行转换;`
-###3.2.2 Socket数据转模型 
+### 3.2.2 Socket数据转模型 
 (详见`ZXSocketDataReformer`)    
 在socket结算的时候，若需要服务器时间结合socket返回的时间共同完成一个蜡烛的时候，这里需要改为获取服务器时间;  
  
@@ -318,10 +318,10 @@ CAShapeLayer+UIBeizerPath
 		//    }];
 	    
 	}
-###3.2.3 布局修改     
+### 3.2.3 布局修改     
 (详见`ZXHeader.h`)   
 
-####整体布局修改的几个宏     
+#### 整体布局修改的几个宏     
 
 	/**
 	 * 价格坐标系在右边？YES->右边；NO->左边
@@ -333,8 +333,8 @@ CAShapeLayer+UIBeizerPath
 	 */
 	#define IsDisplayCandelInfoInTop NO
 	
-####约束   
-![image](/Users/zhengxu/Desktop/发布/准备重构/README/布局.png)   
+#### 约束   
+![image](https://github.com/czhen09/ZXKline/blob/master/Resource/%E5%B8%83%E5%B1%80.png)   
 
 * 其中CandleChartHeight、QuotaChartHeight、MiddleBlankSpace都是可变的，所以分了横竖屏分别定义；其他尺寸都是固定的。   
 *  由于在内部就对各个控件的UI进行了组装，所以就预留了相关的尺寸约束或者颜色宏，可以在ZXHeader文件中进行修改，如若有不能修改之处，就只有去ZXAssemblyView.m文件中进行修改了；
@@ -342,7 +342,7 @@ CAShapeLayer+UIBeizerPath
 `从某种角度上来说,很多约束可以不改，但是宏中的TotalHeight必须根据项目需求进行修改`
   
  
-###3.2.4 横竖屏适配   
+### 3.2.4 横竖屏适配   
 小技巧:因为我这里横屏之后是全屏并且隐藏了状态栏和导航栏的,为了旋转之后和竖屏的其他控件互不干扰,可以将assenblyView实例添加在self.view的最顶层,然后旋转过去之后就直接将其他控件覆盖在底层
 
 
