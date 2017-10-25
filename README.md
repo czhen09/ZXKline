@@ -13,7 +13,7 @@
 * 二级横屏和蜡烛三级横屏 
 ![image](https://github.com/czhen09/ZXKline/blob/master/Resource/fullScreen1.png)
 ![image](https://github.com/czhen09/ZXKline/blob/master/Resource/fullScreen2.png)
-* 适配两种布局
+* 适配两种布局   
 ![image](https://github.com/czhen09/ZXKline/blob/master/Resource/UI1.png)
 ![image](https://github.com/czhen09/ZXKline/blob/master/Resource/UI2.png)
 
@@ -355,4 +355,5 @@ CAShapeLayer+UIBeizerPath
 5. 有任何其他问题欢迎[Issues](https://github.com/czhen09/ZXKline/issues)或者加群[643982841]()讨论;  
 6. 超链:           
 
-* Json转模型Mac版[ESJsonFormatForMac](https://github.com/czhen09/ESJsonFormatForMac)      
+* Json转模型Mac版[ESJsonFormatForMac](https://github.com/czhen09/ESJsonFormatForMac)     
+* 简书地址[ZXKline](http://www.jianshu.com/p/67977c27abad)    
