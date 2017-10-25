@@ -1,0 +1,1015 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		241C44411F67CAA1001C758C /* SecondStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241C44401F67CAA1001C758C /* SecondStepViewController.m */; };
+		241C44431F67CC89001C758C /* kData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 241C44421F67CC89001C758C /* kData.plist */; };
+		2459FADE1F695882002FE26C /* JoinUpSocketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2459FADD1F695882002FE26C /* JoinUpSocketViewController.m */; };
+		2461CAE61F39BC280019AF4D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2461CAE51F39BC280019AF4D /* main.m */; };
+		2461CAE91F39BC290019AF4D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2461CAE81F39BC290019AF4D /* AppDelegate.m */; };
+		2461CAEF1F39BC2B0019AF4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2461CAED1F39BC2B0019AF4D /* Main.storyboard */; };
+		2461CAF11F39BC2C0019AF4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2461CAF01F39BC2C0019AF4D /* Assets.xcassets */; };
+		2461CAF41F39BC2C0019AF4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2461CAF21F39BC2C0019AF4D /* LaunchScreen.storyboard */; };
+		2461CAFF1F39BC2C0019AF4D /* ZXKlineDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2461CAFE1F39BC2C0019AF4D /* ZXKlineDemoTests.m */; };
+		2461CB0A1F39BC2C0019AF4D /* ZXKlineDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2461CB091F39BC2C0019AF4D /* ZXKlineDemoUITests.m */; };
+		24A1575E1F9996AF0082C308 /* MALayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1570C1F9996AE0082C308 /* MALayer.m */; };
+		24A1575F1F9996AF0082C308 /* ZXCandleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1570E1F9996AE0082C308 /* ZXCandleCell.m */; };
+		24A157601F9996AF0082C308 /* ZXJumpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157101F9996AE0082C308 /* ZXJumpView.m */; };
+		24A157611F9996AF0082C308 /* ZXTimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157121F9996AE0082C308 /* ZXTimeLineView.m */; };
+		24A157621F9996AF0082C308 /* ZXAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157151F9996AE0082C308 /* ZXAccessoryView.m */; };
+		24A157631F9996AF0082C308 /* ZXCandleDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157171F9996AE0082C308 /* ZXCandleDetailView.m */; };
+		24A157641F9996AF0082C308 /* ZXMessageBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1571A1F9996AE0082C308 /* ZXMessageBoxView.m */; };
+		24A157651F9996AF0082C308 /* ZXPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1571C1F9996AE0082C308 /* ZXPriceView.m */; };
+		24A157661F9996AF0082C308 /* ZXRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1571E1F9996AE0082C308 /* ZXRefresh.m */; };
+		24A157671F9996AF0082C308 /* ZXTopCandleInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157201F9996AE0082C308 /* ZXTopCandleInfoView.m */; };
+		24A157681F9996AF0082C308 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157221F9996AE0082C308 /* arrow@2x.png */; };
+		24A157691F9996AF0082C308 /* bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157231F9996AE0082C308 /* bigger@2x.png */; };
+		24A1576A1F9996AF0082C308 /* bigger@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157241F9996AE0082C308 /* bigger@3x.png */; };
+		24A1576B1F9996AF0082C308 /* decrease-h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157251F9996AE0082C308 /* decrease-h@2x.png */; };
+		24A1576C1F9996AF0082C308 /* decrease-h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157261F9996AE0082C308 /* decrease-h@3x.png */; };
+		24A1576D1F9996AF0082C308 /* decrease-n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157271F9996AE0082C308 /* decrease-n@2x.png */; };
+		24A1576E1F9996AF0082C308 /* decrease-n@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157281F9996AE0082C308 /* decrease-n@3x.png */; };
+		24A1576F1F9996AF0082C308 /* increase-h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A157291F9996AE0082C308 /* increase-h@2x.png */; };
+		24A157701F9996AF0082C308 /* increase-h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A1572A1F9996AE0082C308 /* increase-h@3x.png */; };
+		24A157711F9996AF0082C308 /* increase-n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A1572B1F9996AE0082C308 /* increase-n@2x.png */; };
+		24A157721F9996AF0082C308 /* increase-n@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A1572C1F9996AE0082C308 /* increase-n@3x.png */; };
+		24A157731F9996AF0082C308 /* smaller@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A1572D1F9996AE0082C308 /* smaller@2x.png */; };
+		24A157741F9996AF0082C308 /* smaller@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A1572E1F9996AE0082C308 /* smaller@3x.png */; };
+		24A157751F9996AF0082C308 /* KlineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157311F9996AE0082C308 /* KlineModel.m */; };
+		24A157761F9996AF0082C308 /* ZXQuotaColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157341F9996AE0082C308 /* ZXQuotaColumnLayer.m */; };
+		24A157771F9996AF0082C308 /* ZXQuotaLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157361F9996AE0082C308 /* ZXQuotaLineLayer.m */; };
+		24A157781F9996AF0082C308 /* ZXQuotaSynthsisLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157381F9996AE0082C308 /* ZXQuotaSynthsisLayer.m */; };
+		24A157791F9996AF0082C308 /* ZXCandleDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1573B1F9996AE0082C308 /* ZXCandleDataReformer.m */; };
+		24A1577A1F9996AF0082C308 /* ZXDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1573D1F9996AE0082C308 /* ZXDataReformer.m */; };
+		24A1577B1F9996AF0082C308 /* ZXQuotaDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1573F1F9996AE0082C308 /* ZXQuotaDataReformer.m */; };
+		24A1577C1F9996AF0082C308 /* ZXSocketDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157411F9996AE0082C308 /* ZXSocketDataReformer.m */; };
+		24A1577D1F9996AF0082C308 /* ZXTimeLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157441F9996AE0082C308 /* ZXTimeLineLayer.m */; };
+		24A1577E1F9996AF0082C308 /* ZXCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157471F9996AE0082C308 /* ZXCalculator.m */; };
+		24A1577F1F9996AF0082C308 /* ZXAssemblyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1574A1F9996AE0082C308 /* ZXAssemblyView.m */; };
+		24A157801F9996AF0082C308 /* ZXMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1574C1F9996AE0082C308 /* ZXMainView.m */; };
+		525E90B1D5331B5444E969E4 /* libPods-ZXKlineDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06CFF3DAFF4629596075CA03 /* libPods-ZXKlineDemo.a */; };
+		A2F6CE696058EC3662F4EC84 /* libPods-ZXKlineDemoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36320305BCDD8817BDBA5D2F /* libPods-ZXKlineDemoUITests.a */; };
+		E84EAC21D6122592B97DA3B6 /* libPods-ZXKlineDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9BD9AFF5B4C19AB81EF1E4F /* libPods-ZXKlineDemoTests.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2461CAFB1F39BC2C0019AF4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2461CAD91F39BC270019AF4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2461CAE01F39BC280019AF4D;
+			remoteInfo = ZXKlineDemo;
+		};
+		2461CB061F39BC2C0019AF4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2461CAD91F39BC270019AF4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2461CAE01F39BC280019AF4D;
+			remoteInfo = ZXKlineDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		06CFF3DAFF4629596075CA03 /* libPods-ZXKlineDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZXKlineDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		20A493D315DD2D5F7773F527 /* Pods-ZXKlineDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKlineDemoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZXKlineDemoUITests/Pods-ZXKlineDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		241C443F1F67CAA1001C758C /* SecondStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondStepViewController.h; sourceTree = "<group>"; };
+		241C44401F67CAA1001C758C /* SecondStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondStepViewController.m; sourceTree = "<group>"; };
+		241C44421F67CC89001C758C /* kData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = kData.plist; sourceTree = "<group>"; };
+		2459FADC1F695882002FE26C /* JoinUpSocketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinUpSocketViewController.h; sourceTree = "<group>"; };
+		2459FADD1F695882002FE26C /* JoinUpSocketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinUpSocketViewController.m; sourceTree = "<group>"; };
+		2461CAE11F39BC280019AF4D /* ZXKlineDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXKlineDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2461CAE51F39BC280019AF4D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2461CAE71F39BC280019AF4D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2461CAE81F39BC290019AF4D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2461CAEE1F39BC2B0019AF4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2461CAF01F39BC2C0019AF4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2461CAF31F39BC2C0019AF4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2461CAF51F39BC2C0019AF4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2461CAFA1F39BC2C0019AF4D /* ZXKlineDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZXKlineDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2461CAFE1F39BC2C0019AF4D /* ZXKlineDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXKlineDemoTests.m; sourceTree = "<group>"; };
+		2461CB001F39BC2C0019AF4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2461CB051F39BC2C0019AF4D /* ZXKlineDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZXKlineDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2461CB091F39BC2C0019AF4D /* ZXKlineDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXKlineDemoUITests.m; sourceTree = "<group>"; };
+		2461CB0B1F39BC2D0019AF4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24A1570B1F9996AD0082C308 /* MALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALayer.h; sourceTree = "<group>"; };
+		24A1570C1F9996AE0082C308 /* MALayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALayer.m; sourceTree = "<group>"; };
+		24A1570D1F9996AE0082C308 /* ZXCandleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCandleCell.h; sourceTree = "<group>"; };
+		24A1570E1F9996AE0082C308 /* ZXCandleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCandleCell.m; sourceTree = "<group>"; };
+		24A1570F1F9996AE0082C308 /* ZXJumpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXJumpView.h; sourceTree = "<group>"; };
+		24A157101F9996AE0082C308 /* ZXJumpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXJumpView.m; sourceTree = "<group>"; };
+		24A157111F9996AE0082C308 /* ZXTimeLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTimeLineView.h; sourceTree = "<group>"; };
+		24A157121F9996AE0082C308 /* ZXTimeLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTimeLineView.m; sourceTree = "<group>"; };
+		24A157141F9996AE0082C308 /* ZXAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAccessoryView.h; sourceTree = "<group>"; };
+		24A157151F9996AE0082C308 /* ZXAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAccessoryView.m; sourceTree = "<group>"; };
+		24A157161F9996AE0082C308 /* ZXCandleDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCandleDetailView.h; sourceTree = "<group>"; };
+		24A157171F9996AE0082C308 /* ZXCandleDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCandleDetailView.m; sourceTree = "<group>"; };
+		24A157181F9996AE0082C308 /* ZXHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXHeader.h; sourceTree = "<group>"; };
+		24A157191F9996AE0082C308 /* ZXMessageBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMessageBoxView.h; sourceTree = "<group>"; };
+		24A1571A1F9996AE0082C308 /* ZXMessageBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMessageBoxView.m; sourceTree = "<group>"; };
+		24A1571B1F9996AE0082C308 /* ZXPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPriceView.h; sourceTree = "<group>"; };
+		24A1571C1F9996AE0082C308 /* ZXPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPriceView.m; sourceTree = "<group>"; };
+		24A1571D1F9996AE0082C308 /* ZXRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXRefresh.h; sourceTree = "<group>"; };
+		24A1571E1F9996AE0082C308 /* ZXRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXRefresh.m; sourceTree = "<group>"; };
+		24A1571F1F9996AE0082C308 /* ZXTopCandleInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTopCandleInfoView.h; sourceTree = "<group>"; };
+		24A157201F9996AE0082C308 /* ZXTopCandleInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTopCandleInfoView.m; sourceTree = "<group>"; };
+		24A157221F9996AE0082C308 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		24A157231F9996AE0082C308 /* bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigger@2x.png"; sourceTree = "<group>"; };
+		24A157241F9996AE0082C308 /* bigger@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigger@3x.png"; sourceTree = "<group>"; };
+		24A157251F9996AE0082C308 /* decrease-h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease-h@2x.png"; sourceTree = "<group>"; };
+		24A157261F9996AE0082C308 /* decrease-h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease-h@3x.png"; sourceTree = "<group>"; };
+		24A157271F9996AE0082C308 /* decrease-n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease-n@2x.png"; sourceTree = "<group>"; };
+		24A157281F9996AE0082C308 /* decrease-n@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease-n@3x.png"; sourceTree = "<group>"; };
+		24A157291F9996AE0082C308 /* increase-h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase-h@2x.png"; sourceTree = "<group>"; };
+		24A1572A1F9996AE0082C308 /* increase-h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase-h@3x.png"; sourceTree = "<group>"; };
+		24A1572B1F9996AE0082C308 /* increase-n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase-n@2x.png"; sourceTree = "<group>"; };
+		24A1572C1F9996AE0082C308 /* increase-n@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase-n@3x.png"; sourceTree = "<group>"; };
+		24A1572D1F9996AE0082C308 /* smaller@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smaller@2x.png"; sourceTree = "<group>"; };
+		24A1572E1F9996AE0082C308 /* smaller@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smaller@3x.png"; sourceTree = "<group>"; };
+		24A157301F9996AE0082C308 /* KlineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineModel.h; sourceTree = "<group>"; };
+		24A157311F9996AE0082C308 /* KlineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineModel.m; sourceTree = "<group>"; };
+		24A157331F9996AE0082C308 /* ZXQuotaColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaColumnLayer.h; sourceTree = "<group>"; };
+		24A157341F9996AE0082C308 /* ZXQuotaColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaColumnLayer.m; sourceTree = "<group>"; };
+		24A157351F9996AE0082C308 /* ZXQuotaLineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaLineLayer.h; sourceTree = "<group>"; };
+		24A157361F9996AE0082C308 /* ZXQuotaLineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaLineLayer.m; sourceTree = "<group>"; };
+		24A157371F9996AE0082C308 /* ZXQuotaSynthsisLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaSynthsisLayer.h; sourceTree = "<group>"; };
+		24A157381F9996AE0082C308 /* ZXQuotaSynthsisLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaSynthsisLayer.m; sourceTree = "<group>"; };
+		24A1573A1F9996AE0082C308 /* ZXCandleDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCandleDataReformer.h; sourceTree = "<group>"; };
+		24A1573B1F9996AE0082C308 /* ZXCandleDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCandleDataReformer.m; sourceTree = "<group>"; };
+		24A1573C1F9996AE0082C308 /* ZXDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDataReformer.h; sourceTree = "<group>"; };
+		24A1573D1F9996AE0082C308 /* ZXDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDataReformer.m; sourceTree = "<group>"; };
+		24A1573E1F9996AE0082C308 /* ZXQuotaDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaDataReformer.h; sourceTree = "<group>"; };
+		24A1573F1F9996AE0082C308 /* ZXQuotaDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaDataReformer.m; sourceTree = "<group>"; };
+		24A157401F9996AE0082C308 /* ZXSocketDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXSocketDataReformer.h; sourceTree = "<group>"; };
+		24A157411F9996AE0082C308 /* ZXSocketDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXSocketDataReformer.m; sourceTree = "<group>"; };
+		24A157431F9996AE0082C308 /* ZXTimeLineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTimeLineLayer.h; sourceTree = "<group>"; };
+		24A157441F9996AE0082C308 /* ZXTimeLineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTimeLineLayer.m; sourceTree = "<group>"; };
+		24A157461F9996AE0082C308 /* ZXCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCalculator.h; sourceTree = "<group>"; };
+		24A157471F9996AE0082C308 /* ZXCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCalculator.m; sourceTree = "<group>"; };
+		24A157491F9996AE0082C308 /* ZXAssemblyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAssemblyView.h; sourceTree = "<group>"; };
+		24A1574A1F9996AE0082C308 /* ZXAssemblyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAssemblyView.m; sourceTree = "<group>"; };
+		24A1574B1F9996AE0082C308 /* ZXMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMainView.h; sourceTree = "<group>"; };
+		24A1574C1F9996AE0082C308 /* ZXMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMainView.m; sourceTree = "<group>"; };
+		36320305BCDD8817BDBA5D2F /* libPods-ZXKlineDemoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZXKlineDemoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CDEE47913B6D76357C382D3 /* Pods-ZXKlineDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKlineDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZXKlineDemoUITests/Pods-ZXKlineDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8618B9D6677693EA21DEF2E0 /* Pods-ZXKlineDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKlineDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZXKlineDemoTests/Pods-ZXKlineDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9D4D1769C50B049603FA68A1 /* Pods-ZXKlineDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKlineDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZXKlineDemoTests/Pods-ZXKlineDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		B258EC5FD513773527625A69 /* Pods-ZXKlineDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKlineDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZXKlineDemo/Pods-ZXKlineDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		B9BD9AFF5B4C19AB81EF1E4F /* libPods-ZXKlineDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZXKlineDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D10418B2E06306692D2A28DA /* Pods-ZXKlineDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKlineDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZXKlineDemo/Pods-ZXKlineDemo.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2461CADE1F39BC280019AF4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				525E90B1D5331B5444E969E4 /* libPods-ZXKlineDemo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2461CAF71F39BC2C0019AF4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E84EAC21D6122592B97DA3B6 /* libPods-ZXKlineDemoTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2461CB021F39BC2C0019AF4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2F6CE696058EC3662F4EC84 /* libPods-ZXKlineDemoUITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2328F8A133079A9EFE92DFEF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B258EC5FD513773527625A69 /* Pods-ZXKlineDemo.debug.xcconfig */,
+				D10418B2E06306692D2A28DA /* Pods-ZXKlineDemo.release.xcconfig */,
+				8618B9D6677693EA21DEF2E0 /* Pods-ZXKlineDemoTests.debug.xcconfig */,
+				9D4D1769C50B049603FA68A1 /* Pods-ZXKlineDemoTests.release.xcconfig */,
+				3CDEE47913B6D76357C382D3 /* Pods-ZXKlineDemoUITests.debug.xcconfig */,
+				20A493D315DD2D5F7773F527 /* Pods-ZXKlineDemoUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		2454BE6B1F7209B7002FE4C5 /* KLine */ = {
+			isa = PBXGroup;
+			children = (
+				24A157091F9996AD0082C308 /* ZXKline */,
+			);
+			path = KLine;
+			sourceTree = "<group>";
+		};
+		2461CAD81F39BC270019AF4D = {
+			isa = PBXGroup;
+			children = (
+				2461CAE31F39BC280019AF4D /* ZXKlineDemo */,
+				2461CAFD1F39BC2C0019AF4D /* ZXKlineDemoTests */,
+				2461CB081F39BC2C0019AF4D /* ZXKlineDemoUITests */,
+				2461CAE21F39BC280019AF4D /* Products */,
+				2328F8A133079A9EFE92DFEF /* Pods */,
+				A369D95CCFC0A2C425598843 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2461CAE21F39BC280019AF4D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2461CAE11F39BC280019AF4D /* ZXKlineDemo.app */,
+				2461CAFA1F39BC2C0019AF4D /* ZXKlineDemoTests.xctest */,
+				2461CB051F39BC2C0019AF4D /* ZXKlineDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2461CAE31F39BC280019AF4D /* ZXKlineDemo */ = {
+			isa = PBXGroup;
+			children = (
+				2454BE6B1F7209B7002FE4C5 /* KLine */,
+				2461CAE71F39BC280019AF4D /* AppDelegate.h */,
+				2461CAE81F39BC290019AF4D /* AppDelegate.m */,
+				241C44421F67CC89001C758C /* kData.plist */,
+				241C443F1F67CAA1001C758C /* SecondStepViewController.h */,
+				241C44401F67CAA1001C758C /* SecondStepViewController.m */,
+				2459FADC1F695882002FE26C /* JoinUpSocketViewController.h */,
+				2459FADD1F695882002FE26C /* JoinUpSocketViewController.m */,
+				2461CAED1F39BC2B0019AF4D /* Main.storyboard */,
+				2461CAF01F39BC2C0019AF4D /* Assets.xcassets */,
+				2461CAF21F39BC2C0019AF4D /* LaunchScreen.storyboard */,
+				2461CAF51F39BC2C0019AF4D /* Info.plist */,
+				2461CAE41F39BC280019AF4D /* Supporting Files */,
+			);
+			path = ZXKlineDemo;
+			sourceTree = "<group>";
+		};
+		2461CAE41F39BC280019AF4D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2461CAE51F39BC280019AF4D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2461CAFD1F39BC2C0019AF4D /* ZXKlineDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				2461CAFE1F39BC2C0019AF4D /* ZXKlineDemoTests.m */,
+				2461CB001F39BC2C0019AF4D /* Info.plist */,
+			);
+			path = ZXKlineDemoTests;
+			sourceTree = "<group>";
+		};
+		2461CB081F39BC2C0019AF4D /* ZXKlineDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2461CB091F39BC2C0019AF4D /* ZXKlineDemoUITests.m */,
+				2461CB0B1F39BC2D0019AF4D /* Info.plist */,
+			);
+			path = ZXKlineDemoUITests;
+			sourceTree = "<group>";
+		};
+		24A157091F9996AD0082C308 /* ZXKline */ = {
+			isa = PBXGroup;
+			children = (
+				24A1570A1F9996AD0082C308 /* Candle */,
+				24A157131F9996AE0082C308 /* Common */,
+				24A157211F9996AE0082C308 /* imageAsset */,
+				24A1572F1F9996AE0082C308 /* Model */,
+				24A157321F9996AE0082C308 /* Quota */,
+				24A157391F9996AE0082C308 /* Reformer */,
+				24A157421F9996AE0082C308 /* TimeLine */,
+				24A157451F9996AE0082C308 /* Tool */,
+				24A157481F9996AE0082C308 /* View */,
+			);
+			path = ZXKline;
+			sourceTree = "<group>";
+		};
+		24A1570A1F9996AD0082C308 /* Candle */ = {
+			isa = PBXGroup;
+			children = (
+				24A1570B1F9996AD0082C308 /* MALayer.h */,
+				24A1570C1F9996AE0082C308 /* MALayer.m */,
+				24A1570D1F9996AE0082C308 /* ZXCandleCell.h */,
+				24A1570E1F9996AE0082C308 /* ZXCandleCell.m */,
+				24A1570F1F9996AE0082C308 /* ZXJumpView.h */,
+				24A157101F9996AE0082C308 /* ZXJumpView.m */,
+				24A157111F9996AE0082C308 /* ZXTimeLineView.h */,
+				24A157121F9996AE0082C308 /* ZXTimeLineView.m */,
+			);
+			path = Candle;
+			sourceTree = "<group>";
+		};
+		24A157131F9996AE0082C308 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				24A157141F9996AE0082C308 /* ZXAccessoryView.h */,
+				24A157151F9996AE0082C308 /* ZXAccessoryView.m */,
+				24A157161F9996AE0082C308 /* ZXCandleDetailView.h */,
+				24A157171F9996AE0082C308 /* ZXCandleDetailView.m */,
+				24A157181F9996AE0082C308 /* ZXHeader.h */,
+				24A157191F9996AE0082C308 /* ZXMessageBoxView.h */,
+				24A1571A1F9996AE0082C308 /* ZXMessageBoxView.m */,
+				24A1571B1F9996AE0082C308 /* ZXPriceView.h */,
+				24A1571C1F9996AE0082C308 /* ZXPriceView.m */,
+				24A1571D1F9996AE0082C308 /* ZXRefresh.h */,
+				24A1571E1F9996AE0082C308 /* ZXRefresh.m */,
+				24A1571F1F9996AE0082C308 /* ZXTopCandleInfoView.h */,
+				24A157201F9996AE0082C308 /* ZXTopCandleInfoView.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		24A157211F9996AE0082C308 /* imageAsset */ = {
+			isa = PBXGroup;
+			children = (
+				24A157221F9996AE0082C308 /* arrow@2x.png */,
+				24A157231F9996AE0082C308 /* bigger@2x.png */,
+				24A157241F9996AE0082C308 /* bigger@3x.png */,
+				24A157251F9996AE0082C308 /* decrease-h@2x.png */,
+				24A157261F9996AE0082C308 /* decrease-h@3x.png */,
+				24A157271F9996AE0082C308 /* decrease-n@2x.png */,
+				24A157281F9996AE0082C308 /* decrease-n@3x.png */,
+				24A157291F9996AE0082C308 /* increase-h@2x.png */,
+				24A1572A1F9996AE0082C308 /* increase-h@3x.png */,
+				24A1572B1F9996AE0082C308 /* increase-n@2x.png */,
+				24A1572C1F9996AE0082C308 /* increase-n@3x.png */,
+				24A1572D1F9996AE0082C308 /* smaller@2x.png */,
+				24A1572E1F9996AE0082C308 /* smaller@3x.png */,
+			);
+			path = imageAsset;
+			sourceTree = "<group>";
+		};
+		24A1572F1F9996AE0082C308 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				24A157301F9996AE0082C308 /* KlineModel.h */,
+				24A157311F9996AE0082C308 /* KlineModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		24A157321F9996AE0082C308 /* Quota */ = {
+			isa = PBXGroup;
+			children = (
+				24A157331F9996AE0082C308 /* ZXQuotaColumnLayer.h */,
+				24A157341F9996AE0082C308 /* ZXQuotaColumnLayer.m */,
+				24A157351F9996AE0082C308 /* ZXQuotaLineLayer.h */,
+				24A157361F9996AE0082C308 /* ZXQuotaLineLayer.m */,
+				24A157371F9996AE0082C308 /* ZXQuotaSynthsisLayer.h */,
+				24A157381F9996AE0082C308 /* ZXQuotaSynthsisLayer.m */,
+			);
+			path = Quota;
+			sourceTree = "<group>";
+		};
+		24A157391F9996AE0082C308 /* Reformer */ = {
+			isa = PBXGroup;
+			children = (
+				24A1573A1F9996AE0082C308 /* ZXCandleDataReformer.h */,
+				24A1573B1F9996AE0082C308 /* ZXCandleDataReformer.m */,
+				24A1573C1F9996AE0082C308 /* ZXDataReformer.h */,
+				24A1573D1F9996AE0082C308 /* ZXDataReformer.m */,
+				24A1573E1F9996AE0082C308 /* ZXQuotaDataReformer.h */,
+				24A1573F1F9996AE0082C308 /* ZXQuotaDataReformer.m */,
+				24A157401F9996AE0082C308 /* ZXSocketDataReformer.h */,
+				24A157411F9996AE0082C308 /* ZXSocketDataReformer.m */,
+			);
+			path = Reformer;
+			sourceTree = "<group>";
+		};
+		24A157421F9996AE0082C308 /* TimeLine */ = {
+			isa = PBXGroup;
+			children = (
+				24A157431F9996AE0082C308 /* ZXTimeLineLayer.h */,
+				24A157441F9996AE0082C308 /* ZXTimeLineLayer.m */,
+			);
+			path = TimeLine;
+			sourceTree = "<group>";
+		};
+		24A157451F9996AE0082C308 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				24A157461F9996AE0082C308 /* ZXCalculator.h */,
+				24A157471F9996AE0082C308 /* ZXCalculator.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		24A157481F9996AE0082C308 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				24A157491F9996AE0082C308 /* ZXAssemblyView.h */,
+				24A1574A1F9996AE0082C308 /* ZXAssemblyView.m */,
+				24A1574B1F9996AE0082C308 /* ZXMainView.h */,
+				24A1574C1F9996AE0082C308 /* ZXMainView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A369D95CCFC0A2C425598843 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06CFF3DAFF4629596075CA03 /* libPods-ZXKlineDemo.a */,
+				B9BD9AFF5B4C19AB81EF1E4F /* libPods-ZXKlineDemoTests.a */,
+				36320305BCDD8817BDBA5D2F /* libPods-ZXKlineDemoUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2461CAE01F39BC280019AF4D /* ZXKlineDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2461CB0E1F39BC2D0019AF4D /* Build configuration list for PBXNativeTarget "ZXKlineDemo" */;
+			buildPhases = (
+				43895D41E1932ADED128BA6A /* [CP] Check Pods Manifest.lock */,
+				2461CADD1F39BC280019AF4D /* Sources */,
+				2461CADE1F39BC280019AF4D /* Frameworks */,
+				2461CADF1F39BC280019AF4D /* Resources */,
+				EF09D9BC726E839D51969E0B /* [CP] Embed Pods Frameworks */,
+				EDB16A7CAC4DF1E89ACB2EDE /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZXKlineDemo;
+			productName = ZXKlineDemo;
+			productReference = 2461CAE11F39BC280019AF4D /* ZXKlineDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2461CAF91F39BC2C0019AF4D /* ZXKlineDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2461CB111F39BC2D0019AF4D /* Build configuration list for PBXNativeTarget "ZXKlineDemoTests" */;
+			buildPhases = (
+				6668A983BB88516668804BE1 /* [CP] Check Pods Manifest.lock */,
+				2461CAF61F39BC2C0019AF4D /* Sources */,
+				2461CAF71F39BC2C0019AF4D /* Frameworks */,
+				2461CAF81F39BC2C0019AF4D /* Resources */,
+				A3D9151B5561D93391898FE0 /* [CP] Embed Pods Frameworks */,
+				C9E9BCBC87AC26BA24124C5D /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2461CAFC1F39BC2C0019AF4D /* PBXTargetDependency */,
+			);
+			name = ZXKlineDemoTests;
+			productName = ZXKlineDemoTests;
+			productReference = 2461CAFA1F39BC2C0019AF4D /* ZXKlineDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2461CB041F39BC2C0019AF4D /* ZXKlineDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2461CB141F39BC2D0019AF4D /* Build configuration list for PBXNativeTarget "ZXKlineDemoUITests" */;
+			buildPhases = (
+				07A46EB9A7E93536DC1B4C55 /* [CP] Check Pods Manifest.lock */,
+				2461CB011F39BC2C0019AF4D /* Sources */,
+				2461CB021F39BC2C0019AF4D /* Frameworks */,
+				2461CB031F39BC2C0019AF4D /* Resources */,
+				D847C434BF3D49B4C4F1FD85 /* [CP] Embed Pods Frameworks */,
+				03C140C9E605D9CF936C8777 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2461CB071F39BC2C0019AF4D /* PBXTargetDependency */,
+			);
+			name = ZXKlineDemoUITests;
+			productName = ZXKlineDemoUITests;
+			productReference = 2461CB051F39BC2C0019AF4D /* ZXKlineDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2461CAD91F39BC270019AF4D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "郑旭";
+				TargetAttributes = {
+					2461CAE01F39BC280019AF4D = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = D79N5ZZ8A6;
+						ProvisioningStyle = Automatic;
+					};
+					2461CAF91F39BC2C0019AF4D = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 2461CAE01F39BC280019AF4D;
+					};
+					2461CB041F39BC2C0019AF4D = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 2461CAE01F39BC280019AF4D;
+					};
+				};
+			};
+			buildConfigurationList = 2461CADC1F39BC280019AF4D /* Build configuration list for PBXProject "ZXKlineDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2461CAD81F39BC270019AF4D;
+			productRefGroup = 2461CAE21F39BC280019AF4D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2461CAE01F39BC280019AF4D /* ZXKlineDemo */,
+				2461CAF91F39BC2C0019AF4D /* ZXKlineDemoTests */,
+				2461CB041F39BC2C0019AF4D /* ZXKlineDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2461CADF1F39BC280019AF4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				241C44431F67CC89001C758C /* kData.plist in Resources */,
+				24A157681F9996AF0082C308 /* arrow@2x.png in Resources */,
+				24A157701F9996AF0082C308 /* increase-h@3x.png in Resources */,
+				24A157711F9996AF0082C308 /* increase-n@2x.png in Resources */,
+				2461CAF41F39BC2C0019AF4D /* LaunchScreen.storyboard in Resources */,
+				24A1576E1F9996AF0082C308 /* decrease-n@3x.png in Resources */,
+				2461CAF11F39BC2C0019AF4D /* Assets.xcassets in Resources */,
+				24A157691F9996AF0082C308 /* bigger@2x.png in Resources */,
+				2461CAEF1F39BC2B0019AF4D /* Main.storyboard in Resources */,
+				24A1576C1F9996AF0082C308 /* decrease-h@3x.png in Resources */,
+				24A157741F9996AF0082C308 /* smaller@3x.png in Resources */,
+				24A1576A1F9996AF0082C308 /* bigger@3x.png in Resources */,
+				24A157731F9996AF0082C308 /* smaller@2x.png in Resources */,
+				24A157721F9996AF0082C308 /* increase-n@3x.png in Resources */,
+				24A1576F1F9996AF0082C308 /* increase-h@2x.png in Resources */,
+				24A1576B1F9996AF0082C308 /* decrease-h@2x.png in Resources */,
+				24A1576D1F9996AF0082C308 /* decrease-n@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2461CAF81F39BC2C0019AF4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2461CB031F39BC2C0019AF4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03C140C9E605D9CF936C8777 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZXKlineDemoUITests/Pods-ZXKlineDemoUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		07A46EB9A7E93536DC1B4C55 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		43895D41E1932ADED128BA6A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6668A983BB88516668804BE1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A3D9151B5561D93391898FE0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZXKlineDemoTests/Pods-ZXKlineDemoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9E9BCBC87AC26BA24124C5D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZXKlineDemoTests/Pods-ZXKlineDemoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D847C434BF3D49B4C4F1FD85 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZXKlineDemoUITests/Pods-ZXKlineDemoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EDB16A7CAC4DF1E89ACB2EDE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZXKlineDemo/Pods-ZXKlineDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF09D9BC726E839D51969E0B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZXKlineDemo/Pods-ZXKlineDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2461CADD1F39BC280019AF4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24A157651F9996AF0082C308 /* ZXPriceView.m in Sources */,
+				241C44411F67CAA1001C758C /* SecondStepViewController.m in Sources */,
+				24A1577D1F9996AF0082C308 /* ZXTimeLineLayer.m in Sources */,
+				24A157621F9996AF0082C308 /* ZXAccessoryView.m in Sources */,
+				24A157671F9996AF0082C308 /* ZXTopCandleInfoView.m in Sources */,
+				24A1577F1F9996AF0082C308 /* ZXAssemblyView.m in Sources */,
+				24A157771F9996AF0082C308 /* ZXQuotaLineLayer.m in Sources */,
+				24A1575F1F9996AF0082C308 /* ZXCandleCell.m in Sources */,
+				24A1577A1F9996AF0082C308 /* ZXDataReformer.m in Sources */,
+				24A1577C1F9996AF0082C308 /* ZXSocketDataReformer.m in Sources */,
+				24A1577B1F9996AF0082C308 /* ZXQuotaDataReformer.m in Sources */,
+				24A1577E1F9996AF0082C308 /* ZXCalculator.m in Sources */,
+				2461CAE91F39BC290019AF4D /* AppDelegate.m in Sources */,
+				24A157791F9996AF0082C308 /* ZXCandleDataReformer.m in Sources */,
+				24A157611F9996AF0082C308 /* ZXTimeLineView.m in Sources */,
+				24A157601F9996AF0082C308 /* ZXJumpView.m in Sources */,
+				24A157761F9996AF0082C308 /* ZXQuotaColumnLayer.m in Sources */,
+				2459FADE1F695882002FE26C /* JoinUpSocketViewController.m in Sources */,
+				2461CAE61F39BC280019AF4D /* main.m in Sources */,
+				24A157801F9996AF0082C308 /* ZXMainView.m in Sources */,
+				24A157751F9996AF0082C308 /* KlineModel.m in Sources */,
+				24A157781F9996AF0082C308 /* ZXQuotaSynthsisLayer.m in Sources */,
+				24A157631F9996AF0082C308 /* ZXCandleDetailView.m in Sources */,
+				24A157661F9996AF0082C308 /* ZXRefresh.m in Sources */,
+				24A157641F9996AF0082C308 /* ZXMessageBoxView.m in Sources */,
+				24A1575E1F9996AF0082C308 /* MALayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2461CAF61F39BC2C0019AF4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2461CAFF1F39BC2C0019AF4D /* ZXKlineDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2461CB011F39BC2C0019AF4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2461CB0A1F39BC2C0019AF4D /* ZXKlineDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2461CAFC1F39BC2C0019AF4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2461CAE01F39BC280019AF4D /* ZXKlineDemo */;
+			targetProxy = 2461CAFB1F39BC2C0019AF4D /* PBXContainerItemProxy */;
+		};
+		2461CB071F39BC2C0019AF4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2461CAE01F39BC280019AF4D /* ZXKlineDemo */;
+			targetProxy = 2461CB061F39BC2C0019AF4D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2461CAED1F39BC2B0019AF4D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2461CAEE1F39BC2B0019AF4D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2461CAF21F39BC2C0019AF4D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2461CAF31F39BC2C0019AF4D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2461CB0C1F39BC2D0019AF4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2461CB0D1F39BC2D0019AF4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2461CB0F1F39BC2D0019AF4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B258EC5FD513773527625A69 /* Pods-ZXKlineDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = D79N5ZZ8A6;
+				INFOPLIST_FILE = ZXKlineDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2461CB101F39BC2D0019AF4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D10418B2E06306692D2A28DA /* Pods-ZXKlineDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = D79N5ZZ8A6;
+				INFOPLIST_FILE = ZXKlineDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2461CB121F39BC2D0019AF4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8618B9D6677693EA21DEF2E0 /* Pods-ZXKlineDemoTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ZXKlineDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZXKlineDemo.app/ZXKlineDemo";
+			};
+			name = Debug;
+		};
+		2461CB131F39BC2D0019AF4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D4D1769C50B049603FA68A1 /* Pods-ZXKlineDemoTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ZXKlineDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZXKlineDemo.app/ZXKlineDemo";
+			};
+			name = Release;
+		};
+		2461CB151F39BC2D0019AF4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CDEE47913B6D76357C382D3 /* Pods-ZXKlineDemoUITests.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = ZXKlineDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ZXKlineDemo;
+			};
+			name = Debug;
+		};
+		2461CB161F39BC2D0019AF4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20A493D315DD2D5F7773F527 /* Pods-ZXKlineDemoUITests.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = ZXKlineDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ZXKlineDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2461CADC1F39BC280019AF4D /* Build configuration list for PBXProject "ZXKlineDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2461CB0C1F39BC2D0019AF4D /* Debug */,
+				2461CB0D1F39BC2D0019AF4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2461CB0E1F39BC2D0019AF4D /* Build configuration list for PBXNativeTarget "ZXKlineDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2461CB0F1F39BC2D0019AF4D /* Debug */,
+				2461CB101F39BC2D0019AF4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2461CB111F39BC2D0019AF4D /* Build configuration list for PBXNativeTarget "ZXKlineDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2461CB121F39BC2D0019AF4D /* Debug */,
+				2461CB131F39BC2D0019AF4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2461CB141F39BC2D0019AF4D /* Build configuration list for PBXNativeTarget "ZXKlineDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2461CB151F39BC2D0019AF4D /* Debug */,
+				2461CB161F39BC2D0019AF4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2461CAD91F39BC270019AF4D /* Project object */;
+}
