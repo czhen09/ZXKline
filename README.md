@@ -352,7 +352,7 @@ CAShapeLayer+UIBeizerPath
 2. 未知bug?待挖掘;   
 3. k线图UI很简单,除了k线没有其他定制,但是接口都是完善的，主要是觉得关乎UI部分我做得越少，通用性就越高;   
 4. 感谢Star;  
-5. 有任何其他问题欢迎[Issues](https://github.com/czhen09/ZXKline/issues)或者加群[643982841]()讨论;  
+5. 有任何其他问题欢迎[Issues](https://github.com/czhen09/ZXKline/issues)或者简书留言;  
 6. 超链:           
 
 * Json转模型Mac版[ESJsonFormatForMac](https://github.com/czhen09/ESJsonFormatForMac)     
