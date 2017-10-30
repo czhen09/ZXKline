@@ -117,7 +117,7 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 /**
  * 价格坐标系在右边？YES->右边；NO->左边
  */
-#define PriceCoordinateIsInRight YES
+#define PriceCoordinateIsInRight NO
 
 /**
  * 显示时间的view
@@ -138,6 +138,7 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
  * 当前屏幕方向是否竖屏  YES—>竖屏  NO->横屏
  */
 #define Portrait (Orientation==UIDeviceOrientationPortrait||Orientation==UIDeviceOrientationPortraitUpsideDown)
+#define LandscapeLeft (Orientation == UIDeviceOrientationLandscapeLeft)
 
 //k线图边框距离画布上下左右距离
 #define TopMargin 5
@@ -188,10 +189,10 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 
 
 #define ZX_IS_IPHONE_X (KSCREEN_HEIGHT == 812.0)
-#define SafeAreaTopMargin 44
-#define SafeAreaBottomMargin 34
+#define SafeAreaTopMargin  (LandscapeLeft ? 44 : 34)
+#define SafeAreaBottomMargin (LandscapeLeft ? 34 : 44)
 
-#define LanscapeCandleWidth      (PriceCoordinateIsInRight ? (ZX_IS_IPHONE_X?(KSCREEN_HEIGHT-VerticalCoordinatesWidth-SafeAreaTopMargin-SafeAreaBottomMargin):(KSCREEN_HEIGHT-VerticalCoordinatesWidth-ZXLeftMargin-ZXRightMargin)) : (KSCREEN_HEIGHT-ZXLeftMargin-ZXRightMargin))
+#define LanscapeCandleWidth      (PriceCoordinateIsInRight ? (ZX_IS_IPHONE_X?(KSCREEN_HEIGHT-VerticalCoordinatesWidth-SafeAreaTopMargin-SafeAreaBottomMargin):(KSCREEN_HEIGHT-VerticalCoordinatesWidth-ZXLeftMargin-ZXRightMargin)) :(ZX_IS_IPHONE_X?(KSCREEN_HEIGHT-SafeAreaTopMargin-SafeAreaBottomMargin):(KSCREEN_HEIGHT-ZXLeftMargin-ZXRightMargin)))
 
 
 #define PortraitTotalWidth    KSCREEN_WIDTH

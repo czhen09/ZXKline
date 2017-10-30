@@ -875,7 +875,13 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
 - (void)drawWhenScrollViewDidScrollWithScrollView:(UIScrollView *)scrollView
 {
+    if (scrollView.contentOffset.y>=0) {
+        self.refreshView.hidden = YES;
+    }
     if (scrollView.contentOffset.y<=0) {
+        if (scrollView.contentOffset.y<0) {
+            self.refreshView.hidden = NO;
+        }
         if (scrollView.contentOffset.y>=-43) {
             
             if (self.refreshView.refreshState==ZXRefreshStateRefreshing||self.refreshView.refreshState==ZXRefreshStateNoMoreData||self.refreshView.refreshState==ZXRefreshStateRequestFailure) {
@@ -910,6 +916,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count*self.candleWidth-self.subViewWidth))];
         return;
     }else{
+       
         //不在两侧的时候绘制
         [self drawTopKline];
     }
@@ -1861,6 +1868,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             make.width.mas_equalTo(44);
             make.left.mas_equalTo(self).offset(-44);
         }];
+        _refreshView.hidden = YES;
     }
     return _refreshView;
 }

@@ -329,7 +329,7 @@ static NSString *const kDrop = @"kDrop";
         [self.topCandleInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.mas_equalTo(self.mas_top);
             make.right.mas_equalTo(self);
-            make.width.mas_equalTo(KSCREEN_WIDTH);
+            make.width.mas_equalTo([UIScreen mainScreen].bounds.size.width);
             make.height.mas_equalTo(40);
         }];
     }
@@ -343,6 +343,7 @@ static NSString *const kDrop = @"kDrop";
         self.topCandleInfoView.backgroundColor = lightGrayBackGroundColor;
         [self.topCandleInfoView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.mas_equalTo(self.mas_top);
+            make.right.mas_equalTo(self);
         }];
     }
     
@@ -355,6 +356,19 @@ static NSString *const kDrop = @"kDrop";
         self.topCandleInfoView.backgroundColor = [UIColor clearColor];
         [self.topCandleInfoView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.mas_equalTo(self.mas_top).offset(40);
+           
+                if (PriceCoordinateIsInRight) {
+                    
+                     if (ZX_IS_IPHONE_X&&!Portrait) {
+                         make.right.mas_equalTo(self).offset(-SafeAreaBottomMargin-VerticalCoordinatesWidth);
+                     }else{
+                         make.right.mas_equalTo(self).offset(-VerticalCoordinatesWidth);
+                     }
+                }else{
+                    if (ZX_IS_IPHONE_X&&!Portrait) {
+                        make.right.mas_equalTo(self).offset(-SafeAreaBottomMargin);
+                    }
+                }
         }];
     }
 }
@@ -373,7 +387,21 @@ static NSString *const kDrop = @"kDrop";
     [self.priceView mas_updateConstraints:^(MASConstraintMaker *make) {
         
         make.height.mas_equalTo(self.candleChartHeight);
-        
+        if (ZX_IS_IPHONE_X&&!Portrait) {
+           
+            if (PriceCoordinateIsInRight) {
+                make.left.mas_equalTo(self.klineMainView.mas_right);
+            }else{
+                make.left.mas_equalTo(SafeAreaTopMargin);
+            }
+        }else{
+            if (PriceCoordinateIsInRight) {
+                
+                make.left.mas_equalTo(self.klineMainView.mas_right);
+            }else{
+                make.left.mas_equalTo(ZXLeftMargin);
+            }
+        }
     }];
     [self.priceView updateFrameWithHeight:self.candleChartHeight];
     [self.quotaView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -399,9 +427,20 @@ static NSString *const kDrop = @"kDrop";
     self.topBorder = [CAShapeLayer layer];
     UIBezierPath *topBorderBeizer = nil;
     if (PriceCoordinateIsInRight) {
-        topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, (TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth), self.candleChartHeight)];
+        if (ZX_IS_IPHONE_X&&!Portrait) {
+            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, TopMargin, LanscapeCandleWidth, self.candleChartHeight)];
+        }else{
+            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth, self.candleChartHeight)];
+        }
+       
     }else{
-        topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, (TotalWidth-ZXLeftMargin-ZXRightMargin), self.candleChartHeight)];
+        if (ZX_IS_IPHONE_X&&!Portrait) {
+            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, TopMargin, LanscapeCandleWidth, self.candleChartHeight)];
+        }else{
+            
+            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, TotalWidth-ZXLeftMargin-ZXRightMargin, self.candleChartHeight)];
+        }
+        
     }
     self.topBorder.lineWidth = 0.5;
     self.topBorder.path = topBorderBeizer.CGPath;
@@ -415,11 +454,18 @@ static NSString *const kDrop = @"kDrop";
     self.bottomBorder = [CAShapeLayer layer];
     UIBezierPath *bottomBorderBeizer = nil;
     if (PriceCoordinateIsInRight) {
-        bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,(TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth), self.quotaChartHeight)];
+        if (ZX_IS_IPHONE_X&&!Portrait) {
+            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
+        }else{
+            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth, self.quotaChartHeight)];
+        }
     }else{
-        bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,(TotalWidth-ZXLeftMargin-ZXRightMargin), self.quotaChartHeight)];
+        if (ZX_IS_IPHONE_X&&!Portrait) {
+            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
+        }else{
+            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin, self.quotaChartHeight)];
+        }
     }
-    
     self.bottomBorder.lineWidth = 0.5;
     self.bottomBorder.path = bottomBorderBeizer.CGPath;
     self.bottomBorder.strokeColor = GrateLineColor.CGColor;
@@ -748,6 +794,10 @@ static NSString *const kDrop = @"kDrop";
         jumpViewBackgroundColor = RISECOLOR;
     }
     [self.jumpView updateJumpViewWithNewPrice:priceStr backgroundColor:jumpViewBackgroundColor precision:self.precision];
+    //没有数据的时候newpointY==Nan;
+    if (isnan(newPointY)) {
+        newPointY = 0;
+    }
     [self.jumpView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(newPointY-14/2+TopMargin));
     }];
@@ -833,7 +883,6 @@ static NSString *const kDrop = @"kDrop";
     [self.timeLineView mas_updateConstraints:^(MASConstraintMaker *make) {
         
         if (ZX_IS_IPHONE_X&&!Portrait) {
-            
             make.left.mas_equalTo(positionX+SafeAreaTopMargin);
         }else
         {
@@ -917,6 +966,7 @@ static NSString *const kDrop = @"kDrop";
     }else{
         [self.candleDetailView jointWithNewAttributedString:MAResultString];
     }
+    
 }
 - (void)longpressPointCandleModel:(KlineModel *)klineModel longPressPoint:(CGPoint)point
 {
