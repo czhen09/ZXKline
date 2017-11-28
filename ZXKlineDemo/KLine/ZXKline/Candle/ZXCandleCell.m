@@ -206,6 +206,7 @@
         _timeLabel.text = self.model.timeStr;
         _timeLabel.backgroundColor = BackgroundColor;
         _timeLabel.font = [UIFont systemFontOfSize:9];
+        _timeLabel.userInteractionEnabled = YES;
         _timeLabel.textColor = NormalTextColor;
         [self addSubview:_timeLabel];
     }

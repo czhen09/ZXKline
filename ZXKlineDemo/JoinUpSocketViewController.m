@@ -44,8 +44,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //销毁定时器
-    [[ZXSocketDataReformer sharedInstance] shouldToInvalidTimer];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -180,9 +178,8 @@
     
     //如若有socket实时绘制的需求，需要实现下面的方法
     //socket
-    //创建定时器,并设置代理接收
+    //定时器不再沿用
     [ZXSocketDataReformer sharedInstance].delegate = self;
-    [[ZXSocketDataReformer sharedInstance] shouldToCreatTimerWithDataArray:self.dataArray];
     
 }
 

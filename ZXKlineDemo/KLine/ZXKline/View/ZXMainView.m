@@ -23,12 +23,12 @@
 /**
  *  K线图每次缩放界限
  */
-#define Y_StockChartScaleBound 0.03
+#define Y_StockChartScaleBound 0.0
 
 /**
  *  K线的缩放因子
  */
-#define Y_StockChartScaleFactor 0.03
+#define Y_StockChartScaleFactor 0.1
 
 /**
  *最小缩放值
@@ -320,6 +320,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     CGFloat difValue = sender.scale - oldScale;
 //    NSLog(@"difValue=====%f",difValue);
 //    NSLog(@"oldScale=====%f",oldScale);
+    
+    if ((self.candleWidth==scale_MaxValue&&difValue>0)||(self.candleWidth==scale_MinValue&&difValue<0)) {
+        return;
+    }
+    
     if (ABS(difValue)>Y_StockChartScaleBound) {
         
         CGFloat oldKlineWidth = self.candleWidth;
@@ -844,6 +849,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (self.kLineModelArr.count<=self.needDrawKlineCount) {
+        return;
+    }
     if (!self.isGestureScroll) {
         
         [self hideCrossCurve];

@@ -18,8 +18,6 @@
 
 @interface ZXSocketDataReformer : NSObject
 + (instancetype)sharedInstance;
-- (void)shouldToCreatTimerWithDataArray:(NSArray *)dataArray;
 - (void)bulidNewKlineModelWithNewPrice:(double)newPrice timestamp:(NSInteger)timestamp volumn:(NSNumber *)volumn dataArray:(NSMutableArray<KlineModel *> *)dataArray isFakeData:(BOOL)isFakeData;
-- (void)shouldToInvalidTimer;
 @property (nonatomic,weak) id<ZXSocketDataReformerDelegate> delegate;
 @end
