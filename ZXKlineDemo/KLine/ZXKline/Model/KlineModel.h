@@ -67,7 +67,7 @@
 //MACD
 //这里由于是使用懒加载的，所以必须声明为对象类型才能保存在模型中
 //previousKlineModel
-@property (nonatomic,strong) KlineModel *previousKlineModel;
+@property (nonatomic,weak) KlineModel *previousKlineModel;
 @property (nonatomic,strong) NSNumber *EMA12;
 @property (nonatomic,strong) NSNumber *EMA26;
 @property (nonatomic,strong) NSNumber *DIF;
