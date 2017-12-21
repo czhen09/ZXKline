@@ -1048,7 +1048,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //在 原来的基础上，下部留下5间距；上部留下20间距；重新计算极值
     self.minAssert = self.minAssert - CandleBottomMargin/self.heightPerPoint;
     self.maxAssert = self.maxAssert + CandleTopMargin/self.heightPerPoint;
-    self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
+    if (self.maxAssert==self.minAssert) {
+        self.heightPerPoint= 1;
+    }else{
+        self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
+    }
     self.timeLineLayer = [[ZXTimeLineLayer alloc] initCurrentNeedDrawDataArr:self.needDrawKlineArr rowHeight:self.candleWidth minValue:self.minAssert heightPerpoint:self.heightPerPoint totalHeight:self.subViewHeight candleChartHeight:self.candleChartHeight];
     [self.tableView.layer addSublayer:self.timeLineLayer];
     [self delegateToReloadPriceView];
@@ -1067,6 +1071,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             model.closePrice = firstModel.openPrice;
             model.highestPrice = firstModel.openPrice;
             model.lowestPrice = firstModel.openPrice;
+            model.volumn = @(0);
             model.isPlaceHolder = YES;
             [self.kLineModelArr insertObject:model atIndex:0];
         }
@@ -1281,9 +1286,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //在 原来的基础上，下部留下5间距；上部留下20间距；重新计算极值
     self.minAssert = self.minAssert - CandleBottomMargin/self.heightPerPoint;
     self.maxAssert = self.maxAssert + CandleTopMargin/self.heightPerPoint;
-    self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
-    
-    
+    if (self.maxAssert==self.minAssert) {
+        self.heightPerPoint= 1;
+    }else{
+        self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
+    }
     //优化计算：对比计算self.kLineModelArr和self.needDrawKlineArr肯定后者更优，但是效果是一样的，在model的传输中，修改self.needDrawKlineArr中的model的时候，self.kLineModelArr数组元素中model也会跟着改变
     //经验证，地址是一个，都是指向同一个对象
     //[self calculatePositionWithOrignalArr:self.kLineModelArr];

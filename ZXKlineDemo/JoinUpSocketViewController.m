@@ -154,7 +154,10 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"kData" ofType:@"plist"];
     NSArray *kDataArr = [NSArray arrayWithContentsOfFile:path];
     
-    
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (int i = 0; i<10; i++) {
+        [tempArray addObject:kDataArr[i]];
+    }
     //将请求到的数据数组传递过去，并且精度也是需要你自己传;
     /*
      数组中数据格式:@[@"时间戳,收盘价,开盘价,最高价,最低价,成交量",
@@ -167,7 +170,7 @@
      修改数据格式→  ↓↓↓↓↓↓↓点它↓↓↓↓↓↓↓↓↓  ←
      */
     //数据处理
-    NSArray *transformedDataArray =  [[ZXDataReformer sharedInstance] transformDataWithOriginalDataArray:kDataArr currentRequestType:@"M1"];
+    NSArray *transformedDataArray =  [[ZXDataReformer sharedInstance] transformDataWithOriginalDataArray:tempArray currentRequestType:@"M1"];
     [self.dataArray addObjectsFromArray:transformedDataArray];
     
     
