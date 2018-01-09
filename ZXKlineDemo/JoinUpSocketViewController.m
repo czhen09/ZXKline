@@ -155,7 +155,7 @@
     NSArray *kDataArr = [NSArray arrayWithContentsOfFile:path];
     
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i<3; i++) {
         [tempArray addObject:kDataArr[i]];
     }
     //将请求到的数据数组传递过去，并且精度也是需要你自己传;

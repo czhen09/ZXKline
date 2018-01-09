@@ -1062,9 +1062,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 - (void)drawCandle
 {
     if (self.kLineModelArr.count<self.needDrawKlineCount) {
-
+        CGFloat count = self.needDrawKlineCount-self.kLineModelArr.count;
         KlineModel *firstModel = self.kLineModelArr.firstObject;
-        for (int i = 0; i<self.needDrawKlineCount-self.kLineModelArr.count; i++) {
+        for (int i = 0; i<count; i++) {
             
             KlineModel *model = [KlineModel new];
             model.openPrice = firstModel.openPrice;
