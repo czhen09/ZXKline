@@ -150,14 +150,24 @@
 - (void)configureData
 {
     
-    //数据获取
+    //=数据获取
     NSString *path = [[NSBundle mainBundle] pathForResource:@"kData" ofType:@"plist"];
     NSArray *kDataArr = [NSArray arrayWithContentsOfFile:path];
     
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (int i = 0; i<3; i++) {
+    for (int i = 0; i<kDataArr.count; i++) {
         [tempArray addObject:kDataArr[i]];
     }
+    
+    
+    
+    
+    //==精度计算
+    int precision = [self calculatePrecisionWithOriginalDataArray:kDataArr];
+    
+    
+    
+    
     //将请求到的数据数组传递过去，并且精度也是需要你自己传;
     /*
      数组中数据格式:@[@"时间戳,收盘价,开盘价,最高价,最低价,成交量",
@@ -169,15 +179,13 @@
     /*如果的数据格式和此demo中不同，那么你需要点进去看看，并且修改响应的取值为你的数据格式;
      修改数据格式→  ↓↓↓↓↓↓↓点它↓↓↓↓↓↓↓↓↓  ←
      */
-    //数据处理
+    //===数据处理
     NSArray *transformedDataArray =  [[ZXDataReformer sharedInstance] transformDataWithOriginalDataArray:tempArray currentRequestType:@"M1"];
     [self.dataArray addObjectsFromArray:transformedDataArray];
     
     
-    
-    
-    //绘制k线图
-    [self.assenblyView drawHistoryCandleWithDataArr:self.dataArray precision:5 stackName:@"股票名" needDrawQuota:self.currentDrawQuotaName];
+    //====绘制k线图
+    [self.assenblyView drawHistoryCandleWithDataArr:self.dataArray precision:precision stackName:@"股票名" needDrawQuota:self.currentDrawQuotaName];
     
     //如若有socket实时绘制的需求，需要实现下面的方法
     //socket
@@ -185,7 +193,25 @@
     [ZXSocketDataReformer sharedInstance].delegate = self;
     
 }
-
+#pragma mark -  计算精度
+- (int)calculatePrecisionWithOriginalDataArray:(NSArray *)dataArray
+{
+    NSString *dataString = dataArray.lastObject;
+    NSArray *strArr = [dataString componentsSeparatedByString:@","];
+    //取的最高值
+    NSInteger maxPrecision = [self calculatePrecisionWithPrice:strArr[3]];
+    return maxPrecision;
+}
+- (int)calculatePrecisionWithPrice:(NSString *)price
+{
+    //计算精度
+    NSInteger dig = 0;
+    if ([price containsString:@"."]) {
+        NSArray *com = [price componentsSeparatedByString:@"."];
+        dig = ((NSString *)com.lastObject).length;
+    }
+    return dig;
+}
 #pragma mark - AssemblyViewDelegate
 - (void)tapActionActOnQuotaArea
 {

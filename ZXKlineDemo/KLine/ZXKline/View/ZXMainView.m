@@ -802,7 +802,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     cell.candyChartHeight = self.candleChartHeight;
     cell.quotaChartHeight = self.quotaChartHeight;
     cell.middleBlankSpace = self.middleBlankSpace;
-    cell.layer.backgroundColor = BackgroundColor.CGColor;
     cell.isDrawKline = self.isDrawKline;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -1732,7 +1731,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         {
             self.candleWidth = [candleWidth floatValue];
         }
-        _tableView.backgroundColor = BackgroundColor;
+        _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.rowHeight = self.candleWidth;
         _tableView.tableFooterView = [UIView new];

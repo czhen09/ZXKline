@@ -36,6 +36,9 @@
 @implementation ZXCandleCell
 - (void)drawRect:(CGRect)rect
 {
+    //cell透明设置layer透明
+    self.layer.backgroundColor = [UIColor clearColor].CGColor;
+    self.backgroundColor = [UIColor clearColor];
     [super drawRect:rect];
     [self addTimeLabel];
     
@@ -56,7 +59,12 @@
         
         make.height.mas_equalTo(TimeViewHeight);
         make.width.mas_equalTo(height);
-        make.top.mas_equalTo(self).offset((height-TimeViewHeight)/2+self.frame.size.height/2);
+        //label和cell左对齐设置
+//        make.top.mas_equalTo(self).offset((height-TimeViewHeight)/2+self.frame.size.height/2);
+        
+        
+        //label和cell居中对齐设置
+        make.centerY.mas_equalTo(self.mas_centerY);
         make.left.mas_equalTo(self).offset(leftSpace);
     }];
     self.timeLabel.transform = CGAffineTransformMakeRotation(M_PI/2);
@@ -173,7 +181,7 @@
         self.bottomLayer.path = bottomLine.CGPath;
         self.bottomLayer.strokeColor = self.model.strokeColor.CGColor;
         [self.layer addSublayer:self.bottomLayer];
-        self.layer.backgroundColor = BackgroundColor.CGColor;
+        
     }
 
 }
@@ -208,6 +216,7 @@
         _timeLabel.font = [UIFont systemFontOfSize:9];
         _timeLabel.userInteractionEnabled = YES;
         _timeLabel.textColor = NormalTextColor;
+        _timeLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_timeLabel];
     }
     return _timeLabel;
