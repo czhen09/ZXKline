@@ -163,7 +163,7 @@
     
     
     //==精度计算
-    int precision = [self calculatePrecisionWithOriginalDataArray:kDataArr];
+    NSInteger precision = [self calculatePrecisionWithOriginalDataArray:kDataArr];
     
     
     
@@ -184,8 +184,10 @@
     [self.dataArray addObjectsFromArray:transformedDataArray];
     
     
+    
+    
     //====绘制k线图
-    [self.assenblyView drawHistoryCandleWithDataArr:self.dataArray precision:precision stackName:@"股票名" needDrawQuota:self.currentDrawQuotaName];
+    [self.assenblyView drawHistoryCandleWithDataArr:self.dataArray precision:(int)precision stackName:@"股票名" needDrawQuota:self.currentDrawQuotaName];
     
     //如若有socket实时绘制的需求，需要实现下面的方法
     //socket
@@ -194,7 +196,7 @@
     
 }
 #pragma mark -  计算精度
-- (int)calculatePrecisionWithOriginalDataArray:(NSArray *)dataArray
+- (NSInteger)calculatePrecisionWithOriginalDataArray:(NSArray *)dataArray
 {
     NSString *dataString = dataArray.lastObject;
     NSArray *strArr = [dataString componentsSeparatedByString:@","];
@@ -202,7 +204,7 @@
     NSInteger maxPrecision = [self calculatePrecisionWithPrice:strArr[3]];
     return maxPrecision;
 }
-- (int)calculatePrecisionWithPrice:(NSString *)price
+- (NSInteger)calculatePrecisionWithPrice:(NSString *)price
 {
     //计算精度
     NSInteger dig = 0;

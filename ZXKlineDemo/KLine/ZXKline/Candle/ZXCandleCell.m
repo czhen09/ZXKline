@@ -181,9 +181,7 @@
         self.bottomLayer.path = bottomLine.CGPath;
         self.bottomLayer.strokeColor = self.model.strokeColor.CGColor;
         [self.layer addSublayer:self.bottomLayer];
-        
     }
-
 }
 - (CAShapeLayer *)drawDottedLineWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint
 {
