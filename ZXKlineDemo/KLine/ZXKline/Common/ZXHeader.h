@@ -125,11 +125,13 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 #define TimeViewHeight 21.0
 
 #define VerticalCoordinatesWidth (PriceCoordinateIsInRight?46:52)
+#define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
 /**
  * 适用于横竖屏的时候，宽度总是小值，高度总是大值
  */
-#define KSCREEN_WIDTH    MIN([UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height)
-#define KSCREEN_HEIGHT   MAX([UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height)
+#define KSCREEN_WIDTH    MIN(SCREEN_WIDTH,SCREEN_HEIGHT)
+#define KSCREEN_HEIGHT   MAX(SCREEN_WIDTH,SCREEN_HEIGHT)
 /**
  * 横竖屏方向
  */

@@ -767,7 +767,7 @@ static NSString *const kDrop = @"kDrop";
 
 - (NSString *)getStringWithDouble:(double)doubleValue
 {
-    return [NSString stringWithFormat:@"%.6f",doubleValue];
+    return [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%.*f",self.precision,doubleValue]];
 }
 
 - (void)updateJumpViewWithNewKlineModel:(KlineModel *)newKlineModel
@@ -785,7 +785,7 @@ static NSString *const kDrop = @"kDrop";
         self.jumpView.hidden = YES;
     }
     CGFloat newPointY = self.candleChartHeight - (newPrice-self.klineMainView.minAssert)*self.klineMainView.heightPerPoint;
-    NSString *priceStr = [NSString stringWithFormat:@"%.6f",newPrice];
+    NSString *priceStr = [NSString stringWithFormat:@"%.*f",self.precision,newPrice];
     UIColor *jumpViewBackgroundColor = nil;
     if (newKlineModel.openPrice>newKlineModel.closePrice) {
         

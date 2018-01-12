@@ -102,12 +102,19 @@
         self.vertivalBottomDottedLayer.strokeColor = GrateLineColor.CGColor;
         [self.layer addSublayer:self.vertivalBottomDottedLayer];
         
-        
-        
-        
-        
+        //赋值
         self.timeLabel.text = self.model.timeStr;
-        self.timeLabel.hidden = NO;
+        
+        
+        //对于超出屏幕宽度范围的timelabel也需要隐藏
+        self.timeLabel.text = self.model.timeStr;
+        CGRect rectToSelf = [self.timeLabel convertRect:self.timeLabel.frame fromView:self];
+        CGRect rectToWindow = [self.timeLabel convertRect:rectToSelf toView:[UIApplication sharedApplication].keyWindow];
+        if (rectToWindow.origin.x<0||rectToWindow.origin.x+rectToWindow.size.width>SCREEN_WIDTH) {
+            self.timeLabel.hidden = YES;
+        }else{
+            self.timeLabel.hidden = NO;
+        }
     }else{
         
         [self.vertivalTopDottedLayer removeFromSuperlayer];

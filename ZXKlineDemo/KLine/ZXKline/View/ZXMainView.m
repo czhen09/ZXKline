@@ -1618,7 +1618,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
     if (positionY<=self.candleChartHeight+TimeViewHeight) {
         currentPositionPrice = (self.minAssert + ((self.candleChartHeight-positionY)/self.heightPerPoint));
-        currentPositionPriceStr = [NSString stringWithFormat:@"%.6f",currentPositionPrice];
+        currentPositionPriceStr = [NSString stringWithFormat:@"%.*f",self.precision,currentPositionPrice];
         
         if ([self.delegate respondsToSelector:@selector(shouldToReloadCurrentPositionPriceJumpViewWithPositonY:price:)]) {
             
@@ -1629,7 +1629,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     {
       
         currentPositionPrice = (self.quotaMinAssert + ((self.subViewHeight-positionY)/self.quotaHeightPerPoint));
-        currentPositionPriceStr = [NSString stringWithFormat:@"%.6f",currentPositionPrice];
+        currentPositionPriceStr = [NSString stringWithFormat:@"%.*f",self.precision,currentPositionPrice];
         
         if ([self.delegate respondsToSelector:@selector(shouldToReloadCurrentPositionPriceJumpViewWithPositonY:price:)]) {
             
