@@ -87,7 +87,7 @@
     }];
     
     self.path = self.beizerPath.CGPath;
-    self.lineWidth = 0.6;
+    self.lineWidth = 1;
     self.strokeColor = self.lineColor.CGColor;
     self.fillColor = [UIColor clearColor].CGColor;
 

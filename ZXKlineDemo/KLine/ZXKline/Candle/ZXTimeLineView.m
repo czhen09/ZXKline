@@ -114,7 +114,7 @@
 {
     if (!_timeLabel) {
         _timeLabel = [[UILabel alloc] init];
-        _timeLabel.font = [UIFont systemFontOfSize:9];
+        _timeLabel.font = [UIFont systemFontOfSize:FontSize];
         _timeLabel.textColor = [UIColor whiteColor];
         _timeLabel.backgroundColor = CoordinateDisPlayLabelColor;
     }

@@ -53,6 +53,10 @@
 
 @class KlineModel;
 @interface ZXAssemblyView : UIView
+/*
+ * @param drawJustKline 是否仅仅绘制k线,忽略指标绘制;
+ */
+- (instancetype)initWithDrawJustKline:(BOOL)drawJustKline;
 - (instancetype)init;
 /**
  * @brief 传入历史数据绘制kline
@@ -104,6 +108,17 @@
  * @param MA1Day  天数
  */
 - (void)reDrawMAWithMA1Day:(NSInteger)MA1Day MA2:(NSInteger)MA2Day MA3:(NSInteger)MA3Day;
+/*
+ * 止盈止损线
+ */
+- (void)updateStopHoldLineWithStopProfitPrice:(double)stopProfitPrice stopLossPrice:(double)stopLossPrice;
+- (void)hideStopHoldLine;
+
+/*
+ * 止盈止损+委托价格线
+ */
+- (void)updateStopHoldLineWithStopProfitPrice:(double)stopProfitPrice stopLossPrice:(double)stopLossPrice delegatePrice:(double)delegatePrice;
+- (void)hideAllReferenceLine;
 
 @property (nonatomic,weak) id<AssemblyViewDelegate> delegate;
 @end

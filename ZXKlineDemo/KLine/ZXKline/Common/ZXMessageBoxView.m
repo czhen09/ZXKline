@@ -64,7 +64,7 @@
         NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         paragraphStyle.lineBreakMode = NSLineBreakByClipping;
         paragraphStyle.alignment = NSTextAlignmentLeft;
-        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:titles[i] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:9],NSParagraphStyleAttributeName:paragraphStyle}];
+        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:titles[i] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FontSize],NSParagraphStyleAttributeName:paragraphStyle}];
         if (KSCREEN_WIDTH==320) {
             
             [attString drawInRect:CGRectMake(10+i%2*(width+padding), 10+i/2*(height+padding), width, height)];

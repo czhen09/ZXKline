@@ -1154,7 +1154,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 {
     switch (topChartContentType) {
         case TopChartContentTypeTineLine:
-            self.isDrawKline = NO;
+            if (!DrawJustKline) {
+                self.isDrawKline = NO;
+            }
             break;
         case  TopChartContentTypeWithCandle:
             self.isDrawKline = YES;
@@ -1162,7 +1164,10 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         default:
             break;
     }
-    [self drawTopKline];
+    if (!DrawJustKline) {
+        [self drawTopKline];
+    }
+    
 }
 
 
@@ -1851,7 +1856,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
     if (self.isCandleFullScreen) {
         
-        return ([UIScreen mainScreen].bounds.size.height-TimeViewHeight);
+        return ([UIScreen mainScreen].bounds.size.height-TimeViewHeight-TopMargin);
         
     }else{
         return CandleChartHeight;
@@ -1868,6 +1873,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (BOOL)isDrawMALayer
 {
+    if (DrawJustKline) {
+        return NO;
+    }
     return YES;
 }
 - (ZXRefresh *)refreshView

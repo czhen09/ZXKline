@@ -20,8 +20,6 @@
 static NSString *const kRise = @"kRise";
 static NSString *const kDrop = @"kDrop";
 
-#define RISECOLOR [UIColor colorWithRed:107.0/255.0 green:165.0/255.0 blue:131.0/255.0 alpha:1]
-#define DROPCOLOR [UIColor redColor]
 @interface ZXAssemblyView ()<ZXMainViewDelegate,ZXAccessoryDelegate>
 @property (nonatomic,strong) ZXMainView *klineMainView;
 /**
@@ -124,15 +122,24 @@ static NSString *const kDrop = @"kDrop";
 
 
 @property (nonatomic,strong) ZXTopCandleInfoView *topCandleInfoView;
+
+//止盈止损委托价格线
+@property (nonatomic,strong) ZXJumpView  *stopProfitLineView;
+@property (nonatomic,strong) ZXJumpView  *stopLossLineView;
+@property (nonatomic,strong) ZXJumpView  *delegateLineView;
+@property (nonatomic,assign) double stopProfitPrice;
+@property (nonatomic,assign) double stopLossPrice;
+@property (nonatomic,assign) double delegatePrice;
+@property (nonatomic,assign) BOOL isShowingStopHoldLine;
+@property (nonatomic,assign) BOOL isShowingAllReferenceLine;
 @end
 
 @implementation ZXAssemblyView
-
-- (instancetype)init
+- (instancetype)initWithDrawJustKline:(BOOL)drawJustKline
 {
     self = [super init];
     if (self) {
-        
+        [[NSUserDefaults standardUserDefaults] setBool:drawJustKline forKey:kDrawJustKline];
         self.backgroundColor = BackgroundColor;
         self.isCandleFullScreen = NO;
         [self addSubviews];
@@ -143,8 +150,14 @@ static NSString *const kDrop = @"kDrop";
     }
     return self;
 }
-
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self = [self initWithDrawJustKline:NO];
+    }
+    return self;
+}
 #pragma mark - 旋转事件
 - (void)statusBarOrientationChange:(NSNotification *)notification
 {
@@ -179,12 +192,15 @@ static NSString *const kDrop = @"kDrop";
     [self addSubview:self.priceMaskView];
     [self addSubview:self.priceView];
     [self addSubview:self.candleDetailView];
-    [self addSubview:self.quotaDetailView];
-    [self addSubview:self.quotaView];
+    if (!DrawJustKline) {
+        [self addSubview:self.quotaDetailView];
+        [self addSubview:self.quotaView];
+        [self addSubview:self.accessoryView];
+        [self addSubview:self.rotateBtn];
+    }
     [self addSubview:self.jumpView];
     [self addSubview:self.timeLineView];
-    [self addSubview:self.accessoryView];
-    [self addSubview:self.rotateBtn];
+    //
     if (IsDisplayCandelInfoInTop) {
         [self addSubview:self.topCandleInfoView];
     }else{
@@ -240,13 +256,16 @@ static NSString *const kDrop = @"kDrop";
         
     }];
     [self.priceView updateFrameWithHeight:self.candleChartHeight];
-    [self.quotaView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight+TopMargin);
-        make.left.mas_equalTo(self.priceView.mas_left);
-        make.width.mas_equalTo(50);
-        make.height.mas_equalTo(self.quotaChartHeight);
-    }];
-    [self.quotaView updateFrameWithHeight:(self.quotaChartHeight)];
+    if (!DrawJustKline) {
+        [self.quotaView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight+TopMargin);
+            make.left.mas_equalTo(self.priceView.mas_left);
+            make.width.mas_equalTo(50);
+            make.height.mas_equalTo(self.quotaChartHeight);
+        }];
+        [self.quotaView updateFrameWithHeight:(self.quotaChartHeight)];
+    }
+    
 
     [self.candleDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.klineMainView);
@@ -261,22 +280,25 @@ static NSString *const kDrop = @"kDrop";
         make.height.mas_equalTo(14);
         
     }];
-    [self.quotaDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.mas_equalTo(self.klineMainView).offset(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight);
-        if (PriceCoordinateIsInRight) {
+    if (!DrawJustKline) {
+        [self.quotaDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
             
-            make.left.mas_equalTo(self.klineMainView).offset(10);
+            make.top.mas_equalTo(self.klineMainView).offset(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight);
+            if (PriceCoordinateIsInRight) {
+                
+                make.left.mas_equalTo(self.klineMainView).offset(10);
+                
+            }else
+            {
+                
+                make.left.mas_equalTo(self.candleDetailView.mas_left);
+            }
             
-        }else
-        {
-            
-            make.left.mas_equalTo(self.candleDetailView.mas_left);
-        }
-
-        make.right.mas_equalTo(self.klineMainView);
-        make.height.mas_equalTo(14);
-    }];
+            make.right.mas_equalTo(self.klineMainView);
+            make.height.mas_equalTo(14);
+        }];
+    }
+   
     [self.jumpView mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.top.mas_equalTo(100);
@@ -302,38 +324,39 @@ static NSString *const kDrop = @"kDrop";
         make.width.mas_equalTo(1);
         make.left.mas_equalTo(20);
     }];
-    [self.accessoryView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        if (PriceCoordinateIsInRight) {
-            make.right.mas_equalTo(self.priceView.mas_left).offset(-4);
-        }else
-        {
-            make.right.mas_equalTo(self.klineMainView).offset(-2);
-        }
-        make.top.mas_equalTo(self).offset(self.candleChartHeight-26+TopMargin);
-        make.width.mas_equalTo(26*3+20);
-        make.height.mas_equalTo(26);
-    }];
-    [self.rotateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (PriceCoordinateIsInRight) {
-        make.right.mas_equalTo(self.priceView.mas_left).offset(-4);
-        }else
-        {
-            make.right.mas_equalTo(self.klineMainView).offset(-2);
-        }
-        make.bottom.mas_equalTo(self).offset(-BottomMargin);
-        
-        make.width.height.mas_equalTo(26);
-    }];
+    if (!DrawJustKline) {
+        [self.accessoryView mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            if (PriceCoordinateIsInRight) {
+                make.right.mas_equalTo(self.priceView.mas_left).offset(-4);
+            }else
+            {
+                make.right.mas_equalTo(self.klineMainView).offset(-2);
+            }
+            make.top.mas_equalTo(self).offset(self.candleChartHeight-26+TopMargin);
+            make.width.mas_equalTo(26*3+20);
+            make.height.mas_equalTo(26);
+        }];
+        [self.rotateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            if (PriceCoordinateIsInRight) {
+                make.right.mas_equalTo(self.priceView.mas_left).offset(-4);
+            }else
+            {
+                make.right.mas_equalTo(self.klineMainView).offset(-2);
+            }
+            make.bottom.mas_equalTo(self).offset(-BottomMargin);
+            
+            make.width.height.mas_equalTo(26);
+        }];
+    }
     if (IsDisplayCandelInfoInTop) {
         [self.topCandleInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.mas_equalTo(self.mas_top);
             make.right.mas_equalTo(self);
-            make.width.mas_equalTo([UIScreen mainScreen].bounds.size.width);
+            make.width.mas_equalTo(KSCREEN_WIDTH);
             make.height.mas_equalTo(40);
         }];
     }
-   
 }
 - (void)updateConstrainsForPortrait
 {
@@ -355,8 +378,7 @@ static NSString *const kDrop = @"kDrop";
     if (IsDisplayCandelInfoInTop) {
         self.topCandleInfoView.backgroundColor = [UIColor clearColor];
         [self.topCandleInfoView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(self.mas_top).offset(40);
-           
+            make.bottom.mas_equalTo(self.mas_top).offset(40+TopMargin);
                 if (PriceCoordinateIsInRight) {
                     
                      if (ZX_IS_IPHONE_X&&!Portrait) {
@@ -381,6 +403,7 @@ static NSString *const kDrop = @"kDrop";
             
             make.left.mas_equalTo(self).offset(ZXLeftMargin);
         }
+        make.top.mas_equalTo(self).offset(TopMargin);
         make.width.mas_equalTo(self.klineMainViewWidth);
         make.height.mas_equalTo(self.klineMainViewHeight);
     }];
@@ -404,21 +427,28 @@ static NSString *const kDrop = @"kDrop";
         }
     }];
     [self.priceView updateFrameWithHeight:self.candleChartHeight];
-    [self.quotaView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight+TopMargin);
-        make.height.mas_equalTo(self.quotaChartHeight);
-    }];
-    [self.quotaView updateFrameWithHeight:self.quotaChartHeight];
-    [self.quotaDetailView mas_updateConstraints:^(MASConstraintMaker *make) {
+    if (!DrawJustKline) {
+        [self.quotaView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight+TopMargin);
+            make.height.mas_equalTo(self.quotaChartHeight);
+        }];
+        [self.quotaView updateFrameWithHeight:self.quotaChartHeight];
+    }
+    if (!DrawJustKline) {
+        [self.quotaDetailView mas_updateConstraints:^(MASConstraintMaker *make) {
+            
+            make.top.mas_equalTo(self.klineMainView).offset(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight);
+        }];
+        
+        [self.accessoryView mas_updateConstraints:^(MASConstraintMaker *make) {
+            if (self.isCandleFullScreen) {
+                make.top.mas_equalTo(self).offset(self.candleChartHeight);
+            }else{
+                make.top.mas_equalTo(self).offset(self.candleChartHeight-31+TopMargin);
+            }
+        }];
 
-        make.top.mas_equalTo(self.klineMainView).offset(self.candleChartHeight+self.middleBlankSpace+TimeViewHeight);
-    }];
-
-    [self.accessoryView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self).offset(self.candleChartHeight-26);
-    }];
-
-    
+    }
 }
 - (void)drawBorder
 {
@@ -442,44 +472,48 @@ static NSString *const kDrop = @"kDrop";
         }
         
     }
-    self.topBorder.lineWidth = 0.5;
+    self.topBorder.lineWidth = 0.2;
     self.topBorder.path = topBorderBeizer.CGPath;
     self.topBorder.strokeColor = GrateLineColor.CGColor;
     self.topBorder.fillColor = [UIColor clearColor].CGColor;
     [self.layer addSublayer:self.topBorder];
     
-    
-    [self.bottomBorder removeFromSuperlayer];
-    self.bottomBorder = nil;
-    self.bottomBorder = [CAShapeLayer layer];
-    UIBezierPath *bottomBorderBeizer = nil;
-    if (PriceCoordinateIsInRight) {
-        if (ZX_IS_IPHONE_X&&!Portrait) {
-            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
+    if (!DrawJustKline) {
+        [self.bottomBorder removeFromSuperlayer];
+        self.bottomBorder = nil;
+        self.bottomBorder = [CAShapeLayer layer];
+        UIBezierPath *bottomBorderBeizer = nil;
+        if (PriceCoordinateIsInRight) {
+            if (ZX_IS_IPHONE_X&&!Portrait) {
+                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
+            }else{
+                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth, self.quotaChartHeight)];
+            }
         }else{
-            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth, self.quotaChartHeight)];
+            if (ZX_IS_IPHONE_X&&!Portrait) {
+                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
+            }else{
+                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin, self.quotaChartHeight)];
+            }
         }
-    }else{
-        if (ZX_IS_IPHONE_X&&!Portrait) {
-            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
-        }else{
-            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin, self.quotaChartHeight)];
-        }
+        self.bottomBorder.lineWidth = 0.2;
+        self.bottomBorder.path = bottomBorderBeizer.CGPath;
+        self.bottomBorder.strokeColor = GrateLineColor.CGColor;
+        self.bottomBorder.fillColor = [UIColor clearColor].CGColor;
+        [self.layer addSublayer:self.bottomBorder];
     }
-    self.bottomBorder.lineWidth = 0.5;
-    self.bottomBorder.path = bottomBorderBeizer.CGPath;
-    self.bottomBorder.strokeColor = GrateLineColor.CGColor;
-    self.bottomBorder.fillColor = [UIColor clearColor].CGColor;
-    [self.layer addSublayer:self.bottomBorder];
+    
 }
 #pragma mark - PublicMethods_指标相关
 - (void)drawPresetQuotaWithQuotaName:(PresetQuotaName)presetQuotaName
 {
+    if (!DrawJustKline) {
+        self.presetQuotaName = presetQuotaName;
+        
+        NSArray *currentDrawKlineModelArr = [self.klineMainView getCurrentDrawKlineModelArr];
+        [self drawPresetQuotaWithQuotaName:presetQuotaName currentDrawKlineModelArr:currentDrawKlineModelArr];
+    }
     
-    self.presetQuotaName = presetQuotaName;
-    
-    NSArray *currentDrawKlineModelArr = [self.klineMainView getCurrentDrawKlineModelArr];
-    [self drawPresetQuotaWithQuotaName:presetQuotaName currentDrawKlineModelArr:currentDrawKlineModelArr];
 }
 
 - (void)drawPresetQuotaWithQuotaName:(PresetQuotaName)presetQuotaName     currentDrawKlineModelArr:(NSArray *)currentDrawKlineModelArr
@@ -632,7 +666,7 @@ static NSString *const kDrop = @"kDrop";
     
     //价格折线
     NSArray *synthsisArr = @[openDataArr,closeDataArr,highDataArr,lowDataArr];
-    [self drawQuotaWithType:QuotaTypeSynthsis dataArr:synthsisArr maxValue:maxValue minValue:minValue quotaName:@"BOLL" subName:@"NOUSE" lineColor:[UIColor blueColor] columnColorArr:nil columnWidthType:0];
+    [self drawQuotaWithType:QuotaTypeSynthsis dataArr:synthsisArr maxValue:maxValue minValue:minValue quotaName:@"BOLL" subName:@"NOUSE" lineColor:BlueColor columnColorArr:nil columnWidthType:0];
     
     //
     [self drawQuotaWithType:QuotaTypeLine dataArr:BOOL_UPataArr maxValue:maxValue minValue:minValue quotaName:@"BOLL" subName:@"UPPER" lineColor:QuotaBOOLUPCOLOR columnColorArr:nil columnWidthType:0];
@@ -713,17 +747,20 @@ static NSString *const kDrop = @"kDrop";
         [self.quotaDetailView reloadQuotaDetailViewWithQuotaDetailString:quotaName];
     }
     self.currentQuotaName = quotaName;
-    [self.quotaView reloadPriceLabelTextWithPriceArr:@[@(maxValue),@(minValue)] precision:self.precision];
-    
-    if (minValue<0&&maxValue>0) {
+    if (!DrawJustKline) {
+        [self.quotaView reloadPriceLabelTextWithPriceArr:@[@(maxValue),@(minValue)] precision:self.precision];
         
-        double quotaHeightPerPoint = (self.quotaChartHeight)/(maxValue - minValue);
-        double zeroValue = ABS(minValue*quotaHeightPerPoint);
-
-        [self.quotaView refreshCurrentPositionPriceLabelPositonY:zeroValue];
-    }else{
-        [self.quotaView hideZeroLabel:YES];
+        if (minValue<0&&maxValue>0) {
+            
+            double quotaHeightPerPoint = (self.quotaChartHeight)/(maxValue - minValue);
+            double zeroValue = ABS(minValue*quotaHeightPerPoint);
+            
+            [self.quotaView refreshCurrentPositionPriceLabelPositonY:zeroValue];
+        }else{
+            [self.quotaView hideZeroLabel:YES];
+        }
     }
+    
     
 }
 #pragma mark - PublicMethods_重绘MA  
@@ -786,14 +823,7 @@ static NSString *const kDrop = @"kDrop";
     }
     CGFloat newPointY = self.candleChartHeight - (newPrice-self.klineMainView.minAssert)*self.klineMainView.heightPerPoint;
     NSString *priceStr = [NSString stringWithFormat:@"%.*f",self.precision,newPrice];
-    UIColor *jumpViewBackgroundColor = nil;
-    if (newKlineModel.openPrice>newKlineModel.closePrice) {
-        
-        jumpViewBackgroundColor = DROPCOLOR;
-    }else{
-        jumpViewBackgroundColor = RISECOLOR;
-    }
-    [self.jumpView updateJumpViewWithNewPrice:priceStr backgroundColor:jumpViewBackgroundColor precision:self.precision];
+    [self.jumpView updateJumpViewWithNewPrice:priceStr backgroundColor:nil];
     //没有数据的时候newpointY==Nan;
     if (isnan(newPointY)) {
         newPointY = 0;
@@ -832,6 +862,87 @@ static NSString *const kDrop = @"kDrop";
 {
     [self.klineMainView switchTopChartContentWithTopChartContentType:topChartContentType];
 }
+#pragma mark - PublicMethods_刷新止盈止损委托价格线
+- (void)hideStopHoldLine
+{
+    self.isShowingStopHoldLine = NO;
+    self.stopLossLineView.hidden = YES;
+    self.stopProfitLineView.hidden = YES;
+}
+- (void)updateStopHoldLineWithStopProfitPrice:(double)stopProfitPrice stopLossPrice:(double)stopLossPrice
+{
+    self.isShowingStopHoldLine = YES;
+    [self updateStopProfitLineViewWithPrice:stopProfitPrice];
+    [self updateStopLossLineViewWithPrice:stopLossPrice];
+}
+- (void)updateStopProfitLineViewWithPrice:(double)stopProfitPrice
+{
+    self.stopProfitPrice = stopProfitPrice;
+    if (stopProfitPrice>self.klineMainView.maxAssert||stopProfitPrice<self.klineMainView.minAssert) {
+        self.stopProfitLineView.hidden = YES;
+        return;
+    }
+    CGFloat pointY = [self transformPriceToPointWithPrice:stopProfitPrice];
+    self.stopProfitLineView.hidden = NO;
+    NSString *priceStr = [NSString stringWithFormat:@"%.*f",self.precision,stopProfitPrice];
+    [self.stopProfitLineView updateJumpViewWithNewPrice:priceStr backgroundColor:RISECOLOR typeText:@"TP"];
+    [self.stopProfitLineView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(pointY-14/2+TopMargin));
+    }];
+}
+- (void)updateStopLossLineViewWithPrice:(double)stopLossPrice
+{
+    self.stopLossPrice = stopLossPrice;
+    if (stopLossPrice>self.klineMainView.maxAssert||stopLossPrice<self.klineMainView.minAssert) {
+        self.stopProfitLineView.hidden = YES;
+        return;
+    }
+    CGFloat pointY = [self transformPriceToPointWithPrice:stopLossPrice];
+    self.stopLossLineView.hidden = NO;
+    NSString *priceStr = [NSString stringWithFormat:@"%.*f",self.precision,stopLossPrice];
+    [self.stopLossLineView updateJumpViewWithNewPrice:priceStr backgroundColor:DROPCOLOR typeText:@"SL"];
+    [self.stopLossLineView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(pointY-14/2+TopMargin));
+    }];
+}
+- (CGFloat )transformPriceToPointWithPrice:(double)price
+{
+    CGFloat newPointY = self.candleChartHeight - (price-self.klineMainView.minAssert)*self.klineMainView.heightPerPoint;
+    //没有数据的时候newpointY==Nan;
+    if (isnan(newPointY)) {
+        newPointY = 0;
+    }
+    return newPointY;
+}
+- (void)updateStopHoldLineWithStopProfitPrice:(double)stopProfitPrice stopLossPrice:(double)stopLossPrice delegatePrice:(double)delegatePrice
+{
+    self.isShowingAllReferenceLine = YES;
+    [self updateStopProfitLineViewWithPrice:stopProfitPrice];
+    [self updateStopLossLineViewWithPrice:stopLossPrice];
+    [self updateDelegateLineViewWithPrice:delegatePrice];
+}
+- (void)updateDelegateLineViewWithPrice:(double)delegatePrice
+{
+    self.delegatePrice = delegatePrice;
+    if (delegatePrice>self.klineMainView.maxAssert||delegatePrice<self.klineMainView.minAssert) {
+        self.delegateLineView.hidden = YES;
+        return;
+    }
+    CGFloat pointY = [self transformPriceToPointWithPrice:delegatePrice];
+    self.delegateLineView.hidden = NO;
+    NSString *priceStr = [NSString stringWithFormat:@"%.*f",self.precision,delegatePrice];
+    [self.delegateLineView updateJumpViewWithNewPrice:priceStr backgroundColor:[UIColor colorWithRed:60/255.0 green:151/255.0 blue:199/255.0 alpha:1] typeText:@"委托价格"];
+    [self.delegateLineView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(pointY-14/2+TopMargin));
+    }];
+}
+- (void)hideAllReferenceLine
+{
+    self.isShowingAllReferenceLine = NO;
+    self.delegateLineView.hidden = YES;
+    self.stopLossLineView.hidden = YES;
+    self.stopProfitLineView.hidden = YES;
+}
 #pragma mark - CustomDelegate
 - (void)shouldToReloadPriceViewWithPriceArr:(NSArray *)priceArr
 {
@@ -847,8 +958,11 @@ static NSString *const kDrop = @"kDrop";
     }else{
         [self.candleDetailView  jointWithNewDetailString:@""];
     }
-    //quotaDetail复原
-    [self.quotaDetailView reloadQuotaDetailViewWithQuotaDetailString:self.currentQuotaName];
+    if (!DrawJustKline) {
+        //quotaDetail复原
+        [self.quotaDetailView reloadQuotaDetailViewWithQuotaDetailString:self.currentQuotaName];
+    }
+    
 }
 - (void)shouldHideCrossCurve
 {
@@ -874,7 +988,7 @@ static NSString *const kDrop = @"kDrop";
     }else{
         self.horizontalView.alpha = 1;
     }
-    [self.horizontalView updateJumpViewWithNewPrice:price backgroundColor:nil precision:self.precision];
+    [self.horizontalView updateJumpViewWithNewPrice:price backgroundColor:nil];
     [self.horizontalView layoutIfNeeded];
     self.horizontalView.hidden = NO;
 }
@@ -902,14 +1016,22 @@ static NSString *const kDrop = @"kDrop";
         [self.delegate returnCurrentDrawKlineModelArr:currentDrawKlineModelArr];
     }
     
-    [self drawPresetQuotaWithQuotaName:self.presetQuotaName currentDrawKlineModelArr:currentDrawKlineModelArr];
+    if (!DrawJustKline) {
+        [self drawPresetQuotaWithQuotaName:self.presetQuotaName currentDrawKlineModelArr:currentDrawKlineModelArr];
+    }
 
     //在这个地方返回需要实时显示的横线，可以达到没有socket返回的时候依然能够显示横线
     if (newKlineModel) {
         
         [self updateJumpViewWithNewKlineModel:newKlineModel];
     }
-
+    
+    //刷新止盈止亏线
+    if (self.isShowingStopHoldLine) {
+       [self updateStopHoldLineWithStopProfitPrice:self.stopProfitPrice stopLossPrice:self.stopLossPrice];
+    }else if (self.isShowingAllReferenceLine){
+        [self updateStopHoldLineWithStopProfitPrice:self.stopProfitPrice stopLossPrice:self.stopLossPrice delegatePrice:self.delegatePrice];
+    }
 }
 - (void)shouldToRequestMoreHistoryKlineDataArr:(SuccessBlock)succ
 {
@@ -951,12 +1073,13 @@ static NSString *const kDrop = @"kDrop";
 
 - (void)shouldToReloadQuotaDetailViewWithResultString:(NSAttributedString *)QuotaResultString shouldToReloadCandleDetailViewWithMAResultString:(NSAttributedString *)MAResultString
 {
-    
+    if (!DrawJustKline) {
         NSMutableAttributedString *attriQuota = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ",self.currentQuotaName]];
         if (QuotaResultString) {
             [attriQuota appendAttributedString:QuotaResultString];
         }
         [self.quotaDetailView reloadQuotaDetailViewWithQuotaAttributedString:attriQuota];
+    }
     if (IsDisplayStockOrQuotaName) {
         NSMutableAttributedString *attriMA = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@  ",self.currentRequestStockName,self.currentRequestType]];
         if (MAResultString) {
@@ -972,10 +1095,12 @@ static NSString *const kDrop = @"kDrop";
 {
     
     if (IsDisplayCandelInfoInTop) {
-        
-        //上部
-        self.topCandleInfoView.hidden = NO;
-        [self.topCandleInfoView updateInfoWithModel:klineModel precision:self.precision];
+        //项目中单独k线图的时候不显示
+        if (!DrawJustKline) {
+            //上部
+            self.topCandleInfoView.hidden = NO;
+            [self.topCandleInfoView updateInfoWithModel:klineModel precision:self.precision];
+        }
     }else{
         
         //下部
@@ -1163,7 +1288,6 @@ static NSString *const kDrop = @"kDrop";
 }
 - (CGFloat)klineMainViewHeight
 {
-
     return self.candleChartHeight+QuotaChartHeight+MiddleBlankSpace+TimeViewHeight;
 }
 - (CGFloat)klineMainViewWidth
@@ -1174,7 +1298,7 @@ static NSString *const kDrop = @"kDrop";
 {
     if (self.isCandleFullScreen) {
         
-        return ([UIScreen mainScreen].bounds.size.height-TimeViewHeight);
+        return ([UIScreen mainScreen].bounds.size.height-TimeViewHeight-TopMargin);
         
     }else{
         return CandleChartHeight;
@@ -1200,13 +1324,11 @@ static NSString *const kDrop = @"kDrop";
     return _klineMainView;
 }
 
-
 - (ZXPriceView *)priceView
 {
     if (!_priceView) {
         _priceView = [[ZXPriceView alloc] initWithFrame:CGRectMake(0,0,0,0) PriceArr:@[@"",@"",@"",@"",@""]];
         _priceView.backgroundColor = [UIColor clearColor];
-        
     }
     return _priceView;
 }
@@ -1232,6 +1354,63 @@ static NSString *const kDrop = @"kDrop";
         _jumpView.hidden = YES;
     }
     return _jumpView;
+}
+- (ZXJumpView *)stopProfitLineView
+{
+    if (!_stopProfitLineView) {
+        _stopProfitLineView = [[ZXJumpView alloc] initWithIsJump:NO];
+        _stopProfitLineView.hidden = YES;
+        [self addSubview:_stopProfitLineView];
+        [_stopProfitLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(100);
+            make.height.mas_equalTo(14);
+            make.left.mas_equalTo(self.klineMainView);
+            if (PriceCoordinateIsInRight) {
+                make.right.mas_equalTo(self.priceView);
+            }else{
+                make.right.mas_equalTo(self.klineMainView);
+            }
+        }];
+    }
+    return _stopProfitLineView;
+}
+- (ZXJumpView *)stopLossLineView
+{
+    if (!_stopLossLineView) {
+        _stopLossLineView = [[ZXJumpView alloc] initWithIsJump:NO];
+        _stopLossLineView.hidden = YES;
+        [self addSubview:_stopLossLineView];
+        [_stopLossLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(100);
+            make.height.mas_equalTo(14);
+            make.left.mas_equalTo(self.klineMainView);
+            if (PriceCoordinateIsInRight) {
+                make.right.mas_equalTo(self.priceView);
+            }else{
+                make.right.mas_equalTo(self.klineMainView);
+            }
+        }];
+    }
+    return _stopLossLineView;
+}
+- (ZXJumpView *)delegateLineView
+{
+    if (!_delegateLineView) {
+        _delegateLineView = [[ZXJumpView alloc] initWithIsJump:NO];
+        _delegateLineView.hidden = YES;
+        [self addSubview:_delegateLineView];
+        [_delegateLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(100);
+            make.height.mas_equalTo(14);
+            make.left.mas_equalTo(self.klineMainView);
+            if (PriceCoordinateIsInRight) {
+                make.right.mas_equalTo(self.priceView);
+            }else{
+                make.right.mas_equalTo(self.klineMainView);
+            }
+        }];
+    }
+    return _delegateLineView;
 }
 - (ZXJumpView *)horizontalView
 {
@@ -1292,7 +1471,6 @@ static NSString *const kDrop = @"kDrop";
         }else{
             _accessoryView.hidden = NO;
         }
-        
     }
     return _accessoryView;
 }
@@ -1334,4 +1512,5 @@ static NSString *const kDrop = @"kDrop";
     }
     return _topCandleInfoView;
 }
+
 @end

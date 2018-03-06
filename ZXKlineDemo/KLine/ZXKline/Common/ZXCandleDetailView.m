@@ -64,8 +64,8 @@
         
         _candleDetailLabel = [[UILabel alloc] init];
         _candleDetailLabel.numberOfLines = 0;
-        _candleDetailLabel.font = [UIFont systemFontOfSize:9];
-        _candleDetailLabel.textColor = NormalTextColor;
+        _candleDetailLabel.font = [UIFont systemFontOfSize:FontSize];
+        _candleDetailLabel.textColor = lightGrayTextColor;
     }
     return _candleDetailLabel;
 }

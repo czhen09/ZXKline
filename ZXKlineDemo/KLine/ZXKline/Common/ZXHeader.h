@@ -11,7 +11,8 @@ static NSString *const kOpen  = @"kOpen";
 static NSString *const kClose = @"kClose";
 static NSString *const kHigh  = @"kHigh";
 static NSString *const kLow   = @"kLow";
-
+//
+static NSString *const kDrawJustKline   = @"kDrawJustKline";
 /**
  * 请求更多的回掉
  */
@@ -57,63 +58,89 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
     ColumnWidthTypeEqualCandle = 0,
     ColumnWidthTypeEqualLine,
 };
+//只绘制k线
+#define DrawJustKline [[NSUserDefaults standardUserDefaults] boolForKey:kDrawJustKline]
+//字体
+#define FontSize 10
 
-
+#define BlueColor [UIColor colorWithRed:0.08 green:0.46 blue:0.70 alpha:1]
+#define PurpleColor [UIColor colorWithRed:0.91 green:0.28 blue:0.51 alpha:1]
+#define YellowColor [UIColor colorWithRed:0.93 green:0.71 blue:0.40 alpha:1]
 /**
  * 蜡烛图-上涨颜色
  */
-#define RISECOLOR [UIColor colorWithRed:107.0/255.0 green:165.0/255.0 blue:131.0/255.0 alpha:1]
+#define RISECOLOR [UIColor colorWithRed:227.0/255.0 green:102.0/255.0 blue:92.0/255.0 alpha:1]
 /**
  * 蜡烛图-下跌颜色
  */
-#define DROPCOLOR [UIColor redColor]
+#define DROPCOLOR [UIColor colorWithRed:64.0/255.0 green:184.0/255.0 blue:172.0/255.0 alpha:1]
 
+//颜色背景系列
+#define DarkBackgroundColor //WhiteBackgroundColor
 
 //均线颜色
-#define MA1Color   [UIColor purpleColor]
-#define MA2Color  [UIColor orangeColor]
-#define MA3Color  [UIColor blueColor]
+#define MA1Color  PurpleColor
+#define MA2Color  YellowColor
+#define MA3Color  BlueColor
 
 
 //指标线颜色
+#ifdef  DarkBackgroundColor
+#define QuotaDIFFCOLOR [UIColor whiteColor]
+#define QuotaDEACOLOR  YellowColor
+
+#define QuotaKCOLOR [UIColor whiteColor]
+#define QuotaDCOLOR YellowColor
+#define QuotaJCOLOR PurpleColor
+
+#define QuotaBOOLUPCOLOR YellowColor
+#define QuotaBOOLMBCOLOR [UIColor whiteColor]
+#define QuotaBOOLDNCOLOR PurpleColor
+
+#define QuotaRSI_6 [UIColor whiteColor]
+#define QuotaRSI_12 YellowColor
+#define QuotaRSI_24 PurpleColor
+#else
 #define QuotaDIFFCOLOR [UIColor darkGrayColor]
 #define QuotaDEACOLOR [UIColor blueColor]
 
-
 #define QuotaKCOLOR [UIColor darkGrayColor]
-#define QuotaDCOLOR [UIColor orangeColor]
-#define QuotaJCOLOR [UIColor purpleColor]
+#define QuotaDCOLOR YellowColor
+#define QuotaJCOLOR PurpleColor
 
-
-#define QuotaBOOLUPCOLOR [UIColor orangeColor]
+#define QuotaBOOLUPCOLOR YellowColor
 #define QuotaBOOLMBCOLOR [UIColor darkGrayColor]
-#define QuotaBOOLDNCOLOR [UIColor purpleColor]
-
+#define QuotaBOOLDNCOLOR PurpleColor
 
 #define QuotaRSI_6 [UIColor darkGrayColor]
-#define QuotaRSI_12 [UIColor orangeColor]
-#define QuotaRSI_24 [UIColor purpleColor]
+#define QuotaRSI_12 YellowColor
+#define QuotaRSI_24 PurpleColor
+#endif
 
 
+#ifdef DarkBackgroundColor
 //黑色背景系列
-//#define BackgroundColor [UIColor blackColor]
-//#define NormalTextColor [UIColor whiteColor]
-//#define BorderColor [UIColor whiteColor]
-//#define CoordinateDisPlayLabelColor [UIColor blackColor]
-
-
-
-
+#define BackgroundColor [UIColor colorWithRed:(54.0/255.0f) green:(57.0/255.0f) blue:(59.0/255.0f) alpha:1]
+//长按横竖线和跳跃线颜色
+#define CoordinateDisPlayLabelColor [UIColor colorWithRed:(168.0/255.0f) green:(168.0/255.0f) blue:(168.0/255.0f) alpha:1]
+//网格线颜色
+#define GrateLineColor [UIColor colorWithRed:(255/255.0f) green:(255/255.0f) blue:(255/255.0f) alpha:1]
+#define lightGrayBackGroundColor [UIColor colorWithRed:(245.0/255.0f) green:(245.0/255.0f) blue:(245.0/255.0f) alpha:1]
+//显示字体颜色
+#define lightGrayTextColor [UIColor colorWithRed:(176.0/255.0f) green:(176.0/255.0f) blue:(176.0/255.0f) alpha:1]
+//==============================================
+#else
 //白色背景系列
 #define BackgroundColor [UIColor whiteColor]
-#define NormalTextColor [UIColor colorWithRed:(153/255.0f) green:(153/255.0f) blue:(153/255.0f) alpha:1]
-#define BorderColor [UIColor lightGrayColor]
 #define CoordinateDisPlayLabelColor [UIColor blackColor]
-
-
 #define GrateLineColor [UIColor colorWithRed:(235/255.0f) green:(237/255.0f) blue:(240/255.0f) alpha:1]
 #define lightGrayBackGroundColor [UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1]
 #define lightGrayTextColor [UIColor colorWithRed:(153/255.0f) green:(153/255.0f) blue:(153/255.0f) alpha:1]
+//==============================================
+#endif
+
+
+
 /**
  * 价格坐标系在右边？YES->右边；NO->左边
  */
@@ -143,14 +170,15 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 #define LandscapeLeft (Orientation == UIDeviceOrientationLandscapeLeft)
 
 //k线图边框距离画布上下左右距离
-#define TopMargin 5
+//横屏的时候顶部设置距离为40;项目需求
+#define TopMargin (Portrait?5:40)
 #define BottomMargin 5
 #define ZXLeftMargin 5
 #define ZXRightMargin 5
 
 
-#define CandleTopMargin 20
-#define CandleBottomMargin 5
+#define CandleTopMargin (DrawJustKline?60:20)
+#define CandleBottomMargin (DrawJustKline?100:5)
 #define QuotaTopMargin 20
 #define QuotaBottomMargin 5
 
@@ -176,15 +204,21 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 /**
  * 上部蜡烛高度;
  */
-#define CandleChartHeight  (Portrait ? (PortraitChartHeight/3.0*2) : (LandScapeChartHeight/3.0*2))
+#define CandleChartHeightJustKline  (Portrait ? (PortraitChartHeight) : (LandScapeChartHeight/3.0*2))
+#define CandleChartHeightKlineWithQuota  (Portrait ? (PortraitChartHeight/3.0*2) : (LandScapeChartHeight/3.0*2))
+#define CandleChartHeight  DrawJustKline?CandleChartHeightJustKline:CandleChartHeightKlineWithQuota
+
+
 /**
  * 下部部指标高度
  */
-#define QuotaChartHeight   (Portrait ? (PortraitChartHeight/3.0*1) : (LandScapeChartHeight/3.0*1))
+#define QuotaChartHeightJustKline  (Portrait ? (0.01) : (0.01))
+#define QuotaChartHeightKlineWithQuota   (Portrait ? (PortraitChartHeight/3.0*1) : (LandScapeChartHeight/3.0*1))
+#define QuotaChartHeight   (DrawJustKline ? QuotaChartHeightJustKline : QuotaChartHeightKlineWithQuota)
 /**
  * 蜡烛和指标之间的间隔
  */
-#define MiddleBlankSpace   (Portrait ? 30  : 10)
+#define MiddleBlankSpace   (DrawJustKline?0:(Portrait ? 10 : 10))
 
 #define PortraitCandleWidth      (PriceCoordinateIsInRight ? (KSCREEN_WIDTH-VerticalCoordinatesWidth-ZXLeftMargin-ZXRightMargin) : (KSCREEN_WIDTH-ZXLeftMargin-ZXRightMargin))
 
@@ -228,7 +262,7 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 
 
 //蜡烛的信息配置的位置：YES->单独的view显示在view顶部；NO->弹框覆盖在蜡烛上
-#define IsDisplayCandelInfoInTop NO
+#define IsDisplayCandelInfoInTop YES
 
 
 #ifndef ZXHeader_h

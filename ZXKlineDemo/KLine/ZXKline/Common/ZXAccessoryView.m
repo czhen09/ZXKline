@@ -28,23 +28,19 @@
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i%3*(width+10), 0, width, height)];
         button.tag = 200+i;
         if (i==0) {
+            [button setImage:[UIImage imageNamed:@"decrease-h"] forState:UIControlStateNormal];
+            UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(decreaseButtonLongPressAction:)];
+            [button addGestureRecognizer:longGesture];
             
-            [button setImage:[UIImage imageNamed:@"bigger"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"smaller"] forState:UIControlStateSelected];
         }
         if (i==1) {
-            
-            [button setImage:[UIImage imageNamed:@"decrease-n"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"decrease-h"] forState:UIControlStateHighlighted];
-            UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(decreaseButtonLongPressAction:)];
+            [button setImage:[UIImage imageNamed:@"increase-h"] forState:UIControlStateNormal];
+            UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(increaseButtonLongPressAction:)];
             [button addGestureRecognizer:longGesture];
         }
         if (i==2) {
-            
-            [button setImage:[UIImage imageNamed:@"increase-n"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"increase-h"] forState:UIControlStateHighlighted];
-            UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(increaseButtonLongPressAction:)];
-            [button addGestureRecognizer:longGesture];
+            [button setImage:[UIImage imageNamed:@"bigger"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"smaller"] forState:UIControlStateSelected];
         }
         button.adjustsImageWhenHighlighted = NO;
         [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -71,14 +67,14 @@
 {
     switch (sender.tag) {
         case 200:
-            [sender setSelected:!sender.selected];
-            self.accessoryName = AccessoryNameFullScreen;
-            break;
-        case 201:
             self.accessoryName = AccessoryNameDecrease;
             break;
-        case 202:
+        case 201:
             self.accessoryName = AccessoryNameIncrease;
+            break;
+        case 202:
+            [sender setSelected:!sender.selected];
+            self.accessoryName = AccessoryNameFullScreen;
             break;
 
     }

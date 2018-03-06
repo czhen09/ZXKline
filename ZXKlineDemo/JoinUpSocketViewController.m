@@ -74,6 +74,13 @@
     //soclet数据暂时用假数据替代
     self.timer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(creatFakeSocketData) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    
+    //止盈止损线
+//    [self.assenblyView updateStopHoldLineWithStopProfitPrice:0.7646 stopLossPrice:0.7620];
+//    [self.assenblyView hideStopHoldLine];
+    //止盈止损线+委托价格线
+//    [self.assenblyView updateStopHoldLineWithStopProfitPrice:0.7646 stopLossPrice:0.7620 delegatePrice:0.7630];
+//    [self.assenblyView hideAllReferenceLine];
 }
 
 #pragma mark - 屏幕旋转通知事件
@@ -348,6 +355,9 @@
 - (ZXAssemblyView *)assenblyView
 {
     if (!_assenblyView) {
+        //仅仅只有k线的初始化方法
+//        _assenblyView = [[ZXAssemblyView alloc] initWithDrawJustKline:YES];
+        //带指标的初始化
         _assenblyView = [[ZXAssemblyView alloc] init];
         _assenblyView.delegate = self;
     }

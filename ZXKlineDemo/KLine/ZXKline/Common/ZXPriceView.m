@@ -64,8 +64,8 @@ static CGFloat const priceLabelHeight = 14;
         
         UILabel *priceLabel = [[UILabel alloc] init];
         priceLabel.backgroundColor = [UIColor clearColor];
-        priceLabel.textColor = NormalTextColor;
-        priceLabel.font = [UIFont systemFontOfSize:9];
+        priceLabel.textColor = lightGrayTextColor;
+        priceLabel.font = [UIFont systemFontOfSize:FontSize];
         priceLabel.textAlignment = NSTextAlignmentCenter;
         priceLabel.lineBreakMode = NSLineBreakByWordWrapping;
         priceLabel.text = self.priceArr[i];
@@ -154,8 +154,8 @@ static CGFloat const priceLabelHeight = 14;
         _zeroLabel.text = @"0";
         _zeroLabel.backgroundColor = [UIColor clearColor];
         _zeroLabel.textAlignment = NSTextAlignmentCenter;
-        _zeroLabel.textColor = NormalTextColor;
-        _zeroLabel.font = [UIFont systemFontOfSize:9];
+        _zeroLabel.textColor = lightGrayTextColor;
+        _zeroLabel.font = [UIFont systemFontOfSize:FontSize];
         
     }
     return _zeroLabel;

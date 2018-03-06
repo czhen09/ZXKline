@@ -10,5 +10,6 @@
 
 @interface ZXJumpView : UIView
 - (instancetype)initWithIsJump:(BOOL)isJump;
-- (void)updateJumpViewWithNewPrice:(NSString *)newPrice backgroundColor:(UIColor *)color precision:(int)precision;
+- (void)updateJumpViewWithNewPrice:(NSString *)newPrice backgroundColor:(UIColor *)color;
+- (void)updateJumpViewWithNewPrice:(NSString *)newPrice backgroundColor:(UIColor *)color typeText:(NSString *)typeText;
 @end

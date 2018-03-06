@@ -14,6 +14,7 @@
 @property (nonatomic,strong) UILabel *priceLabel;
 @property (nonatomic,assign) BOOL isJump;
 @property (nonatomic,strong) CAShapeLayer *horizontalLineLayer;
+@property (nonatomic,strong) UILabel  *typeLabel;
 @end
 @implementation ZXJumpView
 
@@ -31,20 +32,31 @@
 {
     self.jumpLine = [[UIView alloc] init];
     if (self.isJump) {
-        self.jumpLine.backgroundColor = [UIColor whiteColor];
-        [self.jumpLine.layer addSublayer:[self creatLayerWithColor:CoordinateDisPlayLabelColor]];
+        self.jumpLine.backgroundColor = CoordinateDisPlayLabelColor;
+//        [self.jumpLine.layer addSublayer:[self creatLayerWithColor:CoordinateDisPlayLabelColor]];
     }else{
         self.jumpLine.backgroundColor = CoordinateDisPlayLabelColor;
     }
     [self addSubview:self.jumpLine];
+    //
     self.priceLabel = [[UILabel alloc] init];
     self.priceLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.priceLabel.backgroundColor = CoordinateDisPlayLabelColor;
     self.priceLabel.text = @"";
     self.priceLabel.textColor = [UIColor whiteColor];
     self.priceLabel.textAlignment = NSTextAlignmentCenter;
-    self.priceLabel.font = [UIFont systemFontOfSize:9];
+    self.priceLabel.font = [UIFont systemFontOfSize:FontSize];
     [self addSubview:self.priceLabel];
+    //
+    self.typeLabel = [[UILabel alloc] init];
+    self.typeLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.typeLabel.backgroundColor = [UIColor clearColor];
+    self.typeLabel.text = @"";
+    self.typeLabel.hidden = YES;
+    self.typeLabel.textColor = [UIColor whiteColor];
+    self.typeLabel.textAlignment = NSTextAlignmentCenter;
+    self.typeLabel.font = [UIFont systemFontOfSize:FontSize];
+    [self addSubview:self.typeLabel];
 }
 
 - (CAShapeLayer *)creatLayerWithColor:(UIColor *)color
@@ -94,36 +106,32 @@
         make.centerY.mas_equalTo(self);
         
     }];
+    [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.jumpLine);
+        make.bottom.mas_equalTo(self.jumpLine.mas_top);
+        make.height.mas_equalTo(14);
+    }];
 }
-- (void)updateJumpViewWithNewPrice:(NSString *)newPrice backgroundColor:(UIColor *)color precision:(int)precision
+- (void)updateJumpViewWithNewPrice:(NSString *)newPrice backgroundColor:(UIColor *)color
 {
-//    [self.jumpLine mas_updateConstraints:^(MASConstraintMaker *make) {
-//       
-//        make.top.mas_equalTo(topSpace);
-//        
-//    }];
-//    [self.priceLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.top.mas_equalTo(self.jumpLine);
-//    }];
-    
-    
-    
-    //位数处理
-//    NSArray *componentArr = [newPrice componentsSeparatedByString:@"."];
-//    NSString *previousStr = componentArr[0];
-//    NSNumber *previousLength = @(previousStr.length);
-//    int nextLength = 8-[previousLength intValue]-1;
-    NSString *priceStrr = [NSString stringWithFormat:@"%.*f",precision,[newPrice doubleValue]];
-
-    self.priceLabel.text = priceStrr;
+    self.priceLabel.text = newPrice;
     if (color) {
-        
+
         self.priceLabel.backgroundColor = color;
-        if (self.isJump)
-            self.jumpLine.backgroundColor = [UIColor clearColor];
-            [self.jumpLine.layer addSublayer:[self creatLayerWithColor:color]];
+        self.jumpLine.backgroundColor = color;
+//        if (self.isJump)
+//            self.jumpLine.backgroundColor = [UIColor clearColor];
+//            [self.jumpLine.layer addSublayer:[self creatLayerWithColor:color]];
     }
+}
+- (void)updateJumpViewWithNewPrice:(NSString *)newPrice backgroundColor:(UIColor *)color typeText:(NSString *)typeText
+{
+    self.priceLabel.text = newPrice;
+    self.priceLabel.backgroundColor = color;
+    self.jumpLine.backgroundColor = color;
+    self.typeLabel.hidden = NO;
+    self.typeLabel.textColor = color;
+    self.typeLabel.text = typeText;
 }
 @end
 

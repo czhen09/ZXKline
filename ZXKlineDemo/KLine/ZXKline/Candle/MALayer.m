@@ -84,7 +84,7 @@
 
     }];
     self.path = self.beizerPath.CGPath;
-    self.lineWidth = 0.6;
+    self.lineWidth = 1;
     struct CGColor *strokeColor = nil;
     strokeColor = self.lineColor.CGColor;
     self.strokeColor = strokeColor;
