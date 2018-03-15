@@ -85,7 +85,7 @@ static id _instance;
 //MACD
 - (void)calculateMACDWithDataArr:(NSArray *)dataArr model:(KlineModel *)model index:(NSInteger)idx
 {
-    KlineModel *previousKlineModel = [KlineModel new];
+    KlineModel *previousKlineModel = nil;
     if (idx>0&&idx<dataArr.count) {
         
         previousKlineModel = dataArr[idx-1];
@@ -167,7 +167,11 @@ static id _instance;
         
         
         double powSumPrice = 0;
-        for (NSInteger i = idx-(bollNum-1); i<=idx; i++) {
+        NSInteger j = idx-(bollNum-2);
+        if (j<19) {
+            j = 19;
+        }
+        for (NSInteger i = j; i<=idx; i++) {
             
             if (i>=0&&i<dataArr.count) {
                 KlineModel * model = dataArr[i];

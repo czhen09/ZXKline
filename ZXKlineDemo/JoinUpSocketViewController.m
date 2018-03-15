@@ -324,22 +324,22 @@
 #pragma mark - ZXSocketDataReformerDelegate
 - (void)bulidSuccessWithNewKlineModel:(KlineModel *)newKlineModel
 {
-    //维护控制器数据源
-    if (newKlineModel.isNew) {
-        
-        [self.dataArray addObject:newKlineModel];
-        [[ZXQuotaDataReformer sharedInstance] handleQuotaDataWithDataArr:self.dataArray model:newKlineModel index:self.dataArray.count-1];
-        [self.dataArray replaceObjectAtIndex:self.dataArray.count-1 withObject:newKlineModel];
-        
-    }else{
-        [self.dataArray replaceObjectAtIndex:self.dataArray.count-1 withObject:newKlineModel];
-        
-        [[ZXQuotaDataReformer alloc] handleQuotaDataWithDataArr:self.dataArray model:newKlineModel index:self.dataArray.count-1];
-        
-        [self.dataArray replaceObjectAtIndex:self.dataArray.count-1 withObject:newKlineModel];
-    }
-    //绘制最后一个蜡烛
-    [self.assenblyView drawLastKlineWithNewKlineModel:newKlineModel];
+//    //维护控制器数据源
+//    if (newKlineModel.isNew) {
+//        
+//        [self.dataArray addObject:newKlineModel];
+//        [[ZXQuotaDataReformer sharedInstance] handleQuotaDataWithDataArr:self.dataArray model:newKlineModel index:self.dataArray.count-1];
+//        [self.dataArray replaceObjectAtIndex:self.dataArray.count-1 withObject:newKlineModel];
+//        
+//    }else{
+//        [self.dataArray replaceObjectAtIndex:self.dataArray.count-1 withObject:newKlineModel];
+//        
+//        [[ZXQuotaDataReformer alloc] handleQuotaDataWithDataArr:self.dataArray model:newKlineModel index:self.dataArray.count-1];
+//        
+//        [self.dataArray replaceObjectAtIndex:self.dataArray.count-1 withObject:newKlineModel];
+//    }
+//    //绘制最后一个蜡烛
+//    [self.assenblyView drawLastKlineWithNewKlineModel:newKlineModel];
 }
 
 

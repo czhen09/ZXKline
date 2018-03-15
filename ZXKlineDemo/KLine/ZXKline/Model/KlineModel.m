@@ -28,23 +28,22 @@ static NSString *const kDrop = @"kDrop";
 //在最新的蜡烛数据来的时候需要重新每次计算
 - (void)reInitData
 {
-    self.EMA12 = @((2.0 * self.closePrice + 11 *(self.previousKlineModel.EMA12.doubleValue))/13.0);
-    self.EMA26 = @((2 * self.closePrice + 25 * self.previousKlineModel.EMA26.doubleValue)/27);
-    self.DIF = @(self.EMA12.doubleValue - self.EMA26.doubleValue);
-    self.DEA = @(self.previousKlineModel.DEA.doubleValue * 0.8 + 0.2*self.DIF.doubleValue);
-    self.MACD = @(2*(self.DIF.doubleValue - self.DEA.doubleValue));
-    
+    [self EMA12];
+    [self EMA26];
+    [self DIF];
+    [self DEA];
+    [self MACD];
 }
 - (NSNumber *)EMA12
 {
     if (_EMA12==nil) {
         
         if (self.x==0) {
-            
+
             _EMA12 = @(self.closePrice);
 
         }else{
-            
+        
             _EMA12 = @((2.0 * self.closePrice + 11 *(_previousKlineModel.EMA12.doubleValue))/13.0);
         }
     }
@@ -53,7 +52,7 @@ static NSString *const kDrop = @"kDrop";
 - (NSNumber *)EMA26
 {
     if (self.x==0) {
-        
+
         _EMA26 = @(self.closePrice);
     }else{
         _EMA26 = @((2 * self.closePrice + 25 * self.previousKlineModel.EMA26.doubleValue)/27);
@@ -130,10 +129,8 @@ static NSString *const kDrop = @"kDrop";
 
 
 //BOLL
-
 - (void)reInitBOLLData
 {
-    
     if (self.x==19) {
         
         self.BOLL_MB = self.BOLL_MA;
