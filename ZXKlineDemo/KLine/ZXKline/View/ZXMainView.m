@@ -107,10 +107,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 //虚线间隔
 @property (nonatomic,strong) NSMutableArray *needDrawDottLineIndexArr;
 /**
- *随最新价格跳动的横线和label
- */
-@property (nonatomic,strong) ZXJumpView *jumpView;
-/**
  *横竖屏方向
  */
 @property (nonatomic,assign) UIInterfaceOrientation orientation;
@@ -163,7 +159,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 //是否应该加载更多数据，用于手势拖曳结束的判断
 @property (nonatomic,assign) BOOL isShouldToLoadMoreData;
 
-@property (nonatomic,strong) UIView *maskView;
 @end
 
 @implementation ZXMainView
@@ -238,9 +233,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 #pragma mark - Private Methods
 - (void)addSubviews
 {
-
     [self addSubview:self.tableView];
-    [self addSubview:self.maskView];
 }
 
 - (void)addConstrains
@@ -300,12 +293,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         make.top.mas_equalTo(-(width-height)/2);
         make.width.mas_equalTo(height);
         make.height.mas_equalTo(width);
-    }];
-    
-    [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.top.mas_equalTo(self);
-        make.width.mas_equalTo(ZXLeftMargin);
-        make.right.mas_equalTo(self.mas_left);
     }];
 }
 
@@ -1798,17 +1785,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }
     return _needDrawDottLineIndexArr;
 }
-
-- (ZXJumpView *)jumpView
-{
-    if (!_jumpView) {
-        _jumpView = [[ZXJumpView alloc] init];
-        _jumpView.backgroundColor = [UIColor clearColor];
-        _jumpView.hidden = YES;
-    }
-    return _jumpView;
-}
-
 - (NSMutableArray *)quotaLayerArr
 {
     if (!_quotaLayerArr) {
@@ -1893,13 +1869,5 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         _refreshView.hidden = YES;
     }
     return _refreshView;
-}
-- (UIView *)maskView
-{
-    if (!_maskView) {
-        _maskView = [[UIView alloc] init];
-        _maskView.backgroundColor = BackgroundColor;
-    }
-    return _maskView;
 }
 @end

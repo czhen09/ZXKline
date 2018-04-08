@@ -1329,6 +1329,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_priceView) {
         _priceView = [[ZXPriceView alloc] initWithFrame:CGRectMake(0,0,0,0) PriceArr:@[@"",@"",@"",@"",@""]];
         _priceView.backgroundColor = [UIColor clearColor];
+        _priceView.userInteractionEnabled = NO;
     }
     return _priceView;
 }
@@ -1337,6 +1338,7 @@ static NSString *const kDrop = @"kDrop";
 {
     if (!_candleDetailView) {
         _candleDetailView = [[ZXCandleDetailView alloc] init];
+        _candleDetailView.userInteractionEnabled = NO;
     }
     return _candleDetailView;
 }
@@ -1344,6 +1346,7 @@ static NSString *const kDrop = @"kDrop";
 {
     if (!_quotaDetailView) {
         _quotaDetailView = [[ZXCandleDetailView alloc] init];
+        _quotaDetailView.userInteractionEnabled = NO;
     }
     return _quotaDetailView;
 }
@@ -1352,6 +1355,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_jumpView) {
         _jumpView = [[ZXJumpView alloc] initWithIsJump:YES];
         _jumpView.hidden = YES;
+        _jumpView.userInteractionEnabled = NO;
     }
     return _jumpView;
 }
@@ -1360,6 +1364,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_stopProfitLineView) {
         _stopProfitLineView = [[ZXJumpView alloc] initWithIsJump:NO];
         _stopProfitLineView.hidden = YES;
+        _stopProfitLineView.userInteractionEnabled = NO;
         [self addSubview:_stopProfitLineView];
         [_stopProfitLineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(100);
@@ -1379,6 +1384,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_stopLossLineView) {
         _stopLossLineView = [[ZXJumpView alloc] initWithIsJump:NO];
         _stopLossLineView.hidden = YES;
+        _stopLossLineView.userInteractionEnabled = NO;
         [self addSubview:_stopLossLineView];
         [_stopLossLineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(100);
@@ -1398,6 +1404,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_delegateLineView) {
         _delegateLineView = [[ZXJumpView alloc] initWithIsJump:NO];
         _delegateLineView.hidden = YES;
+        _delegateLineView.userInteractionEnabled = NO;
         [self addSubview:_delegateLineView];
         [_delegateLineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(100);
@@ -1417,7 +1424,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_horizontalView) {
         _horizontalView = [[ZXJumpView alloc] initWithIsJump:NO];
         _horizontalView.clipsToBounds = YES;
-
+        _horizontalView.userInteractionEnabled = NO;
         _horizontalView.backgroundColor = [UIColor clearColor];
         [self addSubview:_horizontalView];
         [_horizontalView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1438,6 +1445,7 @@ static NSString *const kDrop = @"kDrop";
 {
     if (!_quotaView) {
         _quotaView = [[ZXPriceView alloc] initWithFrame:CGRectZero PriceArr:@[@"",@""]];
+        _quotaView.userInteractionEnabled = NO;
     }
     return _quotaView;
 }
@@ -1447,6 +1455,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_priceMaskView) {
         _priceMaskView = [[UIView alloc] init];
         _priceMaskView.backgroundColor = BackgroundColor;
+        _priceMaskView.userInteractionEnabled = NO;
     }
     return _priceMaskView;
 }
@@ -1456,6 +1465,7 @@ static NSString *const kDrop = @"kDrop";
         _timeLineView = [[ZXTimeLineView alloc] init];
         _timeLineView.backgroundColor = [UIColor clearColor];
         _timeLineView.hidden = YES;
+        _timeLineView.userInteractionEnabled = NO;
     }
     return _timeLineView;
 }
@@ -1501,6 +1511,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_messageBoxView) {
         _messageBoxView = [[ZXMessageBoxView alloc] initWithFrame:CGRectMake(100, 100, (self.klineMainViewWidth-20)/2, 60)];
         _messageBoxView.hidden = YES;
+        _messageBoxView.userInteractionEnabled = NO;
     }
     return _messageBoxView;
 }

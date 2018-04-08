@@ -904,7 +904,7 @@
 				DEVELOPMENT_TEAM = D79N5ZZ8A6;
 				INFOPLIST_FILE = ZXKlineDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -920,7 +920,7 @@
 				DEVELOPMENT_TEAM = D79N5ZZ8A6;
 				INFOPLIST_FILE = ZXKlineDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = ZX.ZXKlineDemoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
