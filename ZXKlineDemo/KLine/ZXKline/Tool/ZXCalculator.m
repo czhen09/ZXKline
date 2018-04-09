@@ -33,24 +33,25 @@ static id _instance;
     }
     __block double maxValue = 0;
     __block double minValue = 0;
+    __block BOOL isFirstSettingValue = YES;
     NSMutableDictionary *resultDic = [NSMutableDictionary dictionary];
     [calculateArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        double value = [obj doubleValue];
-        if (idx==0) {
-            
-            maxValue = value;
-            minValue = value;
-        }else{
-            
-            if (value>maxValue) {
+        if (![obj isKindOfClass:[NSString class]]) {
+            double value = [obj doubleValue];
+            if (isFirstSettingValue) {
                 maxValue = value;
-            }else if (value<minValue)
-            {
                 minValue = value;
+                isFirstSettingValue = NO;
+            }else{
+                
+                if (value>maxValue) {
+                    maxValue = value;
+                }else if (value<minValue)
+                {
+                    minValue = value;
+                }
             }
         }
-        
     }];
     resultDic[kMaxValue] = @(maxValue);
     resultDic[kMinValue] = @(minValue);
@@ -74,6 +75,9 @@ static id _instance;
     }else if ([requestType isEqualToString:@"H1"])
     {
         timesampInterval = 60*60;
+    }else if ([requestType isEqualToString:@"H4"])
+    {
+        timesampInterval = 60*60*4;
     }else if ([requestType isEqualToString:@"D1"])
     {
         timesampInterval = 60*60*24;

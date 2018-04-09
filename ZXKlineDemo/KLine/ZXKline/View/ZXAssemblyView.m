@@ -641,19 +641,23 @@ static NSString *const kDrop = @"kDrop";
     
 
     [currentDrawKlineModelArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        [openDataArr addObject:@(model.openPrice)];
-        [closeDataArr addObject:@(model.closePrice)];
-        [highDataArr addObject:@(model.highestPrice)];
-        [lowDataArr addObject:@(model.lowestPrice)];
-        
+        if (model.isPlaceHolder) {
+            [openDataArr addObject:@"-"];
+            [closeDataArr addObject:@"-"];
+            [highDataArr addObject:@"-"];
+            [lowDataArr addObject:@"-"];
+        }else{
+            [openDataArr addObject:@(model.openPrice)];
+            [closeDataArr addObject:@(model.closePrice)];
+            [highDataArr addObject:@(model.highestPrice)];
+            [lowDataArr addObject:@(model.lowestPrice)];
+        }
         if (model.x>=19) {
             
             [BOOL_UPataArr addObject:model.BOLL_UP];
             [BOOL_MBataArr addObject:model.BOLL_MB];
             [BOOL_DNataArr addObject:model.BOLL_DN];
         }
-        
     }];
     //极值
     NSDictionary *resultDic = [[ZXCalculator sharedInstance] calculateMaxAndMinValueWithDataArr:@[openDataArr,closeDataArr,highDataArr,lowDataArr,BOOL_DNataArr,BOOL_MBataArr,BOOL_UPataArr]];
@@ -718,10 +722,11 @@ static NSString *const kDrop = @"kDrop";
     NSMutableArray *MACDDataArr = [NSMutableArray array];
     
     for (KlineModel *model in currentDrawKlineModelArr) {
-        
-        [DIFDataArr addObject:model.DIF];
-        [DEADataArr addObject:model.DEA];
-        [MACDDataArr addObject:model.MACD];
+        if (!model.isPlaceHolder) {
+            [DIFDataArr addObject:model.DIF];
+            [DEADataArr addObject:model.DEA];
+            [MACDDataArr addObject:model.MACD];
+        }
     }
     //极值
     NSDictionary *resultDic = [[ZXCalculator sharedInstance] calculateMaxAndMinValueWithDataArr:@[DIFDataArr,DEADataArr,MACDDataArr]];
@@ -823,7 +828,14 @@ static NSString *const kDrop = @"kDrop";
     }
     CGFloat newPointY = self.candleChartHeight - (newPrice-self.klineMainView.minAssert)*self.klineMainView.heightPerPoint;
     NSString *priceStr = [NSString stringWithFormat:@"%.*f",self.precision,newPrice];
-    [self.jumpView updateJumpViewWithNewPrice:priceStr backgroundColor:nil];
+    UIColor *jumpViewBackgroundColor = nil;
+    if (newKlineModel.openPrice>newKlineModel.closePrice) {
+        
+        jumpViewBackgroundColor = DROPCOLOR;
+    }else{
+        jumpViewBackgroundColor = RISECOLOR;
+    }
+    [self.jumpView updateJumpViewWithNewPrice:priceStr backgroundColor:jumpViewBackgroundColor];
     //没有数据的时候newpointY==Nan;
     if (isnan(newPointY)) {
         newPointY = 0;
@@ -967,6 +979,11 @@ static NSString *const kDrop = @"kDrop";
 - (void)shouldHideCrossCurve
 {
     
+    if (!self.horizontalView.hidden) {
+        if ([self.delegate respondsToSelector:@selector(longPressEnd)]) {
+            [self.delegate longPressEnd];
+        }
+    }
     self.horizontalView.hidden = YES;
     self.timeLineView.hidden = YES;
     if (IsDisplayCandelInfoInTop) {
@@ -1093,7 +1110,9 @@ static NSString *const kDrop = @"kDrop";
 }
 - (void)longpressPointCandleModel:(KlineModel *)klineModel longPressPoint:(CGPoint)point
 {
-    
+    if ([self.delegate respondsToSelector:@selector(longPressBegin)]) {
+        [self.delegate longPressBegin];
+    }
     if (IsDisplayCandelInfoInTop) {
         //项目中单独k线图的时候不显示
         if (!DrawJustKline) {
@@ -1511,7 +1530,6 @@ static NSString *const kDrop = @"kDrop";
     if (!_messageBoxView) {
         _messageBoxView = [[ZXMessageBoxView alloc] initWithFrame:CGRectMake(100, 100, (self.klineMainViewWidth-20)/2, 60)];
         _messageBoxView.hidden = YES;
-        _messageBoxView.userInteractionEnabled = NO;
     }
     return _messageBoxView;
 }
@@ -1520,6 +1538,7 @@ static NSString *const kDrop = @"kDrop";
     if (!_topCandleInfoView) {
         _topCandleInfoView = [[ZXTopCandleInfoView alloc] init];
         _topCandleInfoView.hidden = YES;
+        _topCandleInfoView.userInteractionEnabled = YES;
     }
     return _topCandleInfoView;
 }

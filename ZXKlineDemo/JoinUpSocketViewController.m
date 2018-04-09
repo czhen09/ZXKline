@@ -162,7 +162,7 @@
     NSArray *kDataArr = [NSArray arrayWithContentsOfFile:path];
     
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (int i = 0; i<kDataArr.count; i++) {
+    for (int i = 0; i<kDataArr.count-1; i++) {
         [tempArray addObject:kDataArr[i]];
     }
     

@@ -119,9 +119,9 @@
 
         self.priceLabel.backgroundColor = color;
         self.jumpLine.backgroundColor = color;
-//        if (self.isJump)
-//            self.jumpLine.backgroundColor = [UIColor clearColor];
-//            [self.jumpLine.layer addSublayer:[self creatLayerWithColor:color]];
+        if (self.isJump)
+            self.jumpLine.backgroundColor = [UIColor clearColor];
+            [self.jumpLine.layer addSublayer:[self creatLayerWithColor:color]];
     }
 }
 - (void)updateJumpViewWithNewPrice:(NSString *)newPrice backgroundColor:(UIColor *)color typeText:(NSString *)typeText

@@ -35,8 +35,14 @@
  * 作用在指标区域的点击事件
  */
 - (void)tapActionActOnQuotaArea;
-
-
+/**
+ * 长按开始
+ */
+- (void)longPressBegin;
+/**
+ * 长按结束
+ */
+- (void)longPressEnd;
 /**
  * @brief 填补长连接中断后的中断数据（后台，通话，断网）
  * @param startTime 缺陷开始时间

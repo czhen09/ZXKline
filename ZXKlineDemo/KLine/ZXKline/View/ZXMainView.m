@@ -158,7 +158,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
 //是否应该加载更多数据，用于手势拖曳结束的判断
 @property (nonatomic,assign) BOOL isShouldToLoadMoreData;
-
 @end
 
 @implementation ZXMainView
@@ -225,7 +224,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count)*self.candleWidth-self.subViewWidth-0.5)];
+        if (self.kLineModelArr.count<self.needDrawKlineCount) {
+            [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount)*self.candleWidth-self.subViewWidth-0.5)];
+        }else{
+            [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count)*self.candleWidth-self.subViewWidth-0.5)];
+        }
     });
     
 }
@@ -294,6 +297,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         make.width.mas_equalTo(height);
         make.height.mas_equalTo(width);
     }];
+    
 }
 
 #pragma mark - 伸缩
@@ -347,11 +351,17 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             
             pinchOffsetY = 0;
         }
-        if (pinchOffsetY+self.subViewWidth>self.kLineModelArr.count*self.candleWidth) {
-            
-            pinchOffsetY = self.kLineModelArr.count*self.candleWidth - self.subViewWidth;
+        if (self.kLineModelArr.count<self.needDrawKlineCount) {
+            if (pinchOffsetY+self.subViewWidth>self.needDrawKlineCount*self.candleWidth) {
+                
+                pinchOffsetY = self.needDrawKlineCount*self.candleWidth - self.subViewWidth;
+            }
+        }else{
+            if (pinchOffsetY+self.subViewWidth>self.kLineModelArr.count*self.candleWidth) {
+                
+                pinchOffsetY = self.kLineModelArr.count*self.candleWidth - self.subViewWidth;
+            }
         }
-        
         [self.tableView setContentOffset:CGPointMake(0, pinchOffsetY)];
     }
     
@@ -611,8 +621,12 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     [self.kLineModelArr addObjectsFromArray:dataArr];
     [self drawTopKline];
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.kLineModelArr.count<self.needDrawKlineCount) {
+            [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount)*self.candleWidth-self.subViewWidth-0.5)];
+        }else{
+            [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count)*self.candleWidth-self.subViewWidth-0.5)];
+        }
         
-        [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count)*self.candleWidth-self.subViewWidth-0.5)];
     });
     
 } 
@@ -660,9 +674,13 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         KlineModel *newsDataModel =  [self calulatePositionWithKlineModel:klineModel];
         [self.kLineModelArr addObject:newsDataModel];
         [self drawTopKline];
-        [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth+(self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
-    }else{
+        if (self.kLineModelArr.count<self.needDrawKlineCount) {
+            [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount)*self.candleWidth-self.subViewWidth-0.5)];
+        }else{
+            [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth+(self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
+        }
         
+    }else{
         
         KlineModel *newsDataModel =  [self calulatePositionWithKlineModel:klineModel];
         [self.kLineModelArr replaceObjectAtIndex:self.kLineModelArr.count-1 withObject:newsDataModel];
@@ -769,6 +787,10 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 #pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.kLineModelArr.count<self.needDrawKlineCount)
+    {
+        return self.needDrawKlineArr.count;
+    }
     return self.kLineModelArr.count;
 }
 
@@ -782,7 +804,13 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         cell.isDrawDottedLine = NO;
     }
-    cell.model = self.kLineModelArr[indexPath.row];
+    if (self.kLineModelArr.count<self.needDrawKlineCount)
+    {
+        cell.model = self.needDrawKlineArr[indexPath.row];
+    }else{
+        cell.model = self.kLineModelArr[indexPath.row];
+    }
+    
     //这句话很关键：在cell中调用drawrect之后，cell中会出现一条线，设置透明色可以解决
     cell.backgroundColor = [UIColor clearColor];
     cell.tableViewHeight = self.subViewHeight;
@@ -835,13 +863,21 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.kLineModelArr.count<=self.needDrawKlineCount) {
-        return;
-    }
     if (!self.isGestureScroll) {
         
         [self hideCrossCurve];
     }
+    if (self.kLineModelArr.count<=self.needDrawKlineCount) {
+       if (scrollView.contentOffset.y+self.subViewWidth>=self.needDrawKlineCount*self.candleWidth)
+        {
+            //阻止最右侧的回弹
+            [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
+        }else if (scrollView.contentOffset.y<=0){
+            [self.tableView setContentOffset:CGPointMake(0, 0)];
+        }
+        return;
+    }
+    
     [self handleMarginBugWith:scrollView];
     
     [self drawWhenScrollViewDidScrollWithScrollView:scrollView];
@@ -1027,6 +1063,22 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)drawTimeLine
 {
+//    if (self.kLineModelArr.count<self.needDrawKlineCount) {
+//        CGFloat count = self.needDrawKlineCount-self.kLineModelArr.count;
+//        KlineModel *firstModel = self.kLineModelArr.firstObject;
+//        for (int i = 0; i<count; i++) {
+//
+//            KlineModel *model = [KlineModel new];
+//            model.openPrice = firstModel.openPrice;
+//            model.closePrice = firstModel.openPrice;
+//            model.highestPrice = firstModel.openPrice;
+//            model.lowestPrice = firstModel.openPrice;
+//            model.volumn = @(0);
+//            model.x = 0;
+//            model.isPlaceHolder = YES;
+//            [self.kLineModelArr insertObject:model atIndex:0];
+//        }
+//    }
     [self calculateNeedDrawKlineArr];
     [self calculateTimeLineMaxAndMinValueWithNeedDrawArr:self.needDrawKlineArr];
     self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
@@ -1039,6 +1091,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
     }
+    while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
+        KlineModel *model  = [KlineModel new];
+        model.isPlaceHolder = YES;
+        [self.needDrawKlineArr insertObject:model atIndex:0];
+    }
     self.timeLineLayer = [[ZXTimeLineLayer alloc] initCurrentNeedDrawDataArr:self.needDrawKlineArr rowHeight:self.candleWidth minValue:self.minAssert heightPerpoint:self.heightPerPoint totalHeight:self.subViewHeight candleChartHeight:self.candleChartHeight];
     [self.tableView.layer addSublayer:self.timeLineLayer];
     [self delegateToReloadPriceView];
@@ -1047,21 +1104,21 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)drawCandle
 {
-    if (self.kLineModelArr.count<self.needDrawKlineCount) {
-        CGFloat count = self.needDrawKlineCount-self.kLineModelArr.count;
-        KlineModel *firstModel = self.kLineModelArr.firstObject;
-        for (int i = 0; i<count; i++) {
-            
-            KlineModel *model = [KlineModel new];
-            model.openPrice = firstModel.openPrice;
-            model.closePrice = firstModel.openPrice;
-            model.highestPrice = firstModel.openPrice;
-            model.lowestPrice = firstModel.openPrice;
-            model.volumn = @(0);
-            model.isPlaceHolder = YES;
-            [self.kLineModelArr insertObject:model atIndex:0];
-        }
-    }
+//    if (self.kLineModelArr.count<self.needDrawKlineCount) {
+//        CGFloat count = self.needDrawKlineCount-self.kLineModelArr.count;
+//        KlineModel *firstModel = self.kLineModelArr.firstObject;
+//        for (int i = 0; i<count; i++) {
+//
+//            KlineModel *model = [KlineModel new];
+//            model.openPrice = firstModel.openPrice;
+//            model.closePrice = firstModel.openPrice;
+//            model.highestPrice = firstModel.openPrice;
+//            model.lowestPrice = firstModel.openPrice;
+//            model.volumn = @(0);
+//            model.isPlaceHolder = YES;
+//            [self.kLineModelArr insertObject:model atIndex:0];
+//        }
+//    }
     [self calculateNeedDrawKlineArr];
     [self calculateMaxAndMinValueWithNeedDrawArr:self.needDrawKlineArr];
     NSArray *MA5DataArr  = nil;
@@ -1286,6 +1343,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //经验证，地址是一个，都是指向同一个对象
     //[self calculatePositionWithOrignalArr:self.kLineModelArr];
     [self calculatePositionWithOrignalArr:self.needDrawKlineArr];
+    while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
+        KlineModel *model  = [KlineModel new];
+        model.isPlaceHolder = YES;
+        [self.needDrawKlineArr insertObject:model atIndex:0];
+    }
     [self.tableView reloadData];
 }
 - (void)calculateTimeLineMaxAndMinValueWithNeedDrawArr:(NSArray *)needDrawArr
@@ -1433,15 +1495,28 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         currentPositionIndexInDataArr = self.needDrawStartIndex + currentPositionIndex;
     }
-    if (currentPositionIndexInDataArr>=self.kLineModelArr.count) {
-        
-        return;
+    if (self.kLineModelArr.count<self.needDrawKlineCount) {
+        if (currentPositionIndexInDataArr>=self.needDrawKlineCount) {
+            
+            return;
+        }
+    }else{
+        if (currentPositionIndexInDataArr>=self.kLineModelArr.count) {
+            
+            return;
+        }
     }
+    
     // NSLog(@"当前位置的model.timeStr%@",model.timeStr);
     // NSLog(@"currentIndex===%ld",(long)currentPositionIndex);
    
     //    数据已经验证没问题
-    KlineModel *moddel = self.kLineModelArr[currentPositionIndexInDataArr];
+    KlineModel *moddel = nil;
+    if (self.kLineModelArr.count<self.needDrawKlineCount) {
+        moddel = self.needDrawKlineArr[currentPositionIndexInDataArr];
+    }else{
+        moddel = self.kLineModelArr[currentPositionIndexInDataArr];
+    }
     if ([self.delegate respondsToSelector:@selector(longpressPointCandleModel:longPressPoint:)]) {
         
         [self.delegate longpressPointCandleModel:moddel longPressPoint:position];
@@ -1465,33 +1540,32 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         [self.delegate shouldToReloadCurrentPositionTimeWithPositonX:newPointX timeStr:moddel.timeStr];
         
         
-        
-        //滚动
-        if (positionX>=(self.subViewWidth-self.candleWidth/2.0)) {
-            
-            self.isGestureScroll = YES;
-            CGFloat offsetY = (self.needDrawStartIndex+1)*self.candleWidth;
-            if (offsetY>=self.kLineModelArr.count*self.candleWidth-self.subViewWidth) {
+        if (self.kLineModelArr.count>self.needDrawKlineCount) {
+            //滚动
+            if (positionX>=(self.subViewWidth-self.candleWidth/2.0)) {
                 
-                offsetY = self.kLineModelArr.count*self.candleWidth-self.subViewWidth;
+                self.isGestureScroll = YES;
+                CGFloat offsetY = (self.needDrawStartIndex+1)*self.candleWidth;
+                if (offsetY>=self.kLineModelArr.count*self.candleWidth-self.subViewWidth) {
+                    
+                    offsetY = self.kLineModelArr.count*self.candleWidth-self.subViewWidth;
+                }
+                [self.tableView setContentOffset:CGPointMake(0, offsetY)];
+                self.isGestureScroll = NO;
+            }else if (positionX<=self.candleWidth/2.0)
+            {
+                self.isGestureScroll = YES;
+                CGFloat offsetY = (self.needDrawStartIndex-1)*self.candleWidth;
+                if (offsetY<=0) {
+                    
+                    offsetY = 0;
+                }
+                [self.tableView setContentOffset:CGPointMake(0, offsetY)];
+                self.isGestureScroll = NO;
             }
-            [self.tableView setContentOffset:CGPointMake(0, offsetY)];
-            self.isGestureScroll = NO;
-        }else if (positionX<=self.candleWidth/2.0)
-        {
-            self.isGestureScroll = YES;
-            CGFloat offsetY = (self.needDrawStartIndex-1)*self.candleWidth;
-            if (offsetY<=0) {
-                
-                offsetY = 0;
-            }
-            [self.tableView setContentOffset:CGPointMake(0, offsetY)];
-            self.isGestureScroll = NO;
         }
     }
     NSLog(@"highestPrice===%@,%f,%f,%f,%f,%ld",moddel.timeStr,moddel.openPrice,moddel.closePrice,moddel.highestPrice,moddel.lowestPrice,(long)moddel.timestamp);
-    
-    
     if (!moddel.isPlaceHolder) {
         
         [self getLongPressDetailFromQuotaWithIndexInCurrentDrawKlineModelArr:(currentPositionIndexInDataArr-self.needDrawStartIndex)];
@@ -1773,6 +1847,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (BOOL)isScrollToBottom
 {
+    if (self.kLineModelArr.count<self.needDrawKlineCount) {
+        return YES;
+    }
     _isScrollToBottom = self.needDrawStartIndex+1 < (self.kLineModelArr.count-self.needDrawKlineCount)?NO:YES;
     return _isScrollToBottom;
 }

@@ -36,30 +36,43 @@
 }
 - (void)drawWithPositionArr:(NSArray *)positionArr
 {
-    NSInteger startIndex = ((KlineModel *)(self.currentNeedDrawDataArr.firstObject)).x;
-    NSInteger endIndex = ((KlineModel *)(self.currentNeedDrawDataArr.lastObject)).x;
+    __block NSInteger invalidNumCount = 0;
+    if ([positionArr containsObject:@"-"]) {
+        
+        [positionArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSString class]]) {
+                
+                if ([obj isEqualToString:@"-"]) {
+                    
+                    invalidNumCount += 1;
+                }
+            }
+            
+        }];
+    }
+    NSInteger startIndex = ((KlineModel *)(self.currentNeedDrawDataArr[invalidNumCount])).x;
     self.beizerPath = [UIBezierPath bezierPath];
     [positionArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 
-        if (idx==0) {
+        if (![obj isKindOfClass:[NSString class]]) {
+            if (idx==invalidNumCount) {
+                [self.beizerPath moveToPoint:CGPointMake([obj doubleValue], self.rowHeight*(startIndex+idx)+self.rowHeight/2)];
+            }else{
             
-            [self.beizerPath moveToPoint:CGPointMake([obj doubleValue], self.rowHeight*(startIndex+idx)+self.rowHeight/2)];
-        }else{
-            
-            [self.beizerPath addLineToPoint:CGPointMake([obj doubleValue], self.rowHeight*(startIndex+idx)+self.rowHeight/2)];
+                [self.beizerPath addLineToPoint:CGPointMake([obj doubleValue], self.rowHeight*(startIndex+idx)+self.rowHeight/2)];
+            }
         }
-
     }];
-    
     self.path = self.beizerPath.CGPath;
     self.lineWidth = 0.6;
     self.strokeColor = [UIColor blueColor].CGColor;
     self.fillColor = [UIColor clearColor].CGColor;
     
-    
-    
-    [self.beizerPath addLineToPoint:CGPointMake((self.totalHeight-self.candleChartHeight), endIndex*self.rowHeight+self.rowHeight/2)];
-    [self.beizerPath addLineToPoint:CGPointMake((self.totalHeight-self.candleChartHeight), startIndex*self.rowHeight+self.rowHeight/2)];
+
+
+    [self.beizerPath addLineToPoint:CGPointMake((self.totalHeight-self.candleChartHeight), (startIndex+positionArr.count-0.5)*self.rowHeight)];
+    [self.beizerPath addLineToPoint:CGPointMake((self.totalHeight-self.candleChartHeight), (startIndex+invalidNumCount)*self.rowHeight+self.rowHeight/2)];
     [self.beizerPath closePath];
     CAShapeLayer *fillColorLayer = [CAShapeLayer layer];
     fillColorLayer.path = self.beizerPath.CGPath;
@@ -72,10 +85,12 @@
 {
     NSMutableArray *timeLinePositionArr = [NSMutableArray array];
     [dataArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-    
-        double positionY = (model.closePrice - self.minValue)*self.heightPerpoint+(self.totalHeight-self.candleChartHeight);
-        [timeLinePositionArr addObject:@(positionY)];
-       
+        if (model.isPlaceHolder) {
+            [timeLinePositionArr addObject:@"-"];
+        }else{
+            double positionY = (model.closePrice - self.minValue)*self.heightPerpoint+(self.totalHeight-self.candleChartHeight);
+            [timeLinePositionArr addObject:@(positionY)];
+        }
     }];
     return [timeLinePositionArr copy];
 }
