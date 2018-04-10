@@ -1217,6 +1217,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
 #pragma mark - 绘制MA及相关计算
 - (void)reCalculateMaxAndMinWhenDrawMALayerWithAllDataArr:(NSArray *)allNeedDrawArr{
+    if (allNeedDrawArr.count<=0) {
+        return;
+    }
     __block double tempMax = 0;
     __block double tempMin = 0;
     [allNeedDrawArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
