@@ -174,9 +174,12 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         self.isFirst = YES;
         self.isCandleFullScreen = NO;
         self.isNew = 0;
-        self.MA1Day = 5;
-        self.MA2Day = 10;
-        self.MA3Day = 20;
+        NSInteger MA1Day = [[NSUserDefaults standardUserDefaults] integerForKey:kMA1Day];
+        NSInteger MA2Day = [[NSUserDefaults standardUserDefaults] integerForKey:kMA2Day];
+        NSInteger MA3Day = [[NSUserDefaults standardUserDefaults] integerForKey:kMA3Day];
+        self.MA1Day = MA1Day?MA1Day:5;
+        self.MA2Day = MA2Day?MA2Day:10;
+        self.MA3Day = MA3Day?MA3Day:20;
         self.isDrawKline = YES;
         UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
         [self.tableView addGestureRecognizer:pinchGesture];
@@ -229,6 +232,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         }else{
             [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count)*self.candleWidth-self.subViewWidth-0.5)];
         }
+
     });
     
 }
@@ -868,7 +872,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         [self hideCrossCurve];
     }
     if (self.kLineModelArr.count<=self.needDrawKlineCount) {
-       if (scrollView.contentOffset.y+self.subViewWidth>=self.needDrawKlineCount*self.candleWidth)
+        if (scrollView.contentOffset.y+self.subViewWidth>=self.needDrawKlineCount*self.candleWidth)
         {
             //阻止最右侧的回弹
             [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
@@ -1038,6 +1042,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)reDrawMAWithMA1Day:(NSInteger)MA1Day MA2:(NSInteger)MA2Day MA3:(NSInteger)MA3Day
 {
+    [[NSUserDefaults standardUserDefaults] setInteger:MA1Day forKey:kMA1Day];
+    [[NSUserDefaults standardUserDefaults] setInteger:MA2Day forKey:kMA2Day];
+    [[NSUserDefaults standardUserDefaults] setInteger:MA3Day forKey:kMA3Day];
     self.MA1Day = MA1Day;
     self.MA2Day = MA2Day;
     self.MA3Day = MA3Day;
@@ -1602,13 +1609,13 @@ static NSString *const kCandleWidth = @"kCandleWidth";
                 NSNumber *value = values[index];
                 NSString *result = [self transformNumberToLengthEightWithNumber:value];
                 UIColor *attributedColor = nil;
-                if ([keys.firstObject isEqualToString:@"MA5"]) {
+                if ([keys.firstObject isEqualToString:[NSString stringWithFormat:@"MA%ld",self.MA1Day]]) {
                     
                     attributedColor = MA1Color;
-                }else if ([keys.firstObject isEqualToString:@"MA10"])
+                }else if ([keys.firstObject isEqualToString:[NSString stringWithFormat:@"MA%ld",self.MA2Day]])
                 {
                     attributedColor = MA2Color;
-                }else if ([keys.firstObject isEqualToString:@"MA20"])
+                }else if ([keys.firstObject isEqualToString:[NSString stringWithFormat:@"MA%ld",self.MA3Day]])
                 {
                     attributedColor = MA3Color;
                 }

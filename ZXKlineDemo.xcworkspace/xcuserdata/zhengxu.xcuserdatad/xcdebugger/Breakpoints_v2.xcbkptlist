@@ -56,9 +56,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1093"
-            endingLineNumber = "1093"
-            landmarkName = "-drawTimeLine"
-            landmarkType = "7">
+            endingLineNumber = "1093">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -152,9 +150,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "640"
-            endingLineNumber = "640"
-            landmarkName = "-drawLastKlineWithNewKlineModel:isNew:"
-            landmarkType = "7">
+            endingLineNumber = "640">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -168,9 +164,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "644"
-            endingLineNumber = "644"
-            landmarkName = "-drawLastKlineWithNewKlineModel:isNew:"
-            landmarkType = "7">
+            endingLineNumber = "644">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
