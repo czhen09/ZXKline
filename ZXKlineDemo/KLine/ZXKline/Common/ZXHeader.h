@@ -13,6 +13,10 @@ static NSString *const kHigh  = @"kHigh";
 static NSString *const kLow   = @"kLow";
 //
 static NSString *const kDrawJustKline   = @"kDrawJustKline";
+//
+static NSString *const kMA1Day = @"MA1Day";
+static NSString *const kMA2Day = @"MA2Day";
+static NSString *const kMA3Day = @"MA3Day";
 /**
  * 请求更多的回掉
  */

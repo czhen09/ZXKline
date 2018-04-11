@@ -52,11 +52,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "544970524.737767"
+            timestampString = "545110347.254774"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1093"
-            endingLineNumber = "1093">
+            endingLineNumber = "1093"
+            landmarkName = "-drawTimeLine"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -146,11 +148,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "544970524.7379301"
+            timestampString = "545110347.2552429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "640"
-            endingLineNumber = "640">
+            endingLineNumber = "640"
+            landmarkName = "-drawLastKlineWithNewKlineModel:isNew:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -160,11 +164,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "544970524.7379839"
+            timestampString = "545110347.2555031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "644"
-            endingLineNumber = "644">
+            endingLineNumber = "644"
+            landmarkName = "-drawLastKlineWithNewKlineModel:isNew:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
