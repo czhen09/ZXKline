@@ -117,7 +117,7 @@
     }
     
     struct CGColor *strokeColor = nil;
-    if (self.quotaMinValue<0&&self.quotaMaxValue>0) {
+    if (self.quotaMinValue<0&&self.quotaMaxValue>0&&!self.columnColorArr) {
         
         if (x>zeroValue) {
             strokeColor = RISECOLOR.CGColor;

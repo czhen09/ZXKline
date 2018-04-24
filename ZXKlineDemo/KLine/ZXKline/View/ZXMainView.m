@@ -1355,6 +1355,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     [self calculatePositionWithOrignalArr:self.needDrawKlineArr];
     while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
         KlineModel *model  = [KlineModel new];
+        model.volumn = @(0);
         model.isPlaceHolder = YES;
         [self.needDrawKlineArr insertObject:model atIndex:0];
     }

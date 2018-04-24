@@ -553,7 +553,6 @@ static NSString *const kDrop = @"kDrop";
     //COlORARR
     NSMutableArray *VOLColorArr = [NSMutableArray array];
     [currentDrawKlineModelArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         [VOLDataArr addObject:model.volumn];
         if (model.x>=4) {
             [VOL_MA5DataArr addObject:model.volumn_MA5];
