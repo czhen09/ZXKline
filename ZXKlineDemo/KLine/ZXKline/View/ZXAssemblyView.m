@@ -17,6 +17,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "ZXMessageBoxView.h"
 #import "ZXTopCandleInfoView.h"
+#import "ExtremumView.h"
 static NSString *const kRise = @"kRise";
 static NSString *const kDrop = @"kDrop";
 
@@ -132,6 +133,10 @@ static NSString *const kDrop = @"kDrop";
 @property (nonatomic,assign) double delegatePrice;
 @property (nonatomic,assign) BOOL isShowingStopHoldLine;
 @property (nonatomic,assign) BOOL isShowingAllReferenceLine;
+
+//显示极大值视图
+@property (nonatomic,strong) ExtremumView  *maximumView;
+@property (nonatomic,strong) ExtremumView  *minimumView;
 @end
 
 @implementation ZXAssemblyView
@@ -1240,7 +1245,40 @@ static NSString *const kDrop = @"kDrop";
     }
 
 }
+#pragma mark - 显示/更新极值
+- (void)updateMaxAndMinViewWithMaxPoint:(CGPoint)maxPoint minPoint:(CGPoint)minPoint maxValue:(double)maxValue minValue:(double)minValue
+{
 
+    if (maxPoint.x>SCREEN_WIDTH/2.0) {
+        [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self).offset(maxPoint.x-60);
+            make.bottom.mas_equalTo(self).offset(-maxPoint.y);
+        }];
+        [self.maximumView updateExtremumViewWithArrowPositionLeft:NO price:maxValue];
+    }else{
+        [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self).offset(maxPoint.x);
+            make.bottom.mas_equalTo(self).offset(-maxPoint.y);
+        }];
+        [self.maximumView updateExtremumViewWithArrowPositionLeft:YES price:maxValue];
+    }
+    
+    
+    //
+    if (minPoint.x>SCREEN_WIDTH/2.0) {
+        [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self).offset(minPoint.x-60);
+            make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
+        }];
+        [self.minimumView updateExtremumViewWithArrowPositionLeft:NO price:minValue];
+    }else{
+        [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self).offset(minPoint.x);
+            make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
+        }];
+        [self.minimumView updateExtremumViewWithArrowPositionLeft:YES price:minValue];
+    }
+}
 #pragma mark - ZXAccessoryDelegate
 - (void)accessoryActionWithAccessoryName:(AccessoryName)accessoryName isLongPress:(BOOL)isLongPress
 {
@@ -1541,5 +1579,32 @@ static NSString *const kDrop = @"kDrop";
     }
     return _topCandleInfoView;
 }
-
+- (ExtremumView *)maximumView
+{
+    if (!_maximumView) {
+        _maximumView = [[ExtremumView alloc] init];
+        [self addSubview:_maximumView];
+        [_maximumView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self);
+            make.bottom.mas_equalTo(self);
+            make.width.mas_equalTo(60);
+            make.height.mas_equalTo(20);
+        }];
+    }
+    return _maximumView;
+}
+- (ExtremumView *)minimumView
+{
+    if (!_minimumView) {
+        _minimumView = [[ExtremumView alloc] init];
+        [self addSubview:_minimumView];
+        [_minimumView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self);
+            make.bottom.mas_equalTo(self);
+            make.width.mas_equalTo(60);
+            make.height.mas_equalTo(20);
+        }];
+    }
+    return  _minimumView;
+}
 @end

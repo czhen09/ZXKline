@@ -64,6 +64,10 @@
  * 作用在指标区域的点击事件
  */
 - (void)tapActionActOnQuotaArea;
+/**
+ * 返回显示一屏最大最小值所需要的坐标
+ */
+- (void)updateMaxAndMinViewWithMaxPoint:(CGPoint)maxPoint minPoint:(CGPoint)minPoint maxValue:(double)maxValue minValue:(double)minValue;
 @end
 @class KlineModel;
 @interface ZXMainView : UIView

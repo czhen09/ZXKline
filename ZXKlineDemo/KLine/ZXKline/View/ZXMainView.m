@@ -1391,25 +1391,34 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     if (!needDrawArr) {
         return ;
     }
+    UIScrollView *scrollView = self.tableView;
+    CGFloat startOffsetY = scrollView.contentOffset.y - self.needDrawStartIndex*self.candleWidth;
     KlineModel *modelF = needDrawArr.firstObject;
     self.minAssert = modelF.lowestPrice;
     self.maxAssert = modelF.highestPrice;
-    
+    __block CGPoint maxPoint = CGPointMake((modelF.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, modelF.highestPoint+(self.subViewHeight-self.candleChartHeight));;
+    __block CGPoint minPoint = CGPointMake((modelF.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, modelF.lowestPoint+(self.subViewHeight-self.candleChartHeight));
     //峰值应该为全局变量，如果最新的数据在最大最小值之间，就只刷新绘制的那个 cell，否则就要刷新全屏cell
+    
     [needDrawArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if (model.highestPrice>self.maxAssert) {
             
             self.maxAssert = model.highestPrice;
+            maxPoint = CGPointMake((model.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, model.highestPoint+(self.subViewHeight-self.candleChartHeight));
         }
         if (model.lowestPrice<self.minAssert) {
             self.minAssert = model.lowestPrice;
+            minPoint = CGPointMake((model.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, model.lowestPoint+(self.subViewHeight-self.candleChartHeight));
         }
         
     }];
-    
-    
-
+    if (isnan(maxPoint.x)||isnan(maxPoint.y)||isnan(minPoint.x)||isnan(minPoint.y)||maxPoint.y<(self.subViewHeight-self.candleChartHeight)||minPoint.y<(self.subViewHeight-self.candleChartHeight)) {
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(updateMaxAndMinViewWithMaxPoint:minPoint:maxValue:minValue:)]) {
+        [self.delegate updateMaxAndMinViewWithMaxPoint:maxPoint minPoint:minPoint maxValue:self.maxAssert minValue:self.minAssert];
+    }
 }
 - (void)calculatePositionWithOrignalArr:(NSMutableArray *)originalArr
 {

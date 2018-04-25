@@ -182,7 +182,7 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 
 
 #define CandleTopMargin (DrawJustKline?60:20)
-#define CandleBottomMargin (DrawJustKline?100:5)
+#define CandleBottomMargin (DrawJustKline?100:20)
 #define QuotaTopMargin 20
 #define QuotaBottomMargin 5
 
