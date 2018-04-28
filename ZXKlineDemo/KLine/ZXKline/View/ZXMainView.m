@@ -791,7 +791,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.topChartType==ZXTopChartTypeTimeLine) {
-        return 60*4;
+        return TimeLineDataCount;
     }
     if (self.kLineModelArr.count<self.needDrawKlineCount)
     {

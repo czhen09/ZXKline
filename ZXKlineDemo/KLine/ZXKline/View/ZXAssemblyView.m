@@ -606,17 +606,17 @@ static NSString *const kDrop = @"kDrop";
     NSMutableArray *RSI_24DataArr = [NSMutableArray array];
     
     [currentDrawKlineModelArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        if (model.x>=5) {
-            [RSI_6DataArr addObject:model.RSI_6];
+        if (!model.isPlaceHolder) {
+            if (model.x>=5) {
+                [RSI_6DataArr addObject:model.RSI_6];
+            }
+            if (model.x>=11) {
+                [RSI_12DataArr addObject:model.RSI_12];
+            }
+            if (model.x>=23) {
+                [RSI_24DataArr addObject:model.RSI_24];
+            }
         }
-        if (model.x>=11) {
-            [RSI_12DataArr addObject:model.RSI_12];
-        }
-        if (model.x>=23) {
-            [RSI_24DataArr addObject:model.RSI_24];
-        }
-        
     }];
     //极值
     NSDictionary *resultDic = [[ZXCalculator sharedInstance] calculateMaxAndMinValueWithDataArr:@[RSI_6DataArr,RSI_12DataArr,RSI_24DataArr]];
@@ -649,24 +649,20 @@ static NSString *const kDrop = @"kDrop";
     //J
     NSMutableArray *BOOL_DNataArr = [NSMutableArray array];
     
-
+cd 
     [currentDrawKlineModelArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (model.isPlaceHolder) {
-            [openDataArr addObject:@"-"];
-            [closeDataArr addObject:@"-"];
-            [highDataArr addObject:@"-"];
-            [lowDataArr addObject:@"-"];
-        }else{
+        if (!model.isPlaceHolder) {
             [openDataArr addObject:@(model.openPrice)];
             [closeDataArr addObject:@(model.closePrice)];
             [highDataArr addObject:@(model.highestPrice)];
             [lowDataArr addObject:@(model.lowestPrice)];
-        }
-        if (model.x>=19) {
-            
-            [BOOL_UPataArr addObject:model.BOLL_UP];
-            [BOOL_MBataArr addObject:model.BOLL_MB];
-            [BOOL_DNataArr addObject:model.BOLL_DN];
+        
+            if (model.x>=19) {
+                
+                [BOOL_UPataArr addObject:model.BOLL_UP];
+                [BOOL_MBataArr addObject:model.BOLL_MB];
+                [BOOL_DNataArr addObject:model.BOLL_DN];
+            }
         }
     }];
     //极值
@@ -699,14 +695,14 @@ static NSString *const kDrop = @"kDrop";
     NSMutableArray *KDJ_JDataArr = [NSMutableArray array];
     
     [currentDrawKlineModelArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        if (model.x>=8) {
-            
-            [KDJ_KDataArr addObject:model.KDJ_K];
-            [KDJ_DDataArr addObject:model.KDJ_D];
-            [KDJ_JDataArr addObject:model.KDJ_J];
+        if (!model.isPlaceHolder) {
+            if (model.x>=8) {
+                
+                [KDJ_KDataArr addObject:model.KDJ_K];
+                [KDJ_DDataArr addObject:model.KDJ_D];
+                [KDJ_JDataArr addObject:model.KDJ_J];
+            }
         }
-        
     }];
     //极值
     NSDictionary *resultDic = [[ZXCalculator sharedInstance] calculateMaxAndMinValueWithDataArr:@[KDJ_KDataArr,KDJ_DDataArr,KDJ_JDataArr]];
