@@ -1101,6 +1101,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
         KlineModel *model  = [KlineModel new];
         model.isPlaceHolder = YES;
+        model.volumn = @(0);
         [self.needDrawKlineArr insertObject:model atIndex:0];
     }
     self.timeLineLayer = [[ZXTimeLineLayer alloc] initCurrentNeedDrawDataArr:self.needDrawKlineArr rowHeight:self.candleWidth minValue:self.minAssert heightPerpoint:self.heightPerPoint totalHeight:self.subViewHeight candleChartHeight:self.candleChartHeight];
@@ -1396,20 +1397,20 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     KlineModel *modelF = needDrawArr.firstObject;
     self.minAssert = modelF.lowestPrice;
     self.maxAssert = modelF.highestPrice;
-    __block CGPoint maxPoint = CGPointMake((modelF.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, modelF.highestPoint+(self.subViewHeight-self.candleChartHeight));;
-    __block CGPoint minPoint = CGPointMake((modelF.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, modelF.lowestPoint+(self.subViewHeight-self.candleChartHeight));
+    __block CGPoint maxPoint = CGPointMake((modelF.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, modelF.highestPoint+(self.subViewHeight-self.candleChartHeight));
+    __block CGPoint minPoint = CGPointMake((modelF.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, modelF.lowestPoint+(self.subViewHeight-self.candleChartHeight));
     //峰值应该为全局变量，如果最新的数据在最大最小值之间，就只刷新绘制的那个 cell，否则就要刷新全屏cell
     
     [needDrawArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if (model.highestPrice>self.maxAssert) {
+        if (model.highestPrice>=self.maxAssert) {
             
             self.maxAssert = model.highestPrice;
-            maxPoint = CGPointMake((model.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, model.highestPoint+(self.subViewHeight-self.candleChartHeight));
+            maxPoint = CGPointMake((model.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, model.highestPoint+(self.subViewHeight-self.candleChartHeight));
         }
-        if (model.lowestPrice<self.minAssert) {
+        if (model.lowestPrice<=self.minAssert) {
             self.minAssert = model.lowestPrice;
-            minPoint = CGPointMake((model.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, model.lowestPoint+(self.subViewHeight-self.candleChartHeight));
+            minPoint = CGPointMake((model.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, model.lowestPoint+(self.subViewHeight-self.candleChartHeight));
         }
         
     }];

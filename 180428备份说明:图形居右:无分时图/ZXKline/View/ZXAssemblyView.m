@@ -1248,16 +1248,17 @@ static NSString *const kDrop = @"kDrop";
 #pragma mark - 显示/更新极值
 - (void)updateMaxAndMinViewWithMaxPoint:(CGPoint)maxPoint minPoint:(CGPoint)minPoint maxValue:(double)maxValue minValue:(double)minValue
 {
-
+    
+    //60是视图宽度
     if (maxPoint.x>SCREEN_WIDTH/2.0) {
         [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(maxPoint.x-60);
+            make.left.mas_equalTo(self).offset(maxPoint.x-60+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-maxPoint.y);
         }];
         [self.maximumView updateExtremumViewWithArrowPositionLeft:NO price:maxValue];
     }else{
         [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(maxPoint.x);
+            make.left.mas_equalTo(self).offset(maxPoint.x+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-maxPoint.y);
         }];
         [self.maximumView updateExtremumViewWithArrowPositionLeft:YES price:maxValue];
@@ -1267,13 +1268,13 @@ static NSString *const kDrop = @"kDrop";
     //
     if (minPoint.x>SCREEN_WIDTH/2.0) {
         [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(minPoint.x-60);
+            make.left.mas_equalTo(self).offset(minPoint.x-60+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
         }];
         [self.minimumView updateExtremumViewWithArrowPositionLeft:NO price:minValue];
     }else{
         [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(minPoint.x);
+            make.left.mas_equalTo(self).offset(minPoint.x+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
         }];
         [self.minimumView updateExtremumViewWithArrowPositionLeft:YES price:minValue];
