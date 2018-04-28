@@ -35,6 +35,8 @@
 		2461CAF41F39BC2C0019AF4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2461CAF21F39BC2C0019AF4D /* LaunchScreen.storyboard */; };
 		2461CAFF1F39BC2C0019AF4D /* ZXKlineDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2461CAFE1F39BC2C0019AF4D /* ZXKlineDemoTests.m */; };
 		2461CB0A1F39BC2C0019AF4D /* ZXKlineDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2461CB091F39BC2C0019AF4D /* ZXKlineDemoUITests.m */; };
+		2473970620917FDF00167A6C /* ZXBrokenLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2473970520917FDF00167A6C /* ZXBrokenLineLayer.m */; };
+		24783D5B2092C43000BA922D /* ZXRippleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24783D5A2092C43000BA922D /* ZXRippleLayer.m */; };
 		24A1575E1F9996AF0082C308 /* MALayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1570C1F9996AE0082C308 /* MALayer.m */; };
 		24A1575F1F9996AF0082C308 /* ZXCandleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1570E1F9996AE0082C308 /* ZXCandleCell.m */; };
 		24A157601F9996AF0082C308 /* ZXJumpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157101F9996AE0082C308 /* ZXJumpView.m */; };
@@ -53,7 +55,6 @@
 		24A1577A1F9996AF0082C308 /* ZXDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1573D1F9996AE0082C308 /* ZXDataReformer.m */; };
 		24A1577B1F9996AF0082C308 /* ZXQuotaDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1573F1F9996AE0082C308 /* ZXQuotaDataReformer.m */; };
 		24A1577C1F9996AF0082C308 /* ZXSocketDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157411F9996AE0082C308 /* ZXSocketDataReformer.m */; };
-		24A1577D1F9996AF0082C308 /* ZXTimeLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157441F9996AE0082C308 /* ZXTimeLineLayer.m */; };
 		24A1577E1F9996AF0082C308 /* ZXCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A157471F9996AE0082C308 /* ZXCalculator.m */; };
 		24A1577F1F9996AF0082C308 /* ZXAssemblyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1574A1F9996AE0082C308 /* ZXAssemblyView.m */; };
 		24A157801F9996AF0082C308 /* ZXMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A1574C1F9996AE0082C308 /* ZXMainView.m */; };
@@ -120,6 +121,10 @@
 		2461CB051F39BC2C0019AF4D /* ZXKlineDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZXKlineDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2461CB091F39BC2C0019AF4D /* ZXKlineDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXKlineDemoUITests.m; sourceTree = "<group>"; };
 		2461CB0B1F39BC2D0019AF4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2473970420917FDF00167A6C /* ZXBrokenLineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXBrokenLineLayer.h; sourceTree = "<group>"; };
+		2473970520917FDF00167A6C /* ZXBrokenLineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXBrokenLineLayer.m; sourceTree = "<group>"; };
+		24783D592092C43000BA922D /* ZXRippleLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXRippleLayer.h; sourceTree = "<group>"; };
+		24783D5A2092C43000BA922D /* ZXRippleLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZXRippleLayer.m; sourceTree = "<group>"; };
 		24A1570B1F9996AD0082C308 /* MALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALayer.h; sourceTree = "<group>"; };
 		24A1570C1F9996AE0082C308 /* MALayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALayer.m; sourceTree = "<group>"; };
 		24A1570D1F9996AE0082C308 /* ZXCandleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCandleCell.h; sourceTree = "<group>"; };
@@ -157,8 +162,6 @@
 		24A1573F1F9996AE0082C308 /* ZXQuotaDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaDataReformer.m; sourceTree = "<group>"; };
 		24A157401F9996AE0082C308 /* ZXSocketDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXSocketDataReformer.h; sourceTree = "<group>"; };
 		24A157411F9996AE0082C308 /* ZXSocketDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXSocketDataReformer.m; sourceTree = "<group>"; };
-		24A157431F9996AE0082C308 /* ZXTimeLineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTimeLineLayer.h; sourceTree = "<group>"; };
-		24A157441F9996AE0082C308 /* ZXTimeLineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTimeLineLayer.m; sourceTree = "<group>"; };
 		24A157461F9996AE0082C308 /* ZXCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCalculator.h; sourceTree = "<group>"; };
 		24A157471F9996AE0082C308 /* ZXCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCalculator.m; sourceTree = "<group>"; };
 		24A157491F9996AE0082C308 /* ZXAssemblyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAssemblyView.h; sourceTree = "<group>"; };
@@ -324,16 +327,43 @@
 			path = ZXKlineDemoUITests;
 			sourceTree = "<group>";
 		};
+		247396FD20917FA300167A6C /* TopChartType */ = {
+			isa = PBXGroup;
+			children = (
+				2473970320917FDF00167A6C /* TopChartTypeBrokenLine */,
+				2473970220917FC800167A6C /* TopChartTypeTimeLine */,
+			);
+			path = TopChartType;
+			sourceTree = "<group>";
+		};
+		2473970220917FC800167A6C /* TopChartTypeTimeLine */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TopChartTypeTimeLine;
+			sourceTree = "<group>";
+		};
+		2473970320917FDF00167A6C /* TopChartTypeBrokenLine */ = {
+			isa = PBXGroup;
+			children = (
+				2473970420917FDF00167A6C /* ZXBrokenLineLayer.h */,
+				2473970520917FDF00167A6C /* ZXBrokenLineLayer.m */,
+				24783D592092C43000BA922D /* ZXRippleLayer.h */,
+				24783D5A2092C43000BA922D /* ZXRippleLayer.m */,
+			);
+			path = TopChartTypeBrokenLine;
+			sourceTree = "<group>";
+		};
 		24A157091F9996AD0082C308 /* ZXKline */ = {
 			isa = PBXGroup;
 			children = (
+				247396FD20917FA300167A6C /* TopChartType */,
 				2433EC2820909C6400FA67D1 /* imageAsset */,
 				24A1570A1F9996AD0082C308 /* Candle */,
 				24A157131F9996AE0082C308 /* Common */,
 				24A1572F1F9996AE0082C308 /* Model */,
 				24A157321F9996AE0082C308 /* Quota */,
 				24A157391F9996AE0082C308 /* Reformer */,
-				24A157421F9996AE0082C308 /* TimeLine */,
 				24A157451F9996AE0082C308 /* Tool */,
 				24A157481F9996AE0082C308 /* View */,
 			);
@@ -411,15 +441,6 @@
 				24A157411F9996AE0082C308 /* ZXSocketDataReformer.m */,
 			);
 			path = Reformer;
-			sourceTree = "<group>";
-		};
-		24A157421F9996AE0082C308 /* TimeLine */ = {
-			isa = PBXGroup;
-			children = (
-				24A157431F9996AE0082C308 /* ZXTimeLineLayer.h */,
-				24A157441F9996AE0082C308 /* ZXTimeLineLayer.m */,
-			);
-			path = TimeLine;
 			sourceTree = "<group>";
 		};
 		24A157451F9996AE0082C308 /* Tool */ = {
@@ -753,7 +774,6 @@
 			files = (
 				24A157651F9996AF0082C308 /* ZXPriceView.m in Sources */,
 				241C44411F67CAA1001C758C /* SecondStepViewController.m in Sources */,
-				24A1577D1F9996AF0082C308 /* ZXTimeLineLayer.m in Sources */,
 				24A157621F9996AF0082C308 /* ZXAccessoryView.m in Sources */,
 				24A157671F9996AF0082C308 /* ZXTopCandleInfoView.m in Sources */,
 				24A1577F1F9996AF0082C308 /* ZXAssemblyView.m in Sources */,
@@ -770,8 +790,10 @@
 				24A157761F9996AF0082C308 /* ZXQuotaColumnLayer.m in Sources */,
 				2459FADE1F695882002FE26C /* JoinUpSocketViewController.m in Sources */,
 				2461CAE61F39BC280019AF4D /* main.m in Sources */,
+				2473970620917FDF00167A6C /* ZXBrokenLineLayer.m in Sources */,
 				2433EC252090670C00FA67D1 /* ExtremumView.m in Sources */,
 				24A157801F9996AF0082C308 /* ZXMainView.m in Sources */,
+				24783D5B2092C43000BA922D /* ZXRippleLayer.m in Sources */,
 				24A157751F9996AF0082C308 /* KlineModel.m in Sources */,
 				24A157781F9996AF0082C308 /* ZXQuotaSynthsisLayer.m in Sources */,
 				24A157631F9996AF0082C308 /* ZXCandleDetailView.m in Sources */,

@@ -102,14 +102,14 @@
     NSMutableArray *quotaPositionArr = [NSMutableArray array];
     [dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if (![obj isKindOfClass:[NSString class]]) {
-            
+//        if (![obj isKindOfClass:[NSString class]]) {
+        
             double value = [obj doubleValue];
             double quotaPositionY = (value - self.quotaMinValue)*self.heightPerpoint;
             [quotaPositionArr addObject:@(quotaPositionY)];
-        }else{
-            [quotaPositionArr addObject:@"-"];
-        }
+//        }else{
+//            [quotaPositionArr addObject:@"-"];
+//        }
         
     }];
     return [quotaPositionArr copy];

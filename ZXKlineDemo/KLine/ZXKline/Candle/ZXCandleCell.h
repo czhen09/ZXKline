@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "KlineModel.h"
+#import "ZXHeader.h"
 @interface ZXCandleCell : UITableViewCell
 
 @property (nonatomic,strong) KlineModel *model;
@@ -17,6 +18,6 @@
 @property (nonatomic,assign) CGFloat middleBlankSpace;
 @property (nonatomic,assign) CGFloat tableViewHeight;
 @property (nonatomic,assign) CGFloat detailDisplayLabelHeight;
-//用于判断是绘制蜡烛线还是山形图
-@property (nonatomic,assign) BOOL isDrawKline;
+@property (nonatomic,assign) ZXTopChartType topChartType;
+@property (nonatomic,strong) NSString  *timeLineTime;
 @end

@@ -31,11 +31,14 @@ typedef NS_ENUM(NSUInteger, RequestMoreResultType) {
 
 typedef void (^SuccessBlock) (RequestMoreResultType resultType,NSArray *result);
 /**
- * 上半部分
+ * 上半部分;默认是第一个值,如果需要改默认,可以修改顺序
+ * 如果第一个修改为分时线的话,下面的第一个名称也需要切换到成交量
  */
-typedef NS_ENUM(NSUInteger, TopChartContentType) {
-    TopChartContentTypeWithCandle = 0,
-    TopChartContentTypeTineLine,
+typedef NS_ENUM(NSUInteger,ZXTopChartType)
+{
+    ZXTopChartTypeCandle,/*蜡烛*/
+    ZXTopChartTypeBrokenLine,/*折线*/
+    ZXTopChartTypeTimeLine,/*分时线*/
 };
 /**
  * 绘制的指标类型
@@ -184,7 +187,7 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 #define CandleTopMargin (DrawJustKline?60:20)
 #define CandleBottomMargin (DrawJustKline?100:20)
 #define QuotaTopMargin 20
-#define QuotaBottomMargin 5
+#define QuotaBottomMargin 0
 
 
 /**
@@ -268,6 +271,8 @@ typedef NS_ENUM(NSUInteger, ColumnWidthType) {
 //蜡烛的信息配置的位置：YES->单独的view显示在view顶部；NO->弹框覆盖在蜡烛上
 #define IsDisplayCandelInfoInTop YES
 
+//分时线一屏数据个数
+#define TimeLineDataCount 240
 
 #ifndef ZXHeader_h
 #define ZXHeader_h

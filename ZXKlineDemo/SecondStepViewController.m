@@ -32,7 +32,7 @@
 /**
  *
  */
-@property (nonatomic,assign) TopChartContentType topChartContentType;
+@property (nonatomic,assign) ZXTopChartType topChartType;
 
 
 @end
@@ -51,7 +51,7 @@
     //这句话必须要,否则拖动到两端会出现白屏
     self.automaticallyAdjustsScrollViewInsets = NO;
     //
-    self.topChartContentType = TopChartContentTypeWithCandle;
+    self.topChartType = ZXTopChartTypeCandle;
     //
     self.currentDrawQuotaName = self.quotaNameArr[0];
     
@@ -180,14 +180,14 @@
 
 - (void)tapActionActOnCandleArea
 {
-    if (self.topChartContentType==TopChartContentTypeTineLine) {
+    if (self.topChartType==ZXTopChartTypeBrokenLine) {
         
-        [self.assenblyView switchTopChartContentWithTopChartContentType:TopChartContentTypeWithCandle];
-        self.topChartContentType = TopChartContentTypeWithCandle;
-    }else if (self.topChartContentType==TopChartContentTypeWithCandle)
+        [self.assenblyView switchTopChartWithTopChartType:ZXTopChartTypeCandle];
+        self.topChartType = ZXTopChartTypeCandle;
+    }else if (self.topChartType==ZXTopChartTypeCandle)
     {
-        [self.assenblyView switchTopChartContentWithTopChartContentType:TopChartContentTypeTineLine];
-        self.topChartContentType = TopChartContentTypeTineLine;
+        [self.assenblyView switchTopChartWithTopChartType:ZXTopChartTypeBrokenLine];
+        self.topChartType = ZXTopChartTypeBrokenLine;
     }
     
 }

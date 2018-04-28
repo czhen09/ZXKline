@@ -107,7 +107,7 @@
 /**
  * @brief 切换分时图和蜡烛图
  */
-- (void)switchTopChartContentWithTopChartContentType:(TopChartContentType)topChartContentType;
+- (void)switchTopChartWithTopChartType:(ZXTopChartType)topChartType;
 
 /**
  * @brief 改变MA的天数绘制不同的均线

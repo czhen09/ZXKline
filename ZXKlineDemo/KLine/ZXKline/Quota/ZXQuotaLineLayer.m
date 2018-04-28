@@ -58,18 +58,18 @@
     }
     
     [positionArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        NSInteger startIndex = 0;
-//        if (invalidNumCount > 0) {
-//            
-//            if (self.startIndex<=invalidNumCount-1) {
-//                
-//                startIndex = invalidNumCount-1+idx;
-//            }else{
-//                startIndex = self.startIndex + idx;
-//            }
-//        }else{
-//            startIndex = self.startIndex + idx;
-//        }
+        NSInteger startIndex = 0;
+        if (invalidNumCount > 0) {
+            
+            if (self.startIndex<=invalidNumCount-1) {
+                
+                startIndex = invalidNumCount-1+idx;
+            }else{
+                startIndex = self.startIndex + idx;
+            }
+        }else{
+            startIndex = self.startIndex + idx;
+        }
         if (![obj isKindOfClass:[NSString class]]) {
             
             
@@ -87,7 +87,7 @@
     }];
     
     self.path = self.beizerPath.CGPath;
-    self.lineWidth = 1;
+    self.lineWidth = 0.5;
     self.strokeColor = self.lineColor.CGColor;
     self.fillColor = [UIColor clearColor].CGColor;
 
@@ -111,7 +111,7 @@
     NSMutableArray *quotaPositionArr = [NSMutableArray array];
     [dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (![obj isKindOfClass:[NSString class]]) {
-            
+        
             double value = [obj doubleValue];
             double quotaPositionY = (value - self.quotaMinValue)*self.heightPerpoint;
             [quotaPositionArr addObject:@(quotaPositionY)];

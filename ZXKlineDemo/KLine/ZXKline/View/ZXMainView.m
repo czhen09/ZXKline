@@ -16,8 +16,9 @@
 #import "ZXQuotaColumnLayer.h"
 #import "ZXQuotaSynthsisLayer.h"
 #import "ZXTimeLineView.h"
-#import "ZXTimeLineLayer.h"
+#import "ZXBrokenLineLayer.h"
 #import "ZXRefresh.h"
+#import "ZXRippleLayer.h"
 //tableView总的高度
 
 /**
@@ -136,14 +137,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
  */
 @property (nonatomic,strong) NSString *quotaName;
 
-
-
-/**
- * 是否绘制k线，如果不是的话就绘制分时线
- */
-@property (nonatomic,assign) BOOL isDrawKline;
-
-@property (nonatomic,strong) ZXTimeLineLayer *timeLineLayer;
+@property (nonatomic,strong) ZXBrokenLineLayer *timeLineLayer;
 
 
 @property (nonatomic,assign) NSInteger MA1Day;
@@ -158,6 +152,15 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
 //是否应该加载更多数据，用于手势拖曳结束的判断
 @property (nonatomic,assign) BOOL isShouldToLoadMoreData;
+
+@property (nonatomic,assign) ZXTopChartType topChartType;
+
+//当数据不足一屏时:有效数据个数
+@property (nonatomic,assign) NSInteger validDataCount;
+//
+@property (nonatomic,strong) ZXRippleLayer  *rippleLayer;
+//切换到分时线的时候需要reloadData次数;
+@property (nonatomic,assign) NSInteger reloadTimes;
 @end
 
 @implementation ZXMainView
@@ -180,7 +183,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         self.MA1Day = MA1Day?MA1Day:5;
         self.MA2Day = MA2Day?MA2Day:10;
         self.MA3Day = MA3Day?MA3Day:20;
-        self.isDrawKline = YES;
         UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
         [self.tableView addGestureRecognizer:pinchGesture];
         
@@ -308,6 +310,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 //缩放：改变的是tableview的rowheight
 - (void)pinchAction:(UIPinchGestureRecognizer *)sender
 {
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        return;
+    }
     //新的缩放
     CGFloat oldNeedDrawStartPointY = self.tableView.contentOffset.y;
     //static修饰的变量只会被赋值一次；相当于声明一个全局变量
@@ -405,10 +410,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     
     //用@"-"填充，当数据在最开始的时候，线条不是从最开始的地方进行的，那么用@@"-"填充到跟needdrawcount的数量一致，改变数据源，进行绘制和后面获取数据；
     NSMutableArray *newDataArr = [NSMutableArray arrayWithArray:dataArr];
-    if (dataArr.count<self.needDrawKlineCount) {
-        
-        for (int i = 0; i<(self.needDrawKlineCount-dataArr.count); i++) {
-            
+    NSInteger oldCount = dataArr.count;
+    if (newDataArr.count<self.validDataCount) {
+        for (int i = 0; i<self.validDataCount-oldCount; i++) {
             [newDataArr insertObject:@"-" atIndex:0];
         }
     }
@@ -529,7 +533,12 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     self.quotaMaxAssert = maxValue;
     self.quotaMinAssert = minValue;
     self.quotaHeightPerPoint = self.quotaChartHeight/(self.quotaMaxAssert - self.quotaMinAssert);
-    ZXQuotaColumnLayer * MA5Layer = [[ZXQuotaColumnLayer alloc] initQuotaDataArr:dataArr currentDrawStartIndex:self.needDrawStartIndex rowHeight:self.candleWidth minValue:self.quotaMinAssert maxValue:self.quotaMaxAssert  heightPerpoint:self.quotaHeightPerPoint columnColorArr:columnColorArr columnWidthType:columnWidthType];
+    ColumnWidthType type = ColumnWidthTypeEqualCandle;
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        type = ColumnWidthTypeEqualLine;
+    }
+    
+    ZXQuotaColumnLayer * MA5Layer = [[ZXQuotaColumnLayer alloc] initQuotaDataArr:dataArr currentDrawStartIndex:self.needDrawStartIndex rowHeight:self.candleWidth minValue:self.quotaMinAssert maxValue:self.quotaMaxAssert  heightPerpoint:self.quotaHeightPerPoint columnColorArr:columnColorArr columnWidthType:type];
     
     
     
@@ -581,7 +590,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         self.quotaHeightPerPoint = 0;
     }
-    
     ZXQuotaLineLayer * MA5Layer = [[ZXQuotaLineLayer alloc] initQuotaDataArr:dataArr currentDrawStartIndex:self.needDrawStartIndex rowHeight:self.candleWidth minValue:self.quotaMinAssert heightPerpoint:self.quotaHeightPerPoint lineColor:lineColor quotaName:quotaName];
     
     //在同一个指标中，不同的指标线或者指标柱，数组中包含了同名的就提换，没有就新增
@@ -606,6 +614,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         [self.quotaLayerArr addObject:quotaLayerDic];
     }
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        return;
+    }
     [self.tableView.layer addSublayer:MA5Layer];
 }
 #pragma mark - 返回数据
@@ -624,15 +635,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     self.kLineModelArr = nil;
     [self.kLineModelArr addObjectsFromArray:dataArr];
     [self drawTopKline];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.kLineModelArr.count<self.needDrawKlineCount) {
-            [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount)*self.candleWidth-self.subViewWidth-0.5)];
-        }else{
-            [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count)*self.candleWidth-self.subViewWidth-0.5)];
-        }
-        
-    });
-    
+    [self scrollToBottom];
 } 
 #pragma mark - 绘制最后一个candle
 - (void)drawLastKlineWithNewKlineModel:(KlineModel *)klineModel isNew:(BOOL)isNew
@@ -678,11 +681,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         KlineModel *newsDataModel =  [self calulatePositionWithKlineModel:klineModel];
         [self.kLineModelArr addObject:newsDataModel];
         [self drawTopKline];
-        if (self.kLineModelArr.count<self.needDrawKlineCount) {
-            [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount)*self.candleWidth-self.subViewWidth-0.5)];
-        }else{
-            [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth+(self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
-        }
+        [self scrollToBottom];
         
     }else{
         
@@ -791,6 +790,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 #pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        return 60*4;
+    }
     if (self.kLineModelArr.count<self.needDrawKlineCount)
     {
         return self.needDrawKlineArr.count;
@@ -801,12 +803,21 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ZXCandleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    NSInteger intervalCount = ceil(DottedLineIntervalSpace/self.candleWidth);
-    if (indexPath.row%intervalCount==0) {
-        
-        cell.isDrawDottedLine = YES;
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        //分时线只需要这些地方需要
+        if (indexPath.row==59||indexPath.row==119||indexPath.row==179) {
+            cell.isDrawDottedLine = YES;
+        }else{
+            cell.isDrawDottedLine = NO;
+        }
     }else{
-        cell.isDrawDottedLine = NO;
+        NSInteger intervalCount = ceil(DottedLineIntervalSpace/self.candleWidth);
+        if (indexPath.row%intervalCount==0) {
+            
+            cell.isDrawDottedLine = YES;
+        }else{
+            cell.isDrawDottedLine = NO;
+        }
     }
     if (self.kLineModelArr.count<self.needDrawKlineCount)
     {
@@ -814,16 +825,19 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         cell.model = self.kLineModelArr[indexPath.row];
     }
-    
     //这句话很关键：在cell中调用drawrect之后，cell中会出现一条线，设置透明色可以解决
     cell.backgroundColor = [UIColor clearColor];
     cell.tableViewHeight = self.subViewHeight;
     cell.candyChartHeight = self.candleChartHeight;
     cell.quotaChartHeight = self.quotaChartHeight;
     cell.middleBlankSpace = self.middleBlankSpace;
-    cell.isDrawKline = self.isDrawKline;
+    cell.topChartType = self.topChartType;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        if (indexPath.row%60==0) {
+            cell.timeLineTime = [NSString stringWithFormat:@"%ld",((KlineModel *)self.needDrawKlineArr.firstObject).timestamp+60*indexPath.row/60];
+        }
+    }
     return cell;
 }
 
@@ -864,6 +878,18 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         oldPositionX = 0;
         self.tableView.scrollEnabled = YES;
     }
+}
+- (void)scrollToBottom
+{
+    if (self.kLineModelArr.count<self.needDrawKlineCount) {
+        [self.tableView setContentOffset:CGPointMake(0, (self.needDrawKlineCount)*self.candleWidth-self.subViewWidth)];
+    }else{
+        [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth+(self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
+    }
+}
+- (void)scrollToTop
+{
+    [self.tableView setContentOffset:CGPointMake(0, 0)];
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -1061,31 +1087,47 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     [self.MADataArr removeAllObjects];
     [self.timeLineLayer removeFromSuperlayer];
     self.timeLineLayer = nil;
-    if (self.isDrawKline) {
-        
-        [self drawCandle];
-    }else{
-        [self drawTimeLine];
+    switch (self.topChartType) {
+        case ZXTopChartTypeCandle:
+            [self.rippleLayer removeFromSuperlayer];
+            self.rippleLayer = nil;
+            self.candleWidth = [[[NSUserDefaults standardUserDefaults] objectForKey:kCandleWidth] floatValue];
+            self.tableView.rowHeight = self.candleWidth;
+            self.tableView.scrollEnabled = YES;
+            [self drawCandle];
+            if (self.reloadTimes!=0) {
+                [self scrollToBottom];
+            }
+            self.reloadTimes = 0;
+            break;
+        case ZXTopChartTypeBrokenLine:
+            [self.rippleLayer removeFromSuperlayer];
+            self.rippleLayer = nil;
+            self.candleWidth = [[[NSUserDefaults standardUserDefaults] objectForKey:kCandleWidth] floatValue];
+            self.tableView.rowHeight = self.candleWidth;
+            self.tableView.scrollEnabled = YES;
+            [self drawBrokenLine];
+            if (self.reloadTimes!=0) {
+                [self scrollToBottom];
+            }
+            self.reloadTimes = 0;
+            break;
+        case ZXTopChartTypeTimeLine:
+            if (self.reloadTimes==0) {
+                [self scrollToTop];
+            }
+            self.candleWidth = self.subViewWidth/(4*60.0);
+            self.tableView.rowHeight = self.candleWidth;
+            self.tableView.scrollEnabled = NO;
+            [self drawTimeLine];
+            break;
+        default:
+            break;
     }
 }
 - (void)drawTimeLine
 {
-//    if (self.kLineModelArr.count<self.needDrawKlineCount) {
-//        CGFloat count = self.needDrawKlineCount-self.kLineModelArr.count;
-//        KlineModel *firstModel = self.kLineModelArr.firstObject;
-//        for (int i = 0; i<count; i++) {
-//
-//            KlineModel *model = [KlineModel new];
-//            model.openPrice = firstModel.openPrice;
-//            model.closePrice = firstModel.openPrice;
-//            model.highestPrice = firstModel.openPrice;
-//            model.lowestPrice = firstModel.openPrice;
-//            model.volumn = @(0);
-//            model.x = 0;
-//            model.isPlaceHolder = YES;
-//            [self.kLineModelArr insertObject:model atIndex:0];
-//        }
-//    }
+    //
     [self calculateNeedDrawKlineArr];
     [self calculateTimeLineMaxAndMinValueWithNeedDrawArr:self.needDrawKlineArr];
     self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
@@ -1098,12 +1140,39 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
     }
-    while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
-        KlineModel *model  = [KlineModel new];
-        model.isPlaceHolder = YES;
-        [self.needDrawKlineArr insertObject:model atIndex:0];
+    self.timeLineLayer = [[ZXBrokenLineLayer alloc] initCurrentNeedDrawDataArr:self.needDrawKlineArr rowHeight:self.candleWidth minValue:self.minAssert heightPerpoint:self.heightPerPoint totalHeight:self.subViewHeight candleChartHeight:self.candleChartHeight topChartType:ZXTopChartTypeTimeLine];
+    KlineModel *lastModel = self.needDrawKlineArr[self.validDataCount-1];
+    double positionX = (lastModel.closePrice - self.minAssert)*self.heightPerPoint+(self.subViewHeight-self.candleChartHeight)-2;
+    double positionY = self.candleWidth*(self.needDrawStartIndex+self.validDataCount-1)+self.candleWidth/2-2;
+    if (self.reloadTimes!=0) {
+        //主要解决第一次的时候ripple的飞跃情况
+        [self updateRippleLayerWithPostion:CGPointMake(positionX, positionY)];
     }
-    self.timeLineLayer = [[ZXTimeLineLayer alloc] initCurrentNeedDrawDataArr:self.needDrawKlineArr rowHeight:self.candleWidth minValue:self.minAssert heightPerpoint:self.heightPerPoint totalHeight:self.subViewHeight candleChartHeight:self.candleChartHeight];
+    [self.tableView.layer addSublayer:self.timeLineLayer];
+    [self delegateToReloadPriceView];
+    [self delegateToReturnKlieArr];
+    self.reloadTimes += 1;
+    if (self.reloadTimes<2) {
+        //只刷新一次 避免刷新240个cell的cpu过高
+        [self.tableView reloadData];
+    }
+    
+}
+- (void)drawBrokenLine
+{
+    [self calculateNeedDrawKlineArr];
+    [self calculateTimeLineMaxAndMinValueWithNeedDrawArr:self.needDrawKlineArr];
+    self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
+    //留白计算
+    //在 原来的基础上，下部留下5间距；上部留下20间距；重新计算极值
+    self.minAssert = self.minAssert - CandleBottomMargin/self.heightPerPoint;
+    self.maxAssert = self.maxAssert + CandleTopMargin/self.heightPerPoint;
+    if (self.maxAssert==self.minAssert) {
+        self.heightPerPoint= 1;
+    }else{
+        self.heightPerPoint = self.candleChartHeight/(self.maxAssert-self.minAssert);
+    }
+    self.timeLineLayer = [[ZXBrokenLineLayer alloc] initCurrentNeedDrawDataArr:self.needDrawKlineArr rowHeight:self.candleWidth minValue:self.minAssert heightPerpoint:self.heightPerPoint totalHeight:self.subViewHeight candleChartHeight:self.candleChartHeight topChartType:ZXTopChartTypeBrokenLine];
     [self.tableView.layer addSublayer:self.timeLineLayer];
     [self delegateToReloadPriceView];
     [self delegateToReturnKlieArr];
@@ -1111,21 +1180,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)drawCandle
 {
-//    if (self.kLineModelArr.count<self.needDrawKlineCount) {
-//        CGFloat count = self.needDrawKlineCount-self.kLineModelArr.count;
-//        KlineModel *firstModel = self.kLineModelArr.firstObject;
-//        for (int i = 0; i<count; i++) {
-//
-//            KlineModel *model = [KlineModel new];
-//            model.openPrice = firstModel.openPrice;
-//            model.closePrice = firstModel.openPrice;
-//            model.highestPrice = firstModel.openPrice;
-//            model.lowestPrice = firstModel.openPrice;
-//            model.volumn = @(0);
-//            model.isPlaceHolder = YES;
-//            [self.kLineModelArr insertObject:model atIndex:0];
-//        }
-//    }
     [self calculateNeedDrawKlineArr];
     [self calculateMaxAndMinValueWithNeedDrawArr:self.needDrawKlineArr];
     NSArray *MA5DataArr  = nil;
@@ -1170,16 +1224,14 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 - (NSArray *)getNewMADataArrWithOldMADataArr:(NSArray *)oldMADataArr
 {
     NSMutableArray *newDataArr = [NSMutableArray arrayWithArray:oldMADataArr];
-    if (oldMADataArr.count<self.needDrawKlineCount) {
-        
-        for (int i = 0; i<(self.needDrawKlineCount-oldMADataArr.count); i++) {
-            
+    NSInteger oldCount = oldMADataArr.count;
+    if (newDataArr.count<self.validDataCount) {
+        for (int i = 0; i<self.validDataCount-oldCount; i++) {
             [newDataArr insertObject:@"-" atIndex:0];
         }
     }
     return newDataArr;
 }
-
 
 - (void)addOrReplaceMADataArrWithMADataArr:(NSArray *)MADataArr MAName:(NSString *)MAName
 {
@@ -1201,24 +1253,12 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }
 }
 #pragma mark - 切换分时图  
-- (void)switchTopChartContentWithTopChartContentType:(TopChartContentType)topChartContentType
+- (void)switchTopChartWithTopChartType:(ZXTopChartType)topChartType
 {
-    switch (topChartContentType) {
-        case TopChartContentTypeTineLine:
-            if (!DrawJustKline) {
-                self.isDrawKline = NO;
-            }
-            break;
-        case  TopChartContentTypeWithCandle:
-            self.isDrawKline = YES;
-            break;
-        default:
-            break;
-    }
+    self.topChartType = topChartType;
     if (!DrawJustKline) {
         [self drawTopKline];
     }
-    
 }
 
 
@@ -1230,7 +1270,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     __block double tempMax = 0;
     __block double tempMin = 0;
     [allNeedDrawArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         double value = [obj doubleValue];
         if (idx==0) {
             tempMax  = value;
@@ -1332,7 +1371,26 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             [self.needDrawKlineArr addObjectsFromArray:[self.kLineModelArr subarrayWithRange:NSMakeRange(startIndex, self.kLineModelArr.count-startIndex)]];
         }
     }
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        self.validDataCount = self.kLineModelArr.count;
+    }else{
+        self.validDataCount  = self.needDrawKlineArr.count;
+    }
     
+    while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
+        KlineModel *model  = [KlineModel new];
+        model.volumn = @(0);
+        model.x = self.needDrawKlineArr.count;
+        model.isPlaceHolder = YES;
+//        if (model.x==59) {
+//            model.timeStr = TimeLineTimeArray[0];
+//        }else if (model.x==119){
+//            model.timeStr = TimeLineTimeArray[1];
+//        }else if (model.x==179){
+//            model.timeStr = TimeLineTimeArray[2];
+//        }
+        [self.needDrawKlineArr addObject:model];
+    }
 }
 //TODO: //峰值应该为全局变量，如果最新的数据在最大最小值之间，就只刷新绘制的那个 cell，否则就要刷新全屏cell
 - (void)convertToKlinePositionModelWithNeedDrawArr:(NSArray *)needDrawArr
@@ -1353,12 +1411,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //经验证，地址是一个，都是指向同一个对象
     //[self calculatePositionWithOrignalArr:self.kLineModelArr];
     [self calculatePositionWithOrignalArr:self.needDrawKlineArr];
-    while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
-        KlineModel *model  = [KlineModel new];
-        model.volumn = @(0);
-        model.isPlaceHolder = YES;
-        [self.needDrawKlineArr insertObject:model atIndex:0];
-    }
     [self.tableView reloadData];
 }
 - (void)calculateTimeLineMaxAndMinValueWithNeedDrawArr:(NSArray *)needDrawArr
@@ -1372,18 +1424,16 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     
     //峰值应该为全局变量，如果最新的数据在最大最小值之间，就只刷新绘制的那个 cell，否则就要刷新全屏cell
     [needDrawArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        if (model.closePrice>self.maxAssert) {
-            
-            self.maxAssert = model.closePrice;
+        if (!model.isPlaceHolder) {
+            if (model.closePrice>self.maxAssert) {
+                
+                self.maxAssert = model.closePrice;
+            }
+            if (model.closePrice<self.minAssert) {
+                self.minAssert = model.closePrice;
+            }
         }
-        if (model.closePrice<self.minAssert) {
-            self.minAssert = model.closePrice;
-        }
-        
     }];
-    
-    
 }
 
 - (void)calculateMaxAndMinValueWithNeedDrawArr:(NSArray *)needDrawArr
@@ -1401,17 +1451,18 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //峰值应该为全局变量，如果最新的数据在最大最小值之间，就只刷新绘制的那个 cell，否则就要刷新全屏cell
     
     [needDrawArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        if (model.highestPrice>self.maxAssert) {
-            
-            self.maxAssert = model.highestPrice;
-            maxPoint = CGPointMake((model.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, model.highestPoint+(self.subViewHeight-self.candleChartHeight));
+        if (!model.isPlaceHolder) {
+            if (model.highestPrice>=self.maxAssert) {
+                
+                self.maxAssert = model.highestPrice;
+                maxPoint = CGPointMake((model.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, model.highestPoint+(self.subViewHeight-self.candleChartHeight));
+            }
+            if (model.lowestPrice<=self.minAssert) {
+                self.minAssert = model.lowestPrice;
+                minPoint = CGPointMake((model.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, model.lowestPoint+(self.subViewHeight-self.candleChartHeight));
+            }
         }
-        if (model.lowestPrice<self.minAssert) {
-            self.minAssert = model.lowestPrice;
-            minPoint = CGPointMake((model.x-self.needDrawStartIndex+1)*self.candleWidth-startOffsetY, model.lowestPoint+(self.subViewHeight-self.candleChartHeight));
-        }
-        
+
     }];
     if (isnan(maxPoint.x)||isnan(maxPoint.y)||isnan(minPoint.x)||isnan(minPoint.y)||maxPoint.y<(self.subViewHeight-self.candleChartHeight)||minPoint.y<(self.subViewHeight-self.candleChartHeight)) {
         return;
@@ -1585,7 +1636,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             }
         }
     }
-    NSLog(@"highestPrice===%@,%f,%f,%f,%f,%ld",moddel.timeStr,moddel.openPrice,moddel.closePrice,moddel.highestPrice,moddel.lowestPrice,(long)moddel.timestamp);
+    NSLog(@"highestPrice===%@,%f,%f,%f,%f,%ld,%lu",moddel.timeStr,moddel.openPrice,moddel.closePrice,moddel.highestPrice,moddel.lowestPrice,(long)moddel.timestamp,(unsigned long)moddel.x);
     if (!moddel.isPlaceHolder) {
         
         [self getLongPressDetailFromQuotaWithIndexInCurrentDrawKlineModelArr:(currentPositionIndexInDataArr-self.needDrawStartIndex)];
@@ -1645,6 +1696,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
 - (NSAttributedString *)getQuotaResultStringWithDataArr:(NSArray *)dataArr colorArr:(NSArray *)colorArr index:(NSInteger)index
 {
+    if (self.topChartType==ZXTopChartTypeTimeLine&&dataArr.count>0) {
+        dataArr = @[dataArr.firstObject];
+    }
     __block NSMutableAttributedString *resultString = nil;
     [dataArr enumerateObjectsUsingBlock:^(NSDictionary *quotaDic, NSUInteger idx, BOOL * _Nonnull stop) {
         
@@ -1796,8 +1850,19 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     [self updateConstrsinsForLandscape];
     
 }
-
-
+#pragma mark - UpdateRippleLayer
+- (void)updateRippleLayerWithPostion:(CGPoint)position
+{
+    CGRect rect = CGRectMake(position.x, position.y, 4, 4);
+    if (!self.rippleLayer) {
+        self.rippleLayer = [[ZXRippleLayer alloc] initWithFrame:rect];
+        [self.tableView.layer addSublayer:self.rippleLayer];
+    }else{
+        self.rippleLayer.frame = rect;
+        [self.rippleLayer addRippleLayerAnimation];
+    }
+    
+}
 #pragma mark - Getters & Setters
 - (UITableView *)tableView
 {
@@ -1861,6 +1926,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (NSInteger)needDrawKlineCount
 {
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        return TimeLineDataCount;
+    }
     CGFloat width = self.subViewWidth;
     _needDrawKlineCount = ceil(width/self.candleWidth);
     return _needDrawKlineCount;

@@ -7,12 +7,7 @@
 //
 
 #import "ZXCandleCell.h"
-#import "ZXHeader.h"
 #import <Masonry.h>
-
-
-
-
 @interface ZXCandleCell()
 @property (nonatomic,strong) UIBezierPath *bezierPath;
 @property (nonatomic,strong) CAShapeLayer *shapeLayer;
@@ -74,7 +69,6 @@
 {
     
     if (self.isDrawDottedLine) {
-        
         //上部分
         [self.vertivalTopDottedLayer removeFromSuperlayer];
         self.vertivalTopDottedLayer = nil;
@@ -102,12 +96,14 @@
             self.vertivalBottomDottedLayer.strokeColor = GrateLineColor.CGColor;
             [self.layer addSublayer:self.vertivalBottomDottedLayer];
         }
-        //赋值
-        self.timeLabel.text = self.model.timeStr;
-        
-        
+
         //对于超出屏幕宽度范围的timelabel也需要隐藏
-        self.timeLabel.text = self.model.timeStr;
+        if (self.topChartType==ZXTopChartTypeTimeLine) {
+            NSString *timeNew = [self.model.timeStr substringWithRange:NSMakeRange(self.model.timeStr.length-5, 5)];
+            self.timeLabel.text = timeNew;
+        }else{
+            self.timeLabel.text = self.model.timeStr;
+        }
         CGRect rectToSelf = [self.timeLabel convertRect:self.timeLabel.frame fromView:self];
         CGRect rectToWindow = [self.timeLabel convertRect:rectToSelf toView:[UIApplication sharedApplication].keyWindow];
         if (rectToWindow.origin.x<0||rectToWindow.origin.x+rectToWindow.size.width>SCREEN_WIDTH) {
@@ -161,7 +157,7 @@
     [self.shapeLayer removeFromSuperlayer];
     [self.bottomLayer removeFromSuperlayer];
     [self.topLayer removeFromSuperlayer];
-    if (self.isDrawKline&&!self.model.isPlaceHolder) {
+    if ((self.topChartType==ZXTopChartTypeCandle)&&!self.model.isPlaceHolder) {
         
         //画矩形
         //这个地方的模型需要倒置思考，旋转了90度
@@ -231,6 +227,12 @@
 - (UIInterfaceOrientation)orientation
 {
     return  [[UIApplication sharedApplication] statusBarOrientation];
+}
+- (void)setTimeLineTime:(NSString *)timeLineTime
+{
+    _timeLineTime = timeLineTime;
+    self.timeLabel.text = timeLineTime;
+    self.timeLabel.hidden = NO;
 }
 @end
 

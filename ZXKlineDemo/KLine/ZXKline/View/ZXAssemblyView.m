@@ -137,6 +137,9 @@ static NSString *const kDrop = @"kDrop";
 //显示极大值视图
 @property (nonatomic,strong) ExtremumView  *maximumView;
 @property (nonatomic,strong) ExtremumView  *minimumView;
+
+//
+@property (nonatomic,assign) ZXTopChartType topChartType;
 @end
 
 @implementation ZXAssemblyView
@@ -558,26 +561,29 @@ static NSString *const kDrop = @"kDrop";
     //COlORARR
     NSMutableArray *VOLColorArr = [NSMutableArray array];
     [currentDrawKlineModelArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        [VOLDataArr addObject:model.volumn];
-        if (model.x>=4) {
-            [VOL_MA5DataArr addObject:model.volumn_MA5];
+        if (!model.isPlaceHolder) {
+            [VOLDataArr addObject:model.volumn];
+            if (model.x>=4) {
+                [VOL_MA5DataArr addObject:model.volumn_MA5];
+            }
+            if (model.x>=9) {
+                [VOL_MA10DataArr addObject:model.volumn_MA10];
+            }
+            if (model.x>=19) {
+                [VOL_MA20DataArr addObject:model.volumn_MA20];
+            }
+            if (model.openPrice<=model.closePrice) {
+                [VOLColorArr addObject:RISECOLOR];
+            }else{
+                [VOLColorArr addObject:DROPCOLOR];
+            }
         }
-        if (model.x>=9) {
-            [VOL_MA10DataArr addObject:model.volumn_MA10];
-        }
-        if (model.x>=19) {
-            [VOL_MA20DataArr addObject:model.volumn_MA20];
-        }
-        if (model.openPrice<=model.closePrice) {
-            [VOLColorArr addObject:RISECOLOR];
-        }else{
-            [VOLColorArr addObject:DROPCOLOR];
-        }
+        
     }];
     //极值
     NSDictionary *resultDic = [[ZXCalculator sharedInstance] calculateMaxAndMinValueWithDataArr:@[VOLDataArr,VOL_MA5DataArr,VOL_MA10DataArr,VOL_MA20DataArr]];
     CGFloat maxValue = [resultDic[kMaxValue] floatValue];
-    CGFloat minValue = [resultDic[kMinValue] floatValue];
+    CGFloat minValue = 0;
     CGFloat quotaHeightPerPoint = QuotaChartHeight/(maxValue - minValue);
     minValue = minValue - QuotaBottomMargin/quotaHeightPerPoint;
     maxValue = maxValue + QuotaTopMargin/quotaHeightPerPoint;
@@ -818,6 +824,11 @@ static NSString *const kDrop = @"kDrop";
 
 - (void)updateJumpViewWithNewKlineModel:(KlineModel *)newKlineModel
 {
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        self.jumpView.hidden = YES;
+        return;
+    }
+    //
     if (!newKlineModel) {
         
         return;
@@ -874,9 +885,17 @@ static NSString *const kDrop = @"kDrop";
     
 }
 #pragma mark - PrivateMethods_切换蜡烛图和指标
-- (void)switchTopChartContentWithTopChartContentType:(TopChartContentType)topChartContentType
+- (void)switchTopChartWithTopChartType:(ZXTopChartType)topChartType
 {
-    [self.klineMainView switchTopChartContentWithTopChartContentType:topChartContentType];
+    self.topChartType = topChartType;
+    if (self.topChartType==ZXTopChartTypeCandle) {
+        self.maximumView.hidden =  NO;
+        self.minimumView.hidden = NO;
+    }else{
+        self.maximumView.hidden =  YES;
+        self.minimumView.hidden = YES;
+    }
+    [self.klineMainView switchTopChartWithTopChartType:topChartType];
 }
 #pragma mark - PublicMethods_刷新止盈止损委托价格线
 - (void)hideStopHoldLine
@@ -1027,6 +1046,9 @@ static NSString *const kDrop = @"kDrop";
     }];
     [self.timeLineView layoutIfNeeded];
     self.timeLineView.hidden = NO;
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        timeStr = [timeStr substringWithRange:NSMakeRange(timeStr.length-5, 5)];
+    }
     [self.timeLineView updateTimeWithTimeString:timeStr];
 }
 - (void)returnCurrentDrawKlineModelArr:(NSArray *)currentDrawKlineModelArr newKlineModel:(KlineModel *)newKlineModel
@@ -1249,15 +1271,16 @@ static NSString *const kDrop = @"kDrop";
 - (void)updateMaxAndMinViewWithMaxPoint:(CGPoint)maxPoint minPoint:(CGPoint)minPoint maxValue:(double)maxValue minValue:(double)minValue
 {
 
+    //60是视图宽度
     if (maxPoint.x>SCREEN_WIDTH/2.0) {
         [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(maxPoint.x-60);
+            make.left.mas_equalTo(self).offset(maxPoint.x-60+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-maxPoint.y);
         }];
         [self.maximumView updateExtremumViewWithArrowPositionLeft:NO price:maxValue];
     }else{
         [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(maxPoint.x);
+            make.left.mas_equalTo(self).offset(maxPoint.x+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-maxPoint.y);
         }];
         [self.maximumView updateExtremumViewWithArrowPositionLeft:YES price:maxValue];
@@ -1267,13 +1290,13 @@ static NSString *const kDrop = @"kDrop";
     //
     if (minPoint.x>SCREEN_WIDTH/2.0) {
         [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(minPoint.x-60);
+            make.left.mas_equalTo(self).offset(minPoint.x-60+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
         }];
         [self.minimumView updateExtremumViewWithArrowPositionLeft:NO price:minValue];
     }else{
         [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(minPoint.x);
+            make.left.mas_equalTo(self).offset(minPoint.x+ZXLeftMargin);
             make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
         }];
         [self.minimumView updateExtremumViewWithArrowPositionLeft:YES price:minValue];

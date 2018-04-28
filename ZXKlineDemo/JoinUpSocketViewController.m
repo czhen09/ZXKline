@@ -35,7 +35,7 @@
 /**
  *
  */
-@property (nonatomic,assign) TopChartContentType topChartContentType;
+@property (nonatomic,assign) ZXTopChartType topChartType;
 
 @property (nonatomic,strong) NSTimer  *timer;
 @end
@@ -58,7 +58,7 @@
     //这句话必须要,否则拖动到两端会出现白屏
     self.automaticallyAdjustsScrollViewInsets = NO;
     //
-    self.topChartContentType = TopChartContentTypeWithCandle;
+    self.topChartType = ZXTopChartTypeCandle;
     //
     self.currentDrawQuotaName = self.quotaNameArr[0];
     
@@ -162,7 +162,8 @@
     NSArray *kDataArr = [NSArray arrayWithContentsOfFile:path];
     
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (int i = 0; i<kDataArr.count-1; i++) {
+    for (int i = 0; i<100
+         ; i++) {
         [tempArray addObject:kDataArr[i]];
     }
     
@@ -224,6 +225,9 @@
 #pragma mark - AssemblyViewDelegate
 - (void)tapActionActOnQuotaArea
 {
+    if (self.topChartType==ZXTopChartTypeTimeLine) {
+        return;
+    }
     //这里可以进行quota图的切换
     NSInteger index = [self.quotaNameArr indexOfObject:self.currentDrawQuotaName];
     if (index<self.quotaNameArr.count-1) {
@@ -237,14 +241,20 @@
 
 - (void)tapActionActOnCandleArea
 {
-    if (self.topChartContentType==TopChartContentTypeTineLine) {
+    if (self.topChartType==ZXTopChartTypeBrokenLine) {
         
-        [self.assenblyView switchTopChartContentWithTopChartContentType:TopChartContentTypeWithCandle];
-        self.topChartContentType = TopChartContentTypeWithCandle;
-    }else if (self.topChartContentType==TopChartContentTypeWithCandle)
+        [self.assenblyView switchTopChartWithTopChartType:ZXTopChartTypeCandle];
+        self.topChartType = ZXTopChartTypeCandle;
+    }else if (self.topChartType==ZXTopChartTypeCandle)
     {
-        [self.assenblyView switchTopChartContentWithTopChartContentType:TopChartContentTypeTineLine];
-        self.topChartContentType = TopChartContentTypeTineLine;
+        [self.assenblyView switchTopChartWithTopChartType:ZXTopChartTypeTimeLine];
+        [self drawQuotaWithCurrentDrawQuotaName:@"VOL"];
+        self.currentDrawQuotaName = @"VOL";
+        self.topChartType = ZXTopChartTypeTimeLine;
+    }else if (self.topChartType==ZXTopChartTypeTimeLine)
+    {
+        [self.assenblyView switchTopChartWithTopChartType:ZXTopChartTypeBrokenLine];
+        self.topChartType = ZXTopChartTypeBrokenLine;
     }
     
 }
