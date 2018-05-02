@@ -1360,6 +1360,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 #pragma mark - k线相关计算
 - (void)calculateNeedDrawKlineArr
 {
+    if (self.candleWidth==0) {
+        return;
+    }
     NSInteger startIndex = 0;
     startIndex = self.needDrawStartIndex;
     [self.needDrawKlineArr removeAllObjects];
@@ -1376,7 +1379,14 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         self.validDataCount  = self.needDrawKlineArr.count;
     }
-    
+//    NSInteger currentCount = self.needDrawKlineArr.count;
+//    for (int i = 0;i<self.needDrawKlineCount-currentCount; i++) {
+//        KlineModel *model  = [KlineModel new];
+//        model.volumn = @(0);
+//        model.x = self.needDrawKlineArr.count;
+//        model.isPlaceHolder = YES;
+//        [self.needDrawKlineArr addObject:model];
+//    }
     while (self.needDrawKlineArr.count<self.needDrawKlineCount) {
         KlineModel *model  = [KlineModel new];
         model.volumn = @(0);
@@ -1878,6 +1888,8 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         if (!candleWidth) {
             
             self.candleWidth = CandleMaxWidth;
+            //将candle宽度保存到本地
+            [[NSUserDefaults standardUserDefaults] setObject:@(self.candleWidth) forKey:kCandleWidth];
         }else
         {
             self.candleWidth = [candleWidth floatValue];
