@@ -649,7 +649,6 @@ static NSString *const kDrop = @"kDrop";
     //J
     NSMutableArray *BOOL_DNataArr = [NSMutableArray array];
     
-cd 
     [currentDrawKlineModelArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
         if (!model.isPlaceHolder) {
             [openDataArr addObject:@(model.openPrice)];

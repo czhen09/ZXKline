@@ -96,7 +96,7 @@ static id _instance;
         
         if (month == 1||month == 3||month==5||month == 7||month==8||month == 10||month==12) {
             //31
-            timesampInterval = 60*60*31;
+            timesampInterval = 60*60*24*31;
         }else if (month==2)
         {
             
