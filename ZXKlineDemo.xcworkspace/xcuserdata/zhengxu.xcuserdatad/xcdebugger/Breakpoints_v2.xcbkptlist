@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "546941471.299291"
+            timestampString = "546957819.4854701"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1868"
-            endingLineNumber = "1868"
-            landmarkName = "-updateRippleLayerWithPostion:"
+            startingLineNumber = "1463"
+            endingLineNumber = "1463"
+            landmarkName = "-calculateMaxAndMinValueWithNeedDrawArr:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -51,61 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "546941471.299565"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXAssemblyView.m"
+            timestampString = "546957819.485746"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1364"
-            endingLineNumber = "1364"
-            landmarkName = "-calculateNeedDrawKlineArr"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "546941471.2996221"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1366"
-            endingLineNumber = "1366"
-            landmarkName = "-calculateNeedDrawKlineArr"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "546941471.299672"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1095"
-            endingLineNumber = "1095"
-            landmarkName = "-drawTopKline"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "546941471.299721"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1391"
-            endingLineNumber = "1391"
-            landmarkName = "-calculateNeedDrawKlineArr"
+            startingLineNumber = "1270"
+            endingLineNumber = "1270"
+            landmarkName = "-updateMaxAndMinViewWithMaxPoint:minPoint:maxValue:minValue:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

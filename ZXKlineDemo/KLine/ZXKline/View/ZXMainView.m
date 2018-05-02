@@ -161,6 +161,10 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 @property (nonatomic,strong) ZXRippleLayer  *rippleLayer;
 //切换到分时线的时候需要reloadData次数;
 @property (nonatomic,assign) NSInteger reloadTimes;
+
+//最大最小的模型
+@property (nonatomic,strong) KlineModel  *maxValueModel;
+@property (nonatomic,strong) KlineModel  *minValueModel;
 @end
 
 @implementation ZXMainView
@@ -1220,6 +1224,17 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     [self delegateToReloadPriceView];
     [self delegateToReturnKlieArr];
 
+    
+    //返回极值的回掉显示
+    if (self.maxValueModel&&self.minValueModel) {
+        UIScrollView *scrollView = self.tableView;
+        CGFloat startOffsetY = scrollView.contentOffset.y - self.needDrawStartIndex*self.candleWidth;
+        CGPoint maxValuePoint = CGPointMake((self.maxValueModel.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, self.maxValueModel.highestPoint+(self.subViewHeight-self.candleChartHeight));
+        CGPoint minValuePoint = CGPointMake((self.minValueModel.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, self.minValueModel.lowestPoint+(self.subViewHeight-self.candleChartHeight));
+        if ([self.delegate respondsToSelector:@selector(updateMaxAndMinViewWithMaxPoint:minPoint:maxValue:minValue:)]) {
+            [self.delegate updateMaxAndMinViewWithMaxPoint:maxValuePoint minPoint:minValuePoint maxValue:self.maxValueModel.highestPrice minValue:self.minValueModel.lowestPrice];
+        }
+    }
 }
 - (NSArray *)getNewMADataArrWithOldMADataArr:(NSArray *)oldMADataArr
 {
@@ -1360,9 +1375,6 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 #pragma mark - k线相关计算
 - (void)calculateNeedDrawKlineArr
 {
-    if (self.candleWidth==0) {
-        return;
-    }
     NSInteger startIndex = 0;
     startIndex = self.needDrawStartIndex;
     [self.needDrawKlineArr removeAllObjects];
@@ -1451,13 +1463,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     if (!needDrawArr) {
         return ;
     }
-    UIScrollView *scrollView = self.tableView;
-    CGFloat startOffsetY = scrollView.contentOffset.y - self.needDrawStartIndex*self.candleWidth;
     KlineModel *modelF = needDrawArr.firstObject;
     self.minAssert = modelF.lowestPrice;
     self.maxAssert = modelF.highestPrice;
-    __block CGPoint maxPoint = CGPointMake((modelF.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, modelF.highestPoint+(self.subViewHeight-self.candleChartHeight));
-    __block CGPoint minPoint = CGPointMake((modelF.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, modelF.lowestPoint+(self.subViewHeight-self.candleChartHeight));
     //峰值应该为全局变量，如果最新的数据在最大最小值之间，就只刷新绘制的那个 cell，否则就要刷新全屏cell
     
     [needDrawArr enumerateObjectsUsingBlock:^(KlineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -1465,21 +1473,15 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             if (model.highestPrice>=self.maxAssert) {
                 
                 self.maxAssert = model.highestPrice;
-                maxPoint = CGPointMake((model.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, model.highestPoint+(self.subViewHeight-self.candleChartHeight));
+                self.maxValueModel = model;
             }
             if (model.lowestPrice<=self.minAssert) {
                 self.minAssert = model.lowestPrice;
-                minPoint = CGPointMake((model.x-self.needDrawStartIndex)*self.candleWidth-startOffsetY+self.candleWidth/2.0, model.lowestPoint+(self.subViewHeight-self.candleChartHeight));
+                self.minValueModel = model;
             }
         }
 
     }];
-    if (isnan(maxPoint.x)||isnan(maxPoint.y)||isnan(minPoint.x)||isnan(minPoint.y)||maxPoint.y<(self.subViewHeight-self.candleChartHeight)||minPoint.y<(self.subViewHeight-self.candleChartHeight)) {
-        return;
-    }
-    if ([self.delegate respondsToSelector:@selector(updateMaxAndMinViewWithMaxPoint:minPoint:maxValue:minValue:)]) {
-        [self.delegate updateMaxAndMinViewWithMaxPoint:maxPoint minPoint:minPoint maxValue:self.maxAssert minValue:self.minAssert];
-    }
 }
 - (void)calculatePositionWithOrignalArr:(NSMutableArray *)originalArr
 {
