@@ -1924,7 +1924,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     UIScrollView *scrollView = (UIScrollView *)self.tableView;
     if (self.isFirst) {
         
-        scrollViewOffsetX = (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth;
+        if (self.kLineModelArr.count<self.needDrawKlineCount) {
+            scrollViewOffsetX = 0;
+        }else{
+            scrollViewOffsetX = (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth;
+        }
         
     }else{
         scrollViewOffsetX = scrollView.contentOffset.y<= 0 ? 0 : scrollView.contentOffset.y;

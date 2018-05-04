@@ -349,7 +349,7 @@
         [self.dataArray replaceObjectAtIndex:self.dataArray.count-1 withObject:newKlineModel];
     }
     //绘制最后一个蜡烛
-//    [self.assenblyView drawLastKlineWithNewKlineModel:newKlineModel];
+    [self.assenblyView drawLastKlineWithNewKlineModel:newKlineModel];
 }
 
 
