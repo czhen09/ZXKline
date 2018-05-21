@@ -464,21 +464,12 @@ static NSString *const kDrop = @"kDrop";
     self.topBorder = nil;
     self.topBorder = [CAShapeLayer layer];
     UIBezierPath *topBorderBeizer = nil;
-    if (PriceCoordinateIsInRight) {
-        if (ZX_IS_IPHONE_X&&!Portrait) {
-            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, TopMargin, LanscapeCandleWidth, self.candleChartHeight)];
-        }else{
-            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth, self.candleChartHeight)];
-        }
-       
+    if (ZX_IS_IPHONE_X&&!Portrait) {
+        topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, TopMargin, LanscapeCandleWidth, self.candleChartHeight)];
+    }else if(!ZX_IS_IPHONE_X&&!Portrait){
+            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, LanscapeCandleWidth, self.candleChartHeight)];
     }else{
-        if (ZX_IS_IPHONE_X&&!Portrait) {
-            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, TopMargin, LanscapeCandleWidth, self.candleChartHeight)];
-        }else{
-            
-            topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, TotalWidth-ZXLeftMargin-ZXRightMargin, self.candleChartHeight)];
-        }
-        
+        topBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, TopMargin, PortraitCandleWidth, self.candleChartHeight)];
     }
     self.topBorder.lineWidth = 0.2;
     self.topBorder.path = topBorderBeizer.CGPath;
@@ -491,18 +482,12 @@ static NSString *const kDrop = @"kDrop";
         self.bottomBorder = nil;
         self.bottomBorder = [CAShapeLayer layer];
         UIBezierPath *bottomBorderBeizer = nil;
-        if (PriceCoordinateIsInRight) {
-            if (ZX_IS_IPHONE_X&&!Portrait) {
-                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
-            }else{
-                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin-VerticalCoordinatesWidth, self.quotaChartHeight)];
-            }
+        if (ZX_IS_IPHONE_X&&!Portrait) {
+            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
+        }else if(!ZX_IS_IPHONE_X&&!Portrait){
+            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
         }else{
-            if (ZX_IS_IPHONE_X&&!Portrait) {
-                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(SafeAreaTopMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,LanscapeCandleWidth, self.quotaChartHeight)];
-            }else{
-                bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,TotalWidth-ZXLeftMargin-ZXRightMargin, self.quotaChartHeight)];
-            }
+            bottomBorderBeizer = [UIBezierPath bezierPathWithRect:CGRectMake(ZXLeftMargin, self.candleChartHeight+TimeViewHeight+self.middleBlankSpace+TopMargin,PortraitCandleWidth, self.quotaChartHeight)];
         }
         self.bottomBorder.lineWidth = 0.2;
         self.bottomBorder.path = bottomBorderBeizer.CGPath;
@@ -1269,13 +1254,21 @@ static NSString *const kDrop = @"kDrop";
     //60是视图宽度
     if (maxPoint.x>SCREEN_WIDTH/2.0) {
         [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(maxPoint.x-60+ZXLeftMargin);
+            if (!Portrait&&ZX_IS_IPHONE_X) {
+                make.left.mas_equalTo(self).offset(maxPoint.x-60+SafeAreaTopMargin);
+            }else{
+                make.left.mas_equalTo(self).offset(maxPoint.x-60+ZXLeftMargin);
+            }
             make.bottom.mas_equalTo(self).offset(-maxPoint.y);
         }];
         [self.maximumView updateExtremumViewWithArrowPositionLeft:NO price:maxValue];
     }else{
         [self.maximumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(maxPoint.x+ZXLeftMargin);
+           if (!Portrait&&ZX_IS_IPHONE_X) {
+               make.left.mas_equalTo(self).offset(maxPoint.x+SafeAreaTopMargin);
+           }else{
+               make.left.mas_equalTo(self).offset(maxPoint.x+ZXLeftMargin);
+           }
             make.bottom.mas_equalTo(self).offset(-maxPoint.y);
         }];
         [self.maximumView updateExtremumViewWithArrowPositionLeft:YES price:maxValue];
@@ -1285,13 +1278,22 @@ static NSString *const kDrop = @"kDrop";
     //
     if (minPoint.x>SCREEN_WIDTH/2.0) {
         [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(minPoint.x-60+ZXLeftMargin);
+           
+            if (!Portrait&&ZX_IS_IPHONE_X) {
+                make.left.mas_equalTo(self).offset(minPoint.x-60+SafeAreaTopMargin);
+            }else{
+                make.left.mas_equalTo(self).offset(minPoint.x-60+ZXLeftMargin);
+            }
             make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
         }];
         [self.minimumView updateExtremumViewWithArrowPositionLeft:NO price:minValue];
     }else{
         [self.minimumView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self).offset(minPoint.x+ZXLeftMargin);
+            if (!Portrait&&ZX_IS_IPHONE_X) {
+                make.left.mas_equalTo(self).offset(minPoint.x+SafeAreaTopMargin);
+            }else{
+                make.left.mas_equalTo(self).offset(minPoint.x+ZXLeftMargin);
+            }
             make.bottom.mas_equalTo(self).offset(-minPoint.y+10);
         }];
         [self.minimumView updateExtremumViewWithArrowPositionLeft:YES price:minValue];

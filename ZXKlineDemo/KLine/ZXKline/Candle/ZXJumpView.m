@@ -66,10 +66,10 @@
     self.horizontalLineLayer = [CAShapeLayer layer];
     UIBezierPath *topLine = [UIBezierPath bezierPath];
     [topLine moveToPoint:CGPointMake(0,0)];
-    if (ZX_IS_IPHONE_X&&!Portrait) {
-        [topLine addLineToPoint:CGPointMake((KSCREEN_HEIGHT-VerticalCoordinatesWidth-ZXLeftMargin-ZXRightMargin-SafeAreaBottomMargin-SafeAreaTopMargin),0)];
+    if (!Portrait) {
+        [topLine addLineToPoint:CGPointMake(LanscapeCandleWidth-VerticalCoordinatesWidth,0)];
     }else{
-        [topLine addLineToPoint:CGPointMake((KSCREEN_HEIGHT-VerticalCoordinatesWidth-ZXLeftMargin-ZXRightMargin),0)];
+        [topLine addLineToPoint:CGPointMake(PortraitCandleWidth-VerticalCoordinatesWidth,0)];
     }
     self.horizontalLineLayer.lineWidth = 1;
     self.horizontalLineLayer.lineDashPattern = @[@4, @4];

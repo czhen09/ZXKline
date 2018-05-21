@@ -35,88 +35,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXAssemblyView.m"
-            timestampString = "546957819.485746"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1270"
-            endingLineNumber = "1270"
-            landmarkName = "-updateMaxAndMinViewWithMaxPoint:minPoint:maxValue:minValue:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "547116270.750012"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1936"
-            endingLineNumber = "1936"
-            landmarkName = "-needDrawStartIndex"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ZXMainView needDrawStartIndex]"
-                  moduleName = "ZXKlineDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhengxu/Desktop/k%E7%BA%BF/ZXKline/ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-                  timestampString = "547116029.482463"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1936"
-                  endingLineNumber = "1936"
-                  offsetFromSymbolStart = "549">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ZXMainView needDrawStartIndex]"
-                  moduleName = "ZXKlineDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhengxu/Desktop/k%E7%BA%BF/ZXKline/ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-                  timestampString = "547116029.4839129"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1936"
-                  endingLineNumber = "1936"
-                  offsetFromSymbolStart = "692">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "547116270.750079"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1934"
-            endingLineNumber = "1934"
-            landmarkName = "-needDrawStartIndex"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "547116270.750127"
+            timestampString = "548579934.208515"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1104"
@@ -132,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "547116270.750174"
+            timestampString = "548579934.208609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1120"
-            endingLineNumber = "1120"
+            startingLineNumber = "1118"
+            endingLineNumber = "1118"
             landmarkName = "-drawTopKline"
             landmarkType = "7">
          </BreakpointContent>
@@ -148,7 +68,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "547116270.7502199"
+            timestampString = "548579934.2086591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1125"
@@ -164,7 +84,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "547116270.750263"
+            timestampString = "548579934.2087049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1109"
@@ -180,12 +100,268 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
-            timestampString = "547116270.750306"
+            timestampString = "548579934.2087491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1937"
-            endingLineNumber = "1937"
-            landmarkName = "-needDrawStartIndex"
+            startingLineNumber = "1805"
+            endingLineNumber = "1805"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.208793"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1811"
+            endingLineNumber = "1811"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.2088341"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1813"
+            endingLineNumber = "1813"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.208874"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1815"
+            endingLineNumber = "1815"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.208927"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1823"
+            endingLineNumber = "1823"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.208968"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1824"
+            endingLineNumber = "1824"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209026"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1828"
+            endingLineNumber = "1828"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.2090729"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1817"
+            endingLineNumber = "1817"
+            landmarkName = "-increaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209121"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1838"
+            endingLineNumber = "1838"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209167"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1841"
+            endingLineNumber = "1841"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.2092119"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1845"
+            endingLineNumber = "1845"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209258"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1847"
+            endingLineNumber = "1847"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209303"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1850"
+            endingLineNumber = "1850"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209347"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1848"
+            endingLineNumber = "1848"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209393"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1854"
+            endingLineNumber = "1854"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.2094409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1855"
+            endingLineNumber = "1855"
+            landmarkName = "-decreaseCandleWidthWithisLongPress:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZXKlineDemo/KLine/ZXKline/View/ZXMainView.m"
+            timestampString = "548579934.209486"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1101"
+            endingLineNumber = "1101"
+            landmarkName = "-drawTopKline"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

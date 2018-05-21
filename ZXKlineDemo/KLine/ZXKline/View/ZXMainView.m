@@ -1097,10 +1097,10 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         case ZXTopChartTypeCandle:
             [self.rippleLayer removeFromSuperlayer];
             self.rippleLayer = nil;
-            self.candleWidth = [[[NSUserDefaults standardUserDefaults] objectForKey:kCandleWidth] floatValue];
-            self.tableView.rowHeight = self.candleWidth;
             self.tableView.scrollEnabled = YES;
             if (self.reloadTimes!=0) {
+                self.candleWidth = [[[NSUserDefaults standardUserDefaults] objectForKey:kCandleWidth] floatValue];
+                self.tableView.rowHeight = self.candleWidth;
                 self.isFirst = YES;
             }
             [self drawCandle];
@@ -1113,11 +1113,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         case ZXTopChartTypeBrokenLine:
             [self.rippleLayer removeFromSuperlayer];
             self.rippleLayer = nil;
-            self.candleWidth = [[[NSUserDefaults standardUserDefaults] objectForKey:kCandleWidth] floatValue];
-            self.tableView.rowHeight = self.candleWidth;
             self.tableView.scrollEnabled = YES;
             if (self.reloadTimes!=0) {
                 self.isFirst = YES;
+                self.candleWidth = [[[NSUserDefaults standardUserDefaults] objectForKey:kCandleWidth] floatValue];
+                self.tableView.rowHeight = self.candleWidth;
             }
             [self drawBrokenLine];
             if (self.reloadTimes!=0) {
@@ -1823,8 +1823,8 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     self.tableView.rowHeight = self.candleWidth;
     [self drawTopKline];
     
-    self.tableView.rowHeight = self.candleWidth;
-    [self drawTopKline];
+//    self.tableView.rowHeight = self.candleWidth;
+//    [self drawTopKline];
     
     //将candle宽度保存到本地
     [[NSUserDefaults standardUserDefaults] setObject:@(self.candleWidth) forKey:kCandleWidth];

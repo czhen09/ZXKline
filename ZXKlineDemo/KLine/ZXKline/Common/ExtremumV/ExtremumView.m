@@ -40,7 +40,7 @@
         [self.arrowImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.top.bottom.mas_equalTo(self);
             make.width.mas_equalTo(18);
-            make.height.mas_equalTo(5);
+           
         }];
         [self.priceLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(self.arrowImageView.mas_left);
