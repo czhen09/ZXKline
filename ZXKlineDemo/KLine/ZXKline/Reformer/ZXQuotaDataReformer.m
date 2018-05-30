@@ -209,7 +209,7 @@ static id _instance;
         if (i>=0&&i<dataArr.count) {
             KlineModel *model = dataArr[i];
             double close = model.closePrice;
-            double open = model.openPrice;
+            double open = model.previousKlineModel.closePrice;
             [previousPriceArr addObject:@(close-open)];
             model = nil;
         }
